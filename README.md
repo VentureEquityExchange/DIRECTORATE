@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ### VΞNTURΞ ΞQUITY ΞXCHANGΞ | DIRΞCTORATΞ
 
 _DIRΞCTORATΞ is a desktop application for ventures to register Decentralized Autonomous Ventures (DAVs) on VΞNTURΞ ΞQUITY ΞXCHANGΞ via the Ethereum network; providing the directors of the DAV the ability to issue equity shares, raise capital, submit financial reports, and manage shareholder relations._
