@@ -24,7 +24,7 @@ angular.module('vexTradedeskApp')
                     console.log('Connected with id: '+id);
                 });
 
-                socketio.socket.emit('nodeInfo', nodeInfo);
+                socketio.socket.emit('directorate_nodeInfo', nodeInfo);
             });
         }, 10000);
     });
