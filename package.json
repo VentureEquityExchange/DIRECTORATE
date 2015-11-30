@@ -54,11 +54,13 @@
     "build": "electron-packager . $npm_package_productName --out=packaged --icon='icon.icns' --overwrite --ignore='^/packaged$' --prune --all --version=$npm_package_electronVersion"
   },
   "dependencies": {
+    "async": "^1.5.0",
     "d3": "^3.5.9",
     "d3-financial-components": "^0.2.2",
     "d3fc": "^5.0.0",
     "electron-debug": "^0.5.1",
     "peer": "^0.2.8",
+    "pouchdb": "^5.1.0",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.3.7",
     "solc": "^0.1.7-1",

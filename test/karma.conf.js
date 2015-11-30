@@ -41,6 +41,7 @@ module.exports = function(config) {
       'app/bower_components/angular-ui-router/release/angular-ui-router.js',
       'app/bower_components/angular-material-data-table/dist/md-data-table.min.js',
       'app/bower_components/pouchdb/dist/pouchdb.js',
+      'app/bower_components/async/lib/async.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

@@ -7,30 +7,8 @@
  * Controller of the vexTradedeskApp
  */
 angular.module('vexTradedeskApp')
-  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio) {
+  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate) {
     
-    socketio.socket.on('connect', function(){
-        socketio.socket.on('connected', function(data){
-            alert(data.message);
-        });
-        socketio.socket.on('contracts', function(contracts){
-            console.log(contracts);
-        });
-        $timeout(function(){
-            var NI;
-            ethereum.nodeInfo(function(nodeInfo){
-                var peer = new Peer(nodeInfo, {host: 'localhost', port: 3000, path: '/peerjs'});
-                peer.on('open', function(id){
-                    console.log('Connected with id: '+id);
-                });
-
-                socketio.socket.emit('directorate_nodeInfo', nodeInfo);
-            });
-        }, 10000);
-    });
-
-
-
     // Create loading window to allow Ethereum node to fully launch.
 
     $mdDialog.show({
