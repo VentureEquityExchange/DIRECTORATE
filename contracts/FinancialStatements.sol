@@ -7,8 +7,8 @@ contract FinancialStatements {
         bytes32 item; // used to map entries to statements; e.g. revenue, costs
         uint value;
         string note;
-        uint dated;
         string denomination;
+        uint dated;
         // more entries to map;
     }
     
@@ -89,6 +89,7 @@ contract FinancialStatements {
     }
 
     function SubmitEntry(bytes32 _item, uint _value, string _note, string _denomination) {
+    	uint _dated = now;
     	// Example if entry is revenue;
 
     	/*
@@ -106,59 +107,45 @@ contract FinancialStatements {
 
 		// Income Entries
 
-		IncomeStatements[currentReport].Revenue.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-		IncomeStatements[currentReport].CostOfSales.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+		IncomeStatements[currentReport].Revenue.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+		IncomeStatements[currentReport].CostOfSales.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
         
 		// Calculate this;
-        // IncomeStatements[currentReport].GrossProfit.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+        // IncomeStatements[currentReport].GrossProfit.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
 
-        IncomeStatements[currentReport].OtherIncome.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));        
-        IncomeStatements[currentReport].DistributionCosts.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));    
-        IncomeStatements[currentReport].AdministrativeExpenses.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));        
-        IncomeStatements[currentReport].OtherExpense.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        IncomeStatements[currentReport].FinanceCosts.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+        IncomeStatements[currentReport].OtherIncome.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));        
+        IncomeStatements[currentReport].DistributionCosts.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));    
+        IncomeStatements[currentReport].AdministrativeExpenses.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));        
+        IncomeStatements[currentReport].OtherExpense.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        IncomeStatements[currentReport].FinanceCosts.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
         
         
         // Calculate this;
-        // IncomeStatements[currentReport].ProfitBeforeTax.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+        // IncomeStatements[currentReport].ProfitBeforeTax.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
         
-        IncomeStatements[currentReport].IncomeTaxExpense.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        IncomeStatements[currentReport].ProfitForTheYear.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        IncomeStatements[currentReport].BeginningRetainedEarnings.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        IncomeStatements[currentReport].DividendsPaids.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        IncomeStatements[currentReport].EndingRetainedEarnings.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+        IncomeStatements[currentReport].IncomeTaxExpense.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        
+        // Calculate this;
+        // IncomeStatements[currentReport].ProfitForTheYear.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        IncomeStatements[currentReport].BeginningRetainedEarnings.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        IncomeStatements[currentReport].DividendsPaids.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        IncomeStatements[currentReport].EndingRetainedEarnings.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
 
         // Cash Flow Entries
 
 
-        CashFlowStatements[currentReport].Operating.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        CashFlowStatements[currentReport].Investing.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-        CashFlowStatements[currentReport].Financing.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+        CashFlowStatements[currentReport].Operating.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        CashFlowStatements[currentReport].Investing.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+        CashFlowStatements[currentReport].Financing.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
 
 
         // Financial Position Entries;
 
-        FinancialPositionStatements[currentReport].CurrentAssets.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-    	FinancialPositionStatements[currentReport].NonCurrentAssets.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-    	FinancialPositionStatements[currentReport].CurrentLiabilities.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-    	FinancialPositionStatements[currentReport].NonCurrentLiabilities.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
-    	FinancialPositionStatements[currentReport].RetainedEarnings.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination}));
+        FinancialPositionStatements[currentReport].CurrentAssets.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+    	FinancialPositionStatements[currentReport].NonCurrentAssets.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+    	FinancialPositionStatements[currentReport].CurrentLiabilities.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+    	FinancialPositionStatements[currentReport].NonCurrentLiabilities.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
+    	FinancialPositionStatements[currentReport].RetainedEarnings.push(Entry({item : _item, value: _value, note: _note, denomination: _denomination, dated : _dated}));
     } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
+      
 }
