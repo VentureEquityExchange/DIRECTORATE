@@ -11,9 +11,11 @@ angular.module('vexTradedeskApp')
   .factory('registrar', function (socketio, Contracts) {
     // Service logic
     // ...
+    var db = new PouchDB('registrar');
+
     socketio.socket.emit('registrar', null);
     socketio.socket.on('registration.sol', function(contract){
-        Contracts.db.put({
+        db.put({
           _id: contract.name,
           address : contract.address,
           abi : contract.abi,
@@ -21,8 +23,8 @@ angular.module('vexTradedeskApp')
           console.log(saved);
         }).catch(function(error){
           if(error.status == 409){
-            Contracts.db.get(contract.name, {include_docs: true, revs: true}).then(function(doc){
-              return Contracts.db.put({
+            db.get(contract.name, {include_docs: true, revs: true}).then(function(doc){
+              return db.put({
                 _id: contract.name,
                 _rev: doc._rev,
                 address : contract.address,

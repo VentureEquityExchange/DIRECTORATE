@@ -7,8 +7,17 @@
  * Controller of the vexTradedeskApp
  */
 angular.module('vexTradedeskApp')
-  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate) {
+  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture) {
     
+    Venture.create().then(function(venture){
+        console.log(venture);
+    }).catch(function(error){
+        console.log(error);
+    });    
+    
+
+
+
     // Create loading window to allow Ethereum node to fully launch.
 
     $mdDialog.show({

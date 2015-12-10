@@ -8,11 +8,12 @@
  * Factory in the vexTradedeskApp.
  */
 angular.module('vexTradedeskApp')
-  .factory('Contracts', function ($q) {
+  .factory('Contracts', function ($q, ethereum) {
     // Service logic
     // ...
     var async = require('async');
     var db = new PouchDB('contracts');
+
 
     // Public API here
     return {
@@ -29,9 +30,11 @@ angular.module('vexTradedeskApp')
       save: function (contracts) {
         return $q(function(resolve, reject){
           async.forEach(contracts, function(contract,callback){
+              
+              var cName = Object.keys(contract.compiled.contracts)[0];
               db.put({
-                _id: contract.file,
-                source : contract.source
+                _id : cName,
+                compiled : contract.compiled.contracts[cName]
               }).then(function(){
                 callback();  
               }).catch(function(error){
@@ -48,8 +51,7 @@ angular.module('vexTradedeskApp')
                   reject(error);
                 });
               }
-            }
-          );
+            });
         })
       },
       destroy : function(){
@@ -61,6 +63,11 @@ angular.module('vexTradedeskApp')
             reject();
           })
         });
+      },
+      deploy : function(contract){
+        return $q(function(resolve, reject){
+          resolve(contract);
+        })
       }
     };
   });

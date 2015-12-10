@@ -63,7 +63,7 @@
     "pouchdb": "^5.1.0",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.3.7",
-    "solc": "^0.1.7-1",
+    "solc": "^0.1.6",
     "techan": "andredumas/techan.js",
     "web3": "^0.15.1"
   }
