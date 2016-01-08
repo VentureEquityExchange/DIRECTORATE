@@ -7,9 +7,12 @@
  * Controller of the vexTradedeskApp
  */
 angular.module('vexTradedeskApp')
-  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture) {
-    $scope.loaded = false;
-    
+  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture, $rootScope) {
+    $scope.view = 'loading';
+    $rootScope.setView = function(view){
+        $scope.view = view;
+    }
+
     // setTimeout(function(){
     //     Venture.create().then(function(venture){
     //         console.log(venture);
@@ -24,15 +27,19 @@ angular.module('vexTradedeskApp')
 
     // Create loading window to allow Ethereum node to fully launch.
 
-    $mdDialog.show({
-    	parent: angular.element(document.body),
-    	templateUrl : 'views/loading.html'
-    });
+    if($scope.view == 'loading'){
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl : 'views/loading.html'
+        });
 
-    $timeout(function(){
-    	$mdDialog.hide();
-        $scope.loaded = true;
-    }, 1)
+        $timeout(function(){
+            $mdDialog.hide();
+            $rootScope.setView('select-account');
+        }, 1000)    
+    }
+
+    
 
 
     $scope.openSearch = function(){

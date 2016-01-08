@@ -7,7 +7,7 @@
  * # selectAccount
  */
 angular.module('vexTradedeskApp')
-  .directive('selectAccount', function (ethereum) {
+  .directive('selectAccount', function (ethereum, $rootScope) {
     return {
       templateUrl: 'views/selectaccount.html',
       restrict: 'EA',
@@ -20,6 +20,10 @@ angular.module('vexTradedeskApp')
 	    };
 
 	    scope.listAccounts();
+
+	    scope.login = function(account){
+	    	$rootScope.setView('select-venture');
+	    }
       }
     };
   });

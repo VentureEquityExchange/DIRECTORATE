@@ -5,10 +5,8 @@
 <div layout="column" layout-align="center center">
   <md-content layout-padding layout-wrap>
       <div layout="row">
-        
-        <div flex="100" style="text-align:center">
-          <select-account ng-if="loaded" ng-init="listAccounts()"></select-account>
-        </div>
+        <select-account ng-if="view == 'select-account'"></select-account>
+        <select-venture ng-if="view == 'select-venture'"></select-venture>
         
       </div>
   </md-content>
