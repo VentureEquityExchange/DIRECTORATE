@@ -22,6 +22,7 @@ angular.module('vexTradedeskApp')
 	    scope.listAccounts();
 
 	    scope.login = function(account){
+	    	$rootScope.account = account;
 	    	$rootScope.setView('select-venture');
 	    }
       }

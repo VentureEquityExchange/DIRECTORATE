@@ -36,7 +36,7 @@ angular.module('vexTradedeskApp')
         $timeout(function(){
             $mdDialog.hide();
             $rootScope.setView('select-account');
-        }, 1000)    
+        }, 5000)    
     }
 
     
