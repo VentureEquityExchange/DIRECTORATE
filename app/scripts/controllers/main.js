@@ -9,11 +9,14 @@
 angular.module('vexTradedeskApp')
   .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture) {
     
-    Venture.create().then(function(venture){
-        console.log(venture);
-    }).catch(function(error){
-        console.log(error);
-    });    
+    setTimeout(function(){
+        Venture.create().then(function(venture){
+            console.log(venture);
+        }).catch(function(error){
+            console.log(error);
+        });        
+    }, 1000);
+    
     
 
 
@@ -22,19 +25,12 @@ angular.module('vexTradedeskApp')
 
     $mdDialog.show({
     	parent: angular.element(document.body),
-    	template : '<md-dialog>'+
-						'<md-dialog-content>'+
-							'<md-progress-linear md-mode="indeterminate"></md-progress-linear>'+
-							'<div layout="column" layout-align="center center" layout-padding>'+
-								'<p class="md-display-1">VΞNTURΞ ΞQUITY ΞXCHANGΞ | DIRΞCTORATΞ</p>'+
-								'<p class="md-display-1">Loading, please wait...</p>'+
-							'</div>'+
-						'</md-dialog-content>'+
-					'</md-dialog>'
+    	templateUrl : 'views/loading.html'
     });
 
     $timeout(function(){
     	$mdDialog.hide();
+        $scope.listAccounts();
     }, 10000)
 
 

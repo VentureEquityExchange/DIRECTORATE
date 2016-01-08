@@ -108,7 +108,6 @@ angular.module('vexTradedeskApp')
         var duration = 120;
         var payload = {jsonrpc: '2.0',method: 'personal_unlockAccount',params: [address, password, duration],id: 1};
         gethIPC(payload, function(data){
-          console.log(data);
           next(data.result);
         }); 
       },

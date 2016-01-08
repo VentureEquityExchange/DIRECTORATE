@@ -43,7 +43,12 @@ _Currently only the Mac OS X version is configured properly._
 ***
 **DIRΞCTORATΞ Features**
 
-* 
+* Creation of Decentralized Autonomous Ventures (DAVs) on Ethereum;
+* Issue shares in the DAV through a secondary market;
+* Create and issue proposals for shareholder voting;
+* Vote on and ratify proposals of DAVs;
+* Engage in shareholder meeting video conferences with directors of DAVs;
+
 
 ***
 **Operating System Requirements**

@@ -20,8 +20,8 @@ angular.module('vexTradedeskApp')
         return $q(function(resolve, reject){
           Contracts.get('Venture').then(function(contract){
             return Contracts.deploy(contract);
-          }).then(function(compiled){
-            resolve(compiled);
+          }).then(function(deployed){
+            resolve(deployed);
           }).catch(function(error){
             reject(error);
           });

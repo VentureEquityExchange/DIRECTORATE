@@ -1,35 +1,18 @@
+<!-- First Page is login page, select account -->
+
+
+
 <div layout="column" layout-align="center center">
   <md-content layout-padding layout-wrap>
       <div layout="row">
-        <div flex="15">
-          <md-sidenav md-component-id="search" class="md-sidenav-left" layout-padding>
-              <p>Search Ventures</p>
-          </md-sidenav>
-          <md-content style="height:800px">
-            <md-button ng-click="openSearch()">
-              Search Ventures
-            </md-button>
-            <md-button ng-click="showAccount()">
-              Account Details
-            </md-button>
-          </md-content>
+        
+        <div flex="100" style="text-align:center">
+          <h1 class="md-title" style="color:grey">Select Account</h1>
+          <div style="vertical-align: middle" ng-repeat="account in accounts">
+            <md-button class="md-raised" ng-click="login(account)" aria-label="Select Account" md-ripple-size="full">{{account}}</md-button>
+          </div>
         </div>
-        <div flex="70">
-          
-        </div>
-        <div flex="15">
-          <md-sidenav md-component-id="search" class="md-sidenav-left" layout-padding>
-              <p>Search Ventures</p>
-          </md-sidenav>
-          <md-content style="height:800px">
-            <md-button ng-click="openSearch()">
-              Search Ventures
-            </md-button>
-            <md-button ng-click="showAccount()">
-              Account Details
-            </md-button>
-          </md-content>
-        </div>
+        
       </div>
   </md-content>
 </div>
