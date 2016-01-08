@@ -7,10 +7,7 @@
       <div layout="row">
         
         <div flex="100" style="text-align:center">
-          <h1 class="md-title" style="color:grey">Select Account</h1>
-          <div style="vertical-align: middle" ng-repeat="account in accounts">
-            <md-button class="md-raised" ng-click="login(account)" aria-label="Select Account" md-ripple-size="full">{{account}}</md-button>
-          </div>
+          <select-account ng-if="loaded" ng-init="listAccounts()"></select-account>
         </div>
         
       </div>

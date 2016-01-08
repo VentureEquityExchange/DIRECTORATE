@@ -8,14 +8,15 @@
  */
 angular.module('vexTradedeskApp')
   .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture) {
+    $scope.loaded = false;
     
-    setTimeout(function(){
-        Venture.create().then(function(venture){
-            console.log(venture);
-        }).catch(function(error){
-            console.log(error);
-        });        
-    }, 1000);
+    // setTimeout(function(){
+    //     Venture.create().then(function(venture){
+    //         console.log(venture);
+    //     }).catch(function(error){
+    //         console.log(error);
+    //     });        
+    // }, 1000);
     
     
 
@@ -30,8 +31,8 @@ angular.module('vexTradedeskApp')
 
     $timeout(function(){
     	$mdDialog.hide();
-        $scope.listAccounts();
-    }, 10000)
+        $scope.loaded = true;
+    }, 1)
 
 
     $scope.openSearch = function(){
@@ -40,14 +41,6 @@ angular.module('vexTradedeskApp')
 		  });
     }
     
-
-
-    $scope.accounts = [];
-    $scope.listAccounts = function(){
-    	ethereum.listAccounts(function(accounts){
-    		$scope.accounts = accounts;
-    	});
-    };
 
     $scope.showAccount = function(){
     	$mdBottomSheet.show({
