@@ -9,12 +9,14 @@
  */
 angular.module('vexTradedeskApp')
   .factory('ethereum', function () {
+    var Promise = require('bluebird');
     var net = require('net');
     var path = require('path');
     var fs = require('fs');
     var Web3 = require('web3');
     var web3 = new Web3();
     var gethSocket;
+
 
     // Determine Socket Path
 
@@ -86,206 +88,303 @@ angular.module('vexTradedeskApp')
     // Public API here
     return {
       web3 : web3,
-      newAccount : function(password, next){
-        var payload = {jsonrpc: '2.0',method: 'personal_newAccount',params: [password],id: 1};
-        gethIPC(payload, function(data){
-          next(data.error, data.result);
-        }); 
-      },
-      listAccounts : function(next){
-        var payload = {jsonrpc: '2.0',method: 'personal_listAccounts',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.error, data.result);
+      newAccount : function(password){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'personal_newAccount',params: [password],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      deleteAccount : function(address, password, next){
-        var payload = {jsonrpc: '2.0',method: 'personal_deleteAccount',params: [address, password],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
-        }); 
+      listAccounts : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'personal_listAccounts',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
+        })
+        
       },
-      unlockAccount : function(address, next){
-        var duration = 120;
-        var payload = {jsonrpc: '2.0',method: 'personal_unlockAccount',params: [address, password, duration],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
-        }); 
-      },
-      status : function(next){
-        var payload = {jsonrpc: '2.0',method: 'txpool_status',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result.pending, data.result.queued);
+      deleteAccount : function(address, password){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'personal_deleteAccount',params: [address, password],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      datadir : function(next){
-        var payload = {jsonrpc: '2.0',method: 'admin_datadir',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      unlockAccount : function(address, password){
+        return new Promise(function(resolve, reject){
+          var duration = 120;
+          var payload = {jsonrpc: '2.0',method: 'personal_unlockAccount',params: [address, password, duration],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      exportChain : function(file, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_exportChain',params: [file],id: 1};
-        gethIPC(payload, function(data){
-          console.log(data);
-          next(data.result);
+      status : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'txpool_status',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      chainSyncStatus : function(next){
-        var payload = {jsonrpc: '2.0',method: 'admin_chainSyncStatus',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result.blocksAvailable, data.result.blocksWaitingForImport, data.result.estimate, data.result.importing);
+      datadir : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_datadir',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      verbosity : function(level, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_verbosity',params: [level],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      exportChain : function(file){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_exportChain',params: [file],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
+        })
+      },
+      chainSyncStatus : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_chainSyncStatus',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      nodeInfo : function(next){
-        var payload = {jsonrpc: '2.0',method: 'admin_nodeInfo',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
-        }); 
-      },
-      addPeer : function(nodeUrl, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_addPeer',params: [nodeUrl],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      verbosity : function(level){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_verbosity',params: [level],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      peers : function(next){
-        var payload = {jsonrpc: '2.0',method: 'admin_addPeer',params: [nodeUrl],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      nodeInfo : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_nodeInfo',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      startNatSpec : function(next){
-        var payload = {jsonrpc: '2.0',method: 'admin_startNatSpec',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
-        }); 
-      },
-      getContractInfo : function(address, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_getContractInfo',params: [address],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      addPeer : function(nodeUrl){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_addPeer',params: [nodeUrl],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      saveInfo : function(contractInfo, filename, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_getContractInfo',params: [contractInfo, filename],id: 1};
-        gethIPC(payload, function(data){
-          console.log(data);
-          next(data.result);
-        }); 
-      },
-      register : function(address, contractaddress, contenthash, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_register',params: [address, contractaddress, contenthash],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
-        }); 
-      },
-      registerUrl : function(address, codehash, contenthash, next){
-        var payload = {jsonrpc: '2.0',method: 'admin_register',params: [address, codehash, contenthash],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      peers : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_addPeer',params: [nodeUrl],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      start : function(threadCount, next){
-        var payload = {jsonrpc: '2.0',method: 'miner_start',params: [threadCount],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      startNatSpec : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_startNatSpec',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      stop : function(threadCount, next){
-        var payload = {jsonrpc: '2.0',method: 'miner_stop',params: [threadCount],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      getContractInfo : function(address){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_getContractInfo',params: [address],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      startAutoDAG : function(next){
-        var payload = {jsonrpc: '2.0',method: 'miner_startAutoDAG',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      saveInfo : function(contractInfo, filename){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_getContractInfo',params: [contractInfo, filename],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      stopAutoDAG : function(next){
-        var payload = {jsonrpc: '2.0',method: 'miner_stopAutoDAG',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      register : function(address, contractaddress, contenthash){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_register',params: [address, contractaddress, contenthash],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      makeDAG : function(blockNumber, dir, next){
-        var payload = {jsonrpc: '2.0',method: 'miner_makeDAG',params: [blockNumber, dir],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      registerUrl : function(address, codehash, contenthash){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'admin_register',params: [address, codehash, contenthash],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      hashrate : function(next){
-        var payload = {jsonrpc: '2.0',method: 'miner_hashrate',params: [],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      minerStart : function(threadCount){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_start',params: [threadCount],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      setExtra : function(next){ // Set Extra Block data to include 'VΞX'
-        var payload = {jsonrpc: '2.0',method: 'miner_setExtra',params: ["VΞNTURΞ ΞQUITY ΞXCHANGΞ"],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
-        }); 
-      },
-      setGasPrice : function(gasPrice, next){
-        var payload = {jsonrpc: '2.0',method: 'miner_setGasPrice',params: [gasPrice],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      minerStop : function(threadCount){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_stop',params: [threadCount],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      setEtherbase : function(account, next){
-        var payload = {jsonrpc: '2.0',method: 'miner_setEtherbase',params: [account],id: 1};
-        gethIPC(payload, function(data){
-          console.log(data);
-          next(data.result);
+      startAutoDAG : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_startAutoDAG',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });
         });
       },
-      setHead : function(blockNumber, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_setHead',params: [blockNumber],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      stopAutoDAG : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_stopAutoDAG',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      seedHash : function(blockNumber, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_seedHash',params: [blockNumber],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      makeDAG : function(blockNumber, dir){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_makeDAG',params: [blockNumber, dir],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      processBlock : function(blockNumber, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_processBlock',params: [blockNumber],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      hashrate : function(){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_hashrate',params: [],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      getBlockRlp : function(blockNumber, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_getBlockRlp',params: [blockNumber],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      setExtra : function(){ // Set Extra Block data to include 'VΞX'
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_setExtra',params: ["VΞNTURΞ ΞQUITY ΞXCHANGΞ"],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });   
         });
       },
-      printBlock : function(blockNumber, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_printBlock',params: [blockNumber],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      setGasPrice : function(gasPrice){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_setGasPrice',params: [gasPrice],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      dumpBlock : function(blockNumber, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_dumpBlock',params: [blockNumber],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      setEtherbase : function(account){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'miner_setEtherbase',params: [account],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
         });
       },
-      metrics : function(raw, next){
-        var payload = {jsonrpc: '2.0',method: 'debug_metrics',params: [raw],id: 1};
-        gethIPC(payload, function(data){
-          next(data.result);
+      setHead : function(blockNumber){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_setHead',params: [blockNumber],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
+        });
+      },
+      seedHash : function(blockNumber){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_seedHash',params: [blockNumber],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });
+        });
+      },
+      processBlock : function(blockNumber){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_processBlock',params: [blockNumber],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });
+        });
+      },
+      getBlockRlp : function(blockNumber){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_getBlockRlp',params: [blockNumber],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });
+        });
+      },
+      printBlock : function(blockNumber){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_printBlock',params: [blockNumber],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });
+        });
+      },
+      dumpBlock : function(blockNumber){
+        return new Promise(function(resolve, reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_dumpBlock',params: [blockNumber],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });  
+        });
+      },
+      metrics : function(raw){
+        return new Promise(function(resolve,reject){
+          var payload = {jsonrpc: '2.0',method: 'debug_metrics',params: [raw],id: 1};
+          gethIPC(payload, function(data){
+            if(data.error){reject(data.error);}
+            resolve(data.result);
+          });
         });
       }
     };

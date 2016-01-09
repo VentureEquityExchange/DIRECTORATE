@@ -55,10 +55,12 @@
   },
   "dependencies": {
     "async": "^1.5.0",
+    "bluebird": "^3.1.1",
     "d3": "^3.5.9",
     "d3-financial-components": "^0.2.2",
     "d3fc": "^5.0.0",
     "electron-debug": "^0.5.1",
+    "github": "^0.2.4",
     "peer": "^0.2.8",
     "pouchdb": "^5.1.0",
     "socket.io": "^1.3.7",

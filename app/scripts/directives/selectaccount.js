@@ -19,6 +19,11 @@ angular.module('vexTradedeskApp')
 	    	return $q(function(resolve, reject){
 	    		ethereum.listAccounts(function(error, accounts){
 		    		if(error){ reject(error); }
+		    		if(accounts.length == 0){
+			    		scope.newAccount = true;
+			    	} else {
+			    		scope.newAccount = false;
+			    	}
 		    		scope.accounts = accounts;
 		    		resolve(accounts);
 		    	});	
@@ -27,11 +32,7 @@ angular.module('vexTradedeskApp')
 	    };
 
 	    scope.listAccounts().then(function(accounts){
-	    	if(accounts.length == 0){
-	    		scope.newAccount = true;
-	    	} else {
-	    		scope.newAccount = false;
-	    	}
+	    	console.log(accounts);
 	    }).catch(function(error){
 	    	alert(error);
 	    });
@@ -49,11 +50,7 @@ angular.module('vexTradedeskApp')
 	            		ethereum.newAccount(password, function(error, account){
 	            			$scope.password = '';
 	            			scope.listAccounts().then(function(accounts){
-						    	if(accounts.length == 0){
-						    		scope.newAccount = true;
-						    	} else {
-						    		scope.newAccount = false;
-						    	}
+						    	console.log(accounts);
 						    }).catch(function(error){
 						    	alert(error);
 						    });
@@ -65,7 +62,6 @@ angular.module('vexTradedeskApp')
 	            parent: angular.element(document.body),
 	            templateUrl : 'views/newaccount.html',
 	            clickOutsideToClose : true
-
 	        });
 	    }
 

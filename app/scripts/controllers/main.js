@@ -8,6 +8,7 @@
  */
 angular.module('vexTradedeskApp')
   .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture, $rootScope) {
+    
     $scope.view = 'loading';
     $rootScope.setView = function(view){
         $scope.view = view;
