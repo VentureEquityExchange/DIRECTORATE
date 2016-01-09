@@ -21,8 +21,6 @@ angular.module('vexTradedeskApp')
     //     });        
     // }, 1000);
     
-    
-
 
 
     // Create loading window to allow Ethereum node to fully launch.
@@ -36,7 +34,7 @@ angular.module('vexTradedeskApp')
         $timeout(function(){
             $mdDialog.hide();
             $rootScope.setView('select-account');
-        }, 5000)    
+        }, 1)    
     }
 
     

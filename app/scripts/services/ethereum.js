@@ -89,13 +89,13 @@ angular.module('vexTradedeskApp')
       newAccount : function(password, next){
         var payload = {jsonrpc: '2.0',method: 'personal_newAccount',params: [password],id: 1};
         gethIPC(payload, function(data){
-          next(data.result);
+          next(data.error, data.result);
         }); 
       },
       listAccounts : function(next){
         var payload = {jsonrpc: '2.0',method: 'personal_listAccounts',params: [],id: 1};
         gethIPC(payload, function(data){
-          next(data.result);
+          next(data.error, data.result);
         });
       },
       deleteAccount : function(address, password, next){
