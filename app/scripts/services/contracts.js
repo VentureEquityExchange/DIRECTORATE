@@ -51,62 +51,19 @@ angular.module('vexTradedeskApp')
 
     // Public API here
     return {
-      deploy : function(){
+      deploy : function(abi, code, address, password){
         return new Promise(function(resolve, reject){
-          
+          ethereum.unlockAccount(address, password).then(function(result){
+            alert(result);
+          }).catch(function(error){
+            alert(error);
+          });
         });
+      },
+      contractDetails : function(contract){
+        return new Promise(function(resolve, reject){
+
+        })
       }
-      // db : db,
-      // get : function(contract){
-      //   return $q(function(resolve, reject){
-      //     db.get(contract).then(function(contract){
-      //       resolve(contract);
-      //     }).catch(function(error){
-      //       reject(error);
-      //     });
-      //   })
-      // },
-      // save: function (contracts) {
-      //   return $q(function(resolve, reject){
-      //     async.forEach(contracts, function(contract,callback){
-              
-      //         var cName = Object.keys(contract.compiled.contracts)[0];
-      //         db.put({
-      //           _id : cName,
-      //           compiled : contract.compiled.contracts[cName]
-      //         }).then(function(){
-      //           callback();  
-      //         }).catch(function(error){
-      //           reject(error);
-      //         });
-      //       }, function(err){
-      //         // if any of the saves produced an error, err would equal that error
-      //         if(err){
-      //           reject(err);
-      //         }else{
-      //           db.allDocs({include_docs: true, revs: true}).then(function(docs){
-      //             resolve(docs);
-      //           }).catch(function(error){
-      //             reject(error);
-      //           });
-      //         }
-      //       });
-      //   })
-      // },
-      // destroy : function(){
-      //   return $q(function(resolve, reject){
-      //     db.destroy().then(function(response){
-      //       db = new PouchDB('contracts');
-      //       resolve();
-      //     }).catch(function(error){
-      //       reject();
-      //     })
-      //   });
-      // },
-      // deploy : function(contract){
-      //   return $q(function(resolve, reject){
-      //     resolve(contract);
-      //   })
-      // }
     };
   });

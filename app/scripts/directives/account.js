@@ -13,8 +13,10 @@ angular.module('vexTradedeskApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.coinbase = '';
-        ethereum.web3.eth.getCoinbase(function(err, coinbase){
+        ethereum.web3.eth.getCoinbase().then(function(coinbase){
         	scope.coinbase = coinbase;
+        }).catch(function(error){
+          alert(error);
         });
       }
     };
