@@ -51,7 +51,7 @@
   "scripts": {
     "test": "grunt test",
     "start": "electron .",
-    "build": "electron-packager . $npm_package_productName --out=packaged --icon='icon.icns' --overwrite --ignore='^/packaged$' --prune --all --version=$npm_package_electronVersion"
+    "build": "electron-packager . $npm_package_productName --out=packaged --icon='icon.icns' --overwrite --ignore='^/packaged$' --prune --platform=darwin --arch=x64 --version=$npm_package_electronVersion"
   },
   "dependencies": {
     "async": "^1.5.0",
