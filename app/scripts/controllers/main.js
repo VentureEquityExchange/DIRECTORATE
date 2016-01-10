@@ -7,8 +7,9 @@
  * Controller of the vexTradedeskApp
  */
 angular.module('vexTradedeskApp')
-  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contracts, updateDirectorate, Venture, $rootScope) {
+  .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contract, updateDirectorate, Venture, $rootScope) {
     
+    var Promise = require('bluebird');
     $scope.view = 'loading';
     $rootScope.setView = function(view){
         $scope.view = view;
@@ -22,6 +23,15 @@ angular.module('vexTradedeskApp')
     //     });        
     // }, 1000);
     
+    // Promise.delay(11000).then(function(){
+    //     return Contract.details('DirectorIndex');
+    // }).then(function(contract){
+    //     return Contract.deploy(contract.abi, contract.code, "0x954e68a5571040a15c943c4d7d5bd9dc76f4d4e3", 'test');
+    // }).then(function(deployed){
+    //     console.log(deployed);
+    // }).catch(function(error){
+    //     console.log(error)
+    // });
 
 
     // Create loading window to allow Ethereum node to fully launch.

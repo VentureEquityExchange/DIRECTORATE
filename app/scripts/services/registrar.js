@@ -8,7 +8,7 @@
  * Factory in the vexTradedeskApp.
  */
 angular.module('vexTradedeskApp')
-  .factory('registrar', function (socketio, Contracts) {
+  .factory('registrar', function (socketio, Contract) {
     // Service logic
     // ...
     var db = new PouchDB('registrar');

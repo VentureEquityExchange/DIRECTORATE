@@ -8,7 +8,7 @@
  * Factory in the vexTradedeskApp.
  */
 angular.module('vexTradedeskApp')
-  .factory('updateDirectorate', function (socketio, Contracts, registrar) {
+  .factory('updateDirectorate', function (socketio, Contract, registrar) {
     // Service logic
     // ...
 

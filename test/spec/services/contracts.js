@@ -1,14 +1,14 @@
 'use strict';
 
-describe('Service: Contracts', function () {
+describe('Service: Contract', function () {
 
   // load the service's module
   beforeEach(module('vexTradedeskApp'));
 
   // instantiate service
-  var Contracts;
-  beforeEach(inject(function (_Contracts_) {
-    Contracts = _Contracts_;
+  var Contract;
+  beforeEach(inject(function (_Contract_) {
+    Contract = _Contract_;
   }));
 
   it('should do something', function () {

@@ -8,7 +8,7 @@
  * Factory in the vexTradedeskApp.
  */
 angular.module('vexTradedeskApp')
-  .factory('Venture', function (registrar, Contracts, ethereum, $q) {
+  .factory('Venture', function (registrar, Contract, ethereum, $q) {
     // Service logic
     // ...
 
@@ -18,13 +18,13 @@ angular.module('vexTradedeskApp')
     return {
       create: function () {
         return $q(function(resolve, reject){
-          Contracts.get('Venture').then(function(contract){
-            return Contracts.deploy(contract);
-          }).then(function(deployed){
-            resolve(deployed);
-          }).catch(function(error){
-            reject(error);
-          });
+          // Contracts.get('Venture').then(function(contract){
+          //   return Contracts.deploy(contract);
+          // }).then(function(deployed){
+          //   resolve(deployed);
+          // }).catch(function(error){
+          //   reject(error);
+          // });
         });
       }
     };
