@@ -21,22 +21,18 @@ angular.module('vexTradedeskApp')
 
     // Public API here
     return {
-      deploy : function(abi, code, address, password){
+      deploy : function(abi, code, address){
         return new Promise(function(resolve, reject){
-          ethereum.unlockAccount(address, password).then(function(result){
-            ethereum.web3.eth.contract(JSON.parse(abi)).new({from: address, value: 10, data : code, gas : 3141592}, 
-              function(error, deployed){
-                if(error){reject(error);}
-                if(!deployed.address){
-                  console.log('Waiting for contract transaction '+deployed.transactionHash+' to be mined...');
-                } else {
-                  console.log('Contract mined! Contract Address: '+deployed.address);
-                  resolve(deployed);
-                }
-              });
-          }).catch(function(error){
-            reject(error);
-          });
+          ethereum.web3.eth.contract(JSON.parse(abi)).new({from: address, value: 10, data : code, gas : 3141592}, 
+            function(error, deployed){
+              if(error){reject(error);}
+              if(!deployed.address){
+                console.log('Waiting for contract transaction '+deployed.transactionHash+' to be mined...');
+              } else {
+                console.log('Contract mined! Contract Address: '+deployed.address);
+                resolve(deployed);      
+              }
+            });
         });
       },
       details : function(contract){
@@ -50,6 +46,15 @@ angular.module('vexTradedeskApp')
               reject(error);
             });
         });
+      },
+      saveAddress : function(contract, address){
+        return new Promise(function(resolve, reject){
+          fs.writeFileAsync(contractsPath+contract+'/address.txt', address).then(function(data){
+            resolve(data);
+          }).catch(function(error){
+            reject(error);
+          });
+        })
       }
     };
   });

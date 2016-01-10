@@ -1,25 +1,24 @@
 <div flex="100" style="text-align:center">
+	<div style="margin-top:35%">
+		<br/>
+		<md-button class="md-primary" ng-click="new()" aria-label="Select Account" md-ripple-size="full"><p class="md-display-1" style="color:grey">NEW ACCOUNT</p></md-button>
+	</div>
+
+	<br/>
+	<md-divider></md-divider>
+	<br/>
+	<!-- <load-account></load-account> -->
+
+
 	<div ng-show="!newAccount">
-		<h1 class="md-display-1" style="color:grey; margin-top:35%">SELECT ACCOUNT</h1>
+		<h1 class="md-display-1" style="color:grey; ">SELECT ACCOUNT</h1>
 		<br/>
 		<div style="vertical-align: middle" ng-repeat="account in accounts">
 			<md-button class="md-primary" ng-click="login(account)" aria-label="Select Account" md-ripple-size="full"><p class="md-title" style="color:grey">{{account}}</p></md-button>
 		</div>
-		<br/>
-		<md-divider></md-divider>
-		<br/>
-		<!-- <load-account></load-account> -->
 	</div>
 	
 	
-	<div ng-show="newAccount" style="margin-top:50%">
-		<br/>
-		<md-button class="md-primary" ng-click="new()" aria-label="Select Account" md-ripple-size="full"><p class="md-display-1" style="color:grey">NEW ACCOUNT</p></md-button>
-	</div>
-	<div ng-show="!newAccount">
-		<br/>
-		<md-button class="md-primary" ng-click="new()" aria-label="Select Account" md-ripple-size="full"><p class="md-display-1" style="color:grey">NEW ACCOUNT</p></md-button>
-	</div>
 </div>
 
 

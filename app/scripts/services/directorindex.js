@@ -24,11 +24,35 @@ angular.module('vexTradedeskApp')
     return {
       GetVentures: function (director) {
         return new Promise(function(resolve, reject){
-          contract.GetVentures.call(director, function(error, ventures){
+          contract.GetVentures.call({from: director}, function(error, data){
             if(error){reject(error);}
-            resolve(ventures);
+            resolve(data);
           });
         })
+      },
+      NewDirector: function(director){
+        return new Promise(function(resolve, reject){
+          contract.NewDirector({from: director}, function(error, data){
+            if(error){reject(error);}
+            resolve(data);
+          })
+        })
+      },
+      IsDirector: function(director){
+        return new Promise(function(resolve, reject){
+          contract.IsDirector.call({from: director}, function(error, data){
+            if(error){reject(error);}
+            resolve(data);
+          });
+        });
+      },
+      AddVenture : function(director, venture){
+        return new Promise(function(resolve, reject){
+          contract.AddVenture(venture, {from:director}, function(error, data){
+            if(error){reject(error);}
+            resolve(data);
+          });
+        });
       }
     };
   });

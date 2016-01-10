@@ -38,7 +38,7 @@ angular.module('vexTradedeskApp')
 	    scope.new = function(){
 	    	$mdDialog.show({
 	            controller : function($scope){
-	            	$scope.password = ''
+	            	$scope.password = '';
 	            	$scope.createAccount = function(password){
 	            		ethereum.newAccount(password, function(error, account){
 	            			$scope.password = '';

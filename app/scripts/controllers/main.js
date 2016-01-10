@@ -8,32 +8,37 @@
  */
 angular.module('vexTradedeskApp')
   .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contract, updateDirectorate, Venture, $rootScope) {
-    
     var Promise = require('bluebird');
+    
     $scope.view = 'loading';
     $rootScope.setView = function(view){
         $scope.view = view;
     }
 
-    // setTimeout(function(){
-    //     Venture.create().then(function(venture){
-    //         console.log(venture);
-    //     }).catch(function(error){
-    //         console.log(error);
-    //     });        
-    // }, 1000);
+    $rootScope.passwordPrompt = function(){
+        return new Promise(function(resolve, reject){
+            $mdDialog.show({
+              controller: function($scope){
+                $scope.password = '';
+                $scope.enterPassword = function(password){
+                    $mdDialog.hide(password);
+                }
+              },
+              templateUrl: 'views/enterpassword.html',
+              parent: angular.element(document.body),
+              clickOutsideToClose:true
+            }).then(function(password){
+                return ethereum.unlockAccount($rootScope.account, password);
+            }).then(function(unlocked){
+                if(!unlocked){reject(unlocked);}
+                resolve(unlocked);
+            }).catch(function(error){
+                reject(error);
+            });
+        });
+    }
+
     
-    // Promise.delay(11000).then(function(){
-    //     return Contract.details('DirectorIndex');
-    // }).then(function(contract){
-    //     return Contract.deploy(contract.abi, contract.code, "0x954e68a5571040a15c943c4d7d5bd9dc76f4d4e3", 'test');
-    // }).then(function(deployed){
-    //     console.log(deployed);
-    // }).catch(function(error){
-    //     console.log(error)
-    // });
-
-
     // Create loading window to allow Ethereum node to fully launch.
 
     if($scope.view == 'loading'){
@@ -44,12 +49,10 @@ angular.module('vexTradedeskApp')
 
         $timeout(function(){
             $mdDialog.hide();
+
             $rootScope.setView('select-account');
-        }, 1)    
+        }, 10000)
     }
-
-    
-
 
     $scope.openSearch = function(){
     	$mdBottomSheet.show({
