@@ -10,7 +10,7 @@
     "email": "ryan.michael.tate@gmail.com",
     "url": "ventureequity.exchange"
   },
-  "electronVersion": "0.35.0",
+  "electronVersion": "0.36.3",
   "private": true,
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",

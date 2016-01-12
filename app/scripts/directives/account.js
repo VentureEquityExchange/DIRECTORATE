@@ -17,7 +17,8 @@ angular.module('vexTradedeskApp')
         ethereum.web3.eth.getBalance(scope.account, function(error, balance){
           if(error){console.log(error);}
           scope.balance = Number(balance);
-        })
+        });
+        
       }
     };
   });
