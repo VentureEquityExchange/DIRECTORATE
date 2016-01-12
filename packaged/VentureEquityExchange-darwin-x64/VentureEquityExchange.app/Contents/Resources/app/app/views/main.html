@@ -1,0 +1,14 @@
+<!-- First Page is login page, select account -->
+
+
+<sidenav ng-if="account != undefined"></sidenav>
+
+<div layout="column" layout-align="center center">
+  <md-content layout-padding layout-wrap>
+      <div layout="row">
+        <select-account ng-if="view == 'select-account'"></select-account>
+        <select-venture ng-if="view == 'select-venture'"></select-venture>
+        
+      </div>
+  </md-content>
+</div>
