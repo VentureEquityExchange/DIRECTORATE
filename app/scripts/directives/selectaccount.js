@@ -42,7 +42,7 @@ angular.module('vexTradedeskApp')
 	            	$scope.password = '';
 	            	$scope.createAccount = function(password){
 	            		ethereum.newAccount(password).then(function(account){
-	            			console.log(account);
+	            			scope.accounts.push(account);
 	            			$mdDialog.hide(account);
 	            		}).catch(function(error){
 	            			console.log(error);
@@ -53,7 +53,7 @@ angular.module('vexTradedeskApp')
 	            templateUrl : 'views/newaccount.html',
 	            clickOutsideToClose : true
 	        }).then(function(account){
-				scope.accounts.push(account);
+				alert('Created Account: '+account)
 	        });
 	    }
 
