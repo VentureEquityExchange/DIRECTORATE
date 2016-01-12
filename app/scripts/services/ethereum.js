@@ -43,7 +43,7 @@ angular.module('vexTradedeskApp')
       // Wait for Ethereum node to load completely.
       setTimeout(function(){
         web3.setProvider(new web3.providers.IpcProvider(gethSocket, net));
-      }, 10000)
+      }, 5000)
     });
 
     // Geth Socket Connection

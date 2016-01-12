@@ -11,6 +11,7 @@ angular.module('vexTradedeskApp')
     var Promise = require('bluebird');
 
     $scope.view = 'loading';
+    
     $rootScope.setView = function(view){
         $scope.view = view;
     }
@@ -58,6 +59,7 @@ angular.module('vexTradedeskApp')
             templateUrl : 'views/loading.html'
         }).then(function(){
             $rootScope.setView('select-account');
+            
             Promise.delay(12000).then(function(){
                 return ethereum.syncing();
             }).then(function(status){
