@@ -52,13 +52,19 @@ angular.module('vexTradedeskApp')
             controller : function($timeout) {
                 $timeout(function(){
                     $mdDialog.hide();
-
-                }, 10000)
+                }, 5000)
             },
             parent: angular.element(document.body),
             templateUrl : 'views/loading.html'
         }).then(function(){
             $rootScope.setView('select-account');
+            Promise.delay(12000).then(function(){
+                return ethereum.syncing();
+            }).then(function(status){
+                console.log(status);
+            }).catch(function(error){
+                console.log(error);
+            });
         });
     }
 
