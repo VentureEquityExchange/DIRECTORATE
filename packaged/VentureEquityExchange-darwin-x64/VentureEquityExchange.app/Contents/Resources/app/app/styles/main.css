@@ -1,0 +1,175 @@
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+
+/* Techan Chart CSS Styles  */
+
+chart .axis path,
+chart .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+chart text.symbol {
+    fill: #BBBBBB;
+}
+
+chart path {
+    fill: none;
+    stroke-width: 1;
+}
+
+chart path.candle {
+    stroke: #000000;
+}
+
+chart path.candle.body {
+    stroke-width: 0;
+}
+
+chart path.candle.up {
+    fill: #00AA00;
+    stroke: #00AA00;
+}
+
+chart path.candle.down {
+    fill: #FF0000;
+    stroke: #FF0000;
+}
+
+chart .close.annotation.up path {
+    fill: #00AA00;
+}
+
+chart path.volume {
+    fill: #DDDDDD;
+}
+
+chart .indicator-plot path.line {
+    fill: none;
+    stroke-width: 1;
+}
+
+chart .ma-0 path.line {
+    stroke: #1f77b4;
+}
+
+chart .ma-1 path.line {
+    stroke: #aec7e8;
+}
+
+chart .ma-2 path.line {
+    stroke: #ff7f0e;
+}
+
+chart button {
+    position: absolute;
+    right: 110px;
+    top: 25px;
+}
+
+chart path.macd {
+    stroke: #0000AA;
+}
+
+chart path.signal {
+    stroke: #FF9999;
+}
+
+chart path.zero {
+    stroke: #BBBBBB;
+    stroke-dasharray: 0;
+    stroke-opacity: 0.5;
+}
+
+chart path.difference {
+    fill: #BBBBBB;
+    opacity: 0.5;
+}
+
+chart path.rsi {
+    stroke: #000000;
+}
+
+chart path.overbought, chart path.oversold {
+    stroke: #FF9999;
+    stroke-dasharray: 5, 5;
+}
+
+chart path.middle, chart path.zero {
+    stroke: #BBBBBB;
+    stroke-dasharray: 5, 5;
+}
+
+chart .analysis path, chart .analysis circle {
+    stroke: blue;
+    stroke-width: 0.8;
+}
+
+chart .trendline circle {
+    stroke-width: 0;
+    display: none;
+}
+
+chart .mouseover .trendline path {
+    stroke-width: 1.2;
+}
+
+chart .mouseover .trendline circle {
+    stroke-width: 1;
+    display: inline;
+}
+
+chart .dragging .trendline path, chart .dragging .trendline circle {
+    stroke: darkblue;
+}
+
+chart .interaction path, chart .interaction circle {
+    pointer-events: all;
+}
+
+chart .interaction .body {
+    cursor: move;
+}
+
+chart .trendlines .interaction .start, chart .trendlines .interaction .end {
+    cursor: nwse-resize;
+}
+
+chart .supstance path {
+    stroke-dasharray: 2, 2;
+}
+
+chart .supstances .interaction path {
+    pointer-events: all;
+    cursor: ns-resize;
+}
+
+chart .mouseover .supstance path {
+    stroke-width: 1.5;
+}
+
+chart .dragging .supstance path {
+    stroke: darkblue;
+}
+
+chart .crosshair {
+    cursor: crosshair;
+}
+
+chart .crosshair path.wire {
+    stroke: #DDDDDD;
+    stroke-dasharray: 1, 1;
+}
+
+chart .crosshair .axisannotation path {
+    fill: #DDDDDD;
+}
