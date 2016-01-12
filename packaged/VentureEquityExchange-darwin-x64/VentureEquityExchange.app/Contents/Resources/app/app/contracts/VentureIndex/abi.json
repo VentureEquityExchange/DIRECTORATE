@@ -1,2 +1,0 @@
-[{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"index","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"venture","type":"address"}],"name":"AddVenture","outputs":[{"name":"","type":"bool"}],"type":"function"}]
-

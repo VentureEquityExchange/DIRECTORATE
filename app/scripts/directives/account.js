@@ -7,17 +7,17 @@
  * # account
  */
 angular.module('vexTradedeskApp')
-  .directive('account', function (ethereum) {
+  .directive('account', function (ethereum, $rootScope) {
     return {
       templateUrl: 'views/account.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        scope.coinbase = '';
-        ethereum.web3.eth.getCoinbase().then(function(coinbase){
-        	scope.coinbase = coinbase;
-        }).catch(function(error){
-          alert(error);
-        });
+        scope.account = $rootScope.account;
+
+        ethereum.web3.eth.getBalance(scope.account, function(error, balance){
+          if(error){console.log(error);}
+          scope.balance = Number(balance);
+        })
       }
     };
   });
