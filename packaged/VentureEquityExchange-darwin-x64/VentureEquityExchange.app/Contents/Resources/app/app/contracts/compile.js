@@ -10,6 +10,8 @@ function compile(contract){
 	return new Promise(function(resolve, reject){
 		fs.readFileAsync(contractsFolder+'/'+contract+'/'+contract+'.sol', 'utf8').then(function(source){
 			var output = solc.compile(source, 1);
+			console.log(output);
+			if(output.errors) {reject(output);}
 			resolve(output);
 		}).catch(function(error){
 			reject(error);

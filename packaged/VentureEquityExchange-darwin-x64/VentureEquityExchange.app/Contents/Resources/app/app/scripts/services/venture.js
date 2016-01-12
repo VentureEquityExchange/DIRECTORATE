@@ -11,20 +11,35 @@ angular.module('vexTradedeskApp')
   .factory('Venture', function (registrar, Contract, ethereum, $q) {
     // Service logic
     // ...
-
+    var Promise = require('bluebird');
     
-
     // Public API here
     return {
-      create: function () {
-        return $q(function(resolve, reject){
-          // Contracts.get('Venture').then(function(contract){
-          //   return Contracts.deploy(contract);
-          // }).then(function(deployed){
-          //   resolve(deployed);
-          // }).catch(function(error){
-          //   reject(error);
-          // });
+      instance : function(address){
+        return new Promise(function(resolve, reject){
+          Contract.details('Venture').then(function(c){
+            var contract = ethereum.web3.eth.contract(JSON.parse(c.abi)).at(address);
+            resolve(contract);
+          }).catch(function(error){
+            reject(error);
+          });
+        })
+      },
+      name: function (venture) {
+        // Note: venture == instance of venture contract
+        return new Promise(function(resolve, reject){
+          venture.name.call(function(error, name){
+            if(error){reject(error);}
+            resolve(name);
+          });
+        });
+      },
+      industry : function(venture){
+        return new Promise(function(resolve, reject){
+          venture.industry.call(function(error, industry){
+            if(error){reject(error);}
+            resolve(industry);
+          });
         });
       }
     };

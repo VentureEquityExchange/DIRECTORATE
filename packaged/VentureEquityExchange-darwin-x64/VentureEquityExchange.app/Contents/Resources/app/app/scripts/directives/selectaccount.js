@@ -23,6 +23,7 @@ angular.module('vexTradedeskApp')
 		    	} else {
 		    		scope.newAccount = false;
 		    	}
+		    	scope.$apply();
 	    	}).catch(function(error){
 	    		alert(error);
 	    	});	

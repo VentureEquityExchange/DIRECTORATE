@@ -9,7 +9,7 @@
 	<small ng-if="loading">Looking up directorships... <br/></small>
 	<small ng-if="ventures.length == 0">No Ventures Found. Create A New Venture. <br/></small>
 	<div ng-if="ventures.length > 0" style="vertical-align: middle" ng-repeat="venture in ventures">
-		<md-button class="md-primary" ng-click="direct(venture)" aria-label="Select Venture" md-ripple-size="full">{{venture}}</md-button>
+		<md-button class="md-primary" ng-click="direct(venture)" aria-label="Select Venture" md-ripple-size="full">{{venture.name}}</md-button>
 	</div>
 	
 </div>
