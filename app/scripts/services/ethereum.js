@@ -153,9 +153,9 @@ angular.module('vexTradedeskApp')
           });  
         })
       },
-      chainSyncStatus : function(){
+      syncing : function(){
         return new Promise(function(resolve, reject){
-          var payload = {jsonrpc: '2.0',method: 'admin_chainSyncStatus',params: [],id: 1};
+          var payload = {jsonrpc: '2.0',method: 'eth_syncing',params: [],id: 1};
           gethIPC(payload, function(data){
             if(data.error){reject(data.error);}
             resolve(data.result);
