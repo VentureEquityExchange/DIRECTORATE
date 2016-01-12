@@ -9,11 +9,17 @@
 angular.module('vexTradedeskApp')
   .controller('MainCtrl', function ($scope, ethereum, $mdBottomSheet, $mdDialog, $timeout, $mdSidenav, socketio, Contract, updateDirectorate, Venture, $rootScope) {
     var Promise = require('bluebird');
-    
+
     $scope.view = 'loading';
     $rootScope.setView = function(view){
         $scope.view = view;
     }
+
+    // Contract.compile('Venture').then(function(compiled){
+    //     console.log(compiled);
+    // }).catch(function(error){
+    //     console.log(error);
+    // })
 
     $rootScope.passwordPrompt = function(){
         return new Promise(function(resolve, reject){
@@ -43,15 +49,17 @@ angular.module('vexTradedeskApp')
 
     if($scope.view == 'loading'){
         $mdDialog.show({
+            controller : function($timeout) {
+                $timeout(function(){
+                    $mdDialog.hide();
+
+                }, 10000)
+            },
             parent: angular.element(document.body),
             templateUrl : 'views/loading.html'
-        });
-
-        $timeout(function(){
-            $mdDialog.hide();
-
+        }).then(function(){
             $rootScope.setView('select-account');
-        }, 10000)
+        });
     }
 
     $scope.openSearch = function(){
