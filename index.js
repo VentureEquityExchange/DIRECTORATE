@@ -3,7 +3,7 @@ const exec = require('child_process').exec;
 const electron = require('electron');
 const app = require('app');
 const BrowserWindow = require('browser-window');
-
+console.log(app);
 
 // Launch Ethereum Node
 
@@ -17,10 +17,10 @@ var Geth = exec('/usr/local/bin/geth --testnet', {maxBuffer: 1024*600}, function
 
 
 // report crashes to the Electron project
-require('crash-reporter').start();
+// require('crash-reporter').start();
 
 // // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+// require('electron-debug')();
 
 // prevent window being garbage collected
 let mainWindow;
@@ -51,11 +51,11 @@ app.on('window-all-closed', () => {
 	}
 });
 
-app.on('activate-with-no-open-windows', () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow();
-	}
-});
+// app.on('activate-with-no-open-windows', () => {
+// 	if (!mainWindow) {
+// 		mainWindow = createMainWindow();
+// 	}
+// });
 
 app.on('ready', () => {
 	mainWindow = createMainWindow();
