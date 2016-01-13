@@ -20,7 +20,8 @@ angular.module('vexTradedeskApp')
         scope.ventures = [];
         
         function getVentures(){
-        	DirectorIndex.GetVentures($rootScope.account).then(function(ventures){
+        	console.log($rootScope.account.address);
+        	DirectorIndex.GetVentures($rootScope.account.address).then(function(ventures){
 	        	Async.each(ventures, function(venture, cb){
 	        		var V = {};
 	        		var Instance;
@@ -64,7 +65,7 @@ angular.module('vexTradedeskApp')
 	            			return ethereum.minerStart(2);
 	            		}).then(function(data){
 	            			console.log(data);
-	            			return DirectorIndex.NewDirector($rootScope.account);
+	            			return DirectorIndex.NewDirector($rootScope.account.address);
 	            		}).then(function(data){
 							console.log(data);
 							return Contract.compile('Venture');
@@ -72,14 +73,14 @@ angular.module('vexTradedeskApp')
 							console.log(compiled);
 							return Contract.details('Venture')
 	            		}).then(function(contract){
-				        	return NewVenture.deploy($scope.venture.name, contract.abi, contract.code, $rootScope.account);
+				        	return NewVenture.deploy($scope.venture, contract.abi, contract.code, $rootScope.account.address);
 					    }).then(function(deployed){
 					        console.log(deployed);
 					        scope.ventures.push({address : deployed.address, name : $scope.venture.name});
-					        return DirectorIndex.AddVenture($rootScope.account, deployed.address);
+					        return DirectorIndex.AddVenture($rootScope.account.address, deployed.address);
 					    }).then(function(data){
 					        console.log(data);
-					    	return DirectorIndex.GetVentures($rootScope.account);
+					    	return DirectorIndex.GetVentures($rootScope.account.address);
 				        }).then(function(data){
 				        	console.log(data);
 				        	
@@ -92,6 +93,7 @@ angular.module('vexTradedeskApp')
 					        console.log(error);
 					        if(error.message == "Decryption failed: MAC mismatch"){
 					        	alert('Invalid Password');
+					        	$scope.createVenture($scope.venture);
 					        }
 					    });	
 	            	}
@@ -119,12 +121,12 @@ angular.module('vexTradedeskApp')
         		console.log(compiled);
         		return Contract.details('DirectorIndex');
         	}).then(function(contract){
-        		return Contract.deploy(contract.abi, contract.code, $rootScope.account);
+        		return Contract.deploy(contract.abi, contract.code, $rootScope.account.address);
         	}).then(function(deployed){
         		return Contract.saveAddress('DirectorIndex', deployed.address);
         	}).then(function(data){
         		console.log(data);
-        		return DirectorIndex.NewDirector($rootScope.account);
+        		return DirectorIndex.NewDirector($rootScope.account.address);
         	}).then(function(data){
         		console.log(data);
         		return ethereum.minerStop(2);

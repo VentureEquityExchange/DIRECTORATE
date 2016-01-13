@@ -14,7 +14,11 @@ angular.module('vexTradedeskApp')
       link: function postLink(scope, element, attrs) {
         scope.account = $rootScope.account;
 
-        ethereum.web3.eth.getBalance(scope.account, function(error, balance){
+        scope.selectAccount = function(){
+          $rootScope.setView('select-account');
+        }
+
+        ethereum.web3.eth.getBalance(scope.account.address, function(error, balance){
           if(error){console.log(error);}
           scope.balance = Number(balance);
         });
