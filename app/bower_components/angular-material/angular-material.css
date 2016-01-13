@@ -8267,7 +8267,7 @@ md-sidenav {
   z-index: 60;
   width: 304px;
   min-width: 304px;
-  max-width: 304px;
+  max-width: 608px;
   bottom: 0;
   overflow: auto; }
   md-sidenav ul {
@@ -8291,7 +8291,7 @@ md-sidenav {
   md-sidenav.md-locked-open {
     width: 304px;
     min-width: 304px;
-    max-width: 304px; }
+    max-width: 608px; }
   md-sidenav.md-locked-open, md-sidenav.md-locked-open.md-closed, md-sidenav.md-locked-open.md-closed.md-sidenav-left, md-sidenav.md-locked-open.md-closed, md-sidenav.md-locked-open.md-closed.md-sidenav-right, md-sidenav.md-locked-open-remove.md-closed {
     position: static;
     display: -webkit-flex;

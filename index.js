@@ -1,7 +1,9 @@
 'use strict';
 const exec = require('child_process').exec;
 const electron = require('electron');
-const app = electron.app;
+const app = require('app');
+const BrowserWindow = require('browser-window');
+
 
 // Launch Ethereum Node
 
@@ -31,7 +33,7 @@ function onClosed() {
 }
 
 function createMainWindow() {
-	const win = new electron.BrowserWindow({
+	const win = new BrowserWindow({
 		width: 1400,
 		height: 800
 	});

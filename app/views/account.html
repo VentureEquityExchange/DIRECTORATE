@@ -1,7 +1,8 @@
 <md-content layout-padding layout-wrap>
-    <small>Account: {{account}}</small>
+    <small>{{account.alias}}: {{account.address}}</small>
     <small>Balance: {{balance}}</small>
-    <button ng-click="selectAccount()">Switch Account</button>
+    
+    <md-button class="md-raised" ng-click="selectAccount()" aria-label="Select Account" md-ripple-size="full">Switch Account</md-button>
 </md-content>
 
 
