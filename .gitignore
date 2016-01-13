@@ -4,4 +4,4 @@
 /.sass-cache
 /app/bower_components
 /packaged
-/.DS_Store
+.DS_Store
