@@ -60,13 +60,13 @@ angular.module('vexTradedeskApp')
         }).then(function(){
             $rootScope.setView('select-account');
             
-            Promise.delay(12000).then(function(){
-                return ethereum.syncing();
-            }).then(function(status){
-                console.log(status);
-            }).catch(function(error){
-                console.log(error);
-            });
+            // Promise.delay(12000).then(function(){
+            //     return ethereum.syncing();
+            // }).then(function(status){
+            //     console.log(status);
+            // }).catch(function(error){
+            //     console.log(error);
+            // });
         });
     }
 
