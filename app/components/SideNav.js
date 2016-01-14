@@ -20,7 +20,7 @@ export default class SideNav extends React.Component {
 					label="Side Nav"
 					onClick={this.handleToggle} />
 				<LeftNav
-					docked={false}
+					docked={true}
 		          	width={600}
 		          	open={this.state.open}
 		          	onRequestChange={open => this.setState({open})}

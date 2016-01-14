@@ -1,1 +1,0 @@
-module.exports = require("npm:lodash.toplainobject@3.0.0/index");
