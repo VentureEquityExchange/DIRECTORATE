@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SideNav from './SideNav';
 
-class DirectorateApp extends React.Component {
+export default class DirectorateApp extends React.Component {
     constructor(props) {
         super(props);
         this.displayName = 'DirectorateApp';
     }
     render() {
-        return <div>DirectorateApp</div>;
+        return (<div><SideNav /></div>);
     }
 }
-
-export default DirectorateApp;

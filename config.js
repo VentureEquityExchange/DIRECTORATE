@@ -6,7 +6,9 @@ System.config({
     "optional": [
       "runtime",
       "optimisation.modules.system"
-    ]
+    ],
+    stage : 0,
+    blacklist : []
   },
   paths: {
     "github:*": "jspm_packages/github/*",
