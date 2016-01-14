@@ -6,7 +6,6 @@ const BrowserWindow = require('browser-window');
 
 // Launch Ethereum Node
 
-
 const Geth = require('child_process').spawn('/usr/local/bin/geth', ['--testnet']);
 
 Geth.stderr.setEncoding('utf8');

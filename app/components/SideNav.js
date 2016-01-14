@@ -1,6 +1,9 @@
 import React from 'react';
 import LeftNav from 'material-ui/lib/left-nav';
 import RaisedButton from 'material-ui/lib/raised-button';
+import * as Ethereum from '../ethereum/index';
+import Promise from 'bluebird';
+
 
 export default class SideNav extends React.Component {
 	constructor(props){

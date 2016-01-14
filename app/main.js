@@ -8,7 +8,7 @@ import Promise from 'bluebird';
 Promise.delay(5000).then(() => {
 	Ethereum.listAccounts().then((accounts) => {
 		console.log(accounts);
-		console.log(Ethereum.web3)
+
 	}).catch((error) =>{
 		console.log(error);
 	})
