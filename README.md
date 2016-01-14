@@ -9,9 +9,8 @@ DIRΞCTORATΞ is currently under development.
 
 Building Dependencies:
 
-* Node.js, npm
+* Node.js, NPM
 * JSPM
-* Bower
 * Electron
 
 To run DIRΞCTORATΞ as an Electron application, run the following:

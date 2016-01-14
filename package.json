@@ -42,6 +42,7 @@
   },
   "jspm": {
     "dependencies": {
+      "bluebird": "npm:bluebird@^3.1.1",
       "material-ui": "npm:material-ui@^0.14.2",
       "react": "npm:react@^0.14.6",
       "react-dom": "npm:react-dom@^0.14.6"
@@ -52,5 +53,7 @@
       "core-js": "npm:core-js@^1.1.4"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "web3": "^0.15.1"
+  }
 }

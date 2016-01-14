@@ -7,8 +7,8 @@ System.config({
       "runtime",
       "optimisation.modules.system"
     ],
-    stage : 0,
-    blacklist : []
+    "stage": 0,
+    "blacklist": []
   },
   paths: {
     "github:*": "jspm_packages/github/*",
@@ -18,6 +18,7 @@ System.config({
   map: {
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
+    "bluebird": "npm:bluebird@3.1.1",
     "core-js": "npm:core-js@1.2.6",
     "material-ui": "npm:material-ui@0.14.2",
     "react": "npm:react@0.14.6",
@@ -63,6 +64,9 @@ System.config({
       "util": "npm:util@0.10.3"
     },
     "npm:babel-runtime@5.8.34": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bluebird@3.1.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:browserslist@1.1.0": {
