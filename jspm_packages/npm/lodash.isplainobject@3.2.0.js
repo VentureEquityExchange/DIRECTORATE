@@ -1,0 +1,1 @@
+module.exports = require("npm:lodash.isplainobject@3.2.0/index");

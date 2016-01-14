@@ -1,0 +1,50 @@
+{
+  "name": "vex-directorate",
+  "productName": "VEX|DIRECTORATE",
+  "private": true,
+  "version": "0.0.2",
+  "description": "Venture Equity Exchange DAV Issuance and Management Application",
+  "main": "electron-main.js",
+  "electronVersion": "0.36.3",
+  "scripts": {
+    "test": "npm test",
+    "start": "node_modules/.bin/electron .",
+    "build": "electron-packager . $npm_package_productName --out=packaged --icon='icon.icns' --overwrite --ignore='^/packaged --prune --platform=darwin --arch=x64 --version=$npm_package_electronVersion"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentureEquityExchange/DIRECTORATE.git"
+  },
+  "keywords": [
+    "VEX",
+    "ETHEREUM",
+    "BLOCKCHAIN",
+    "VENTURE",
+    "EQUITY",
+    "EXCHANGE"
+  ],
+  "author": "Ryan M. Tate",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VentureEquityExchange/DIRECTORATE/issues"
+  },
+  "homepage": "https://github.com/VentureEquityExchange/DIRECTORATE#readme",
+  "devDependencies": {
+    "electron-packager": "^5.2.0",
+    "electron-prebuilt": "^0.36.3",
+    "jspm": "^0.16.23"
+  },
+  "jspm": {
+    "dependencies": {
+      "material-ui": "npm:material-ui@^0.14.2",
+      "react": "npm:react@^0.14.6",
+      "react-dom": "npm:react-dom@^0.14.6"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  },
+  "dependencies": {}
+}
