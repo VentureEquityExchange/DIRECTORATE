@@ -10,6 +10,7 @@ DIRΞCTORATΞ is currently under development.
 Building Dependencies:
 
 * Node.js, npm
+* JSPM
 * Bower
 * Electron
 
@@ -18,7 +19,7 @@ To run DIRΞCTORATΞ as an Electron application, run the following:
 
 `git clone https://github.com/VentureEquityExchange/DIRECTORATE`
 
-`npm install && bower install`
+`npm install && jspm install`
 
 `electron .`
 
@@ -30,7 +31,7 @@ To build DIRΞCTORATΞ, run the following:
 
 `git clone https://github.com/VentureEquityExchange/DIRECTORATE`
 
-`npm install && bower install`
+`npm install && jspm install`
 
 `npm run build`
 
