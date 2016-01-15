@@ -16,9 +16,9 @@ export default class SideNav extends React.Component {
 	}
 
 
-	handleToggle() {this.setState({open: !this.state.open});}
+	handleToggle = () => {this.setState({open: !this.state.open});}
 
-	handleClose() {this.setState({open: false});}
+	handleClose = () => {this.setState({open: false});}
 
 	render() {
 		return (
@@ -32,10 +32,11 @@ export default class SideNav extends React.Component {
 		          	open={this.state.open}
 		          	onRequestChange={open => this.setState({open})}
 		        >
-					<Wallet account={this.state.account} />
 					<RaisedButton
-						label="Close"
-						onClick={this.handleClose} />
+							label="Close"
+							onClick={this.handleClose} />
+					<Wallet account={this.state.account} />
+					
 				</LeftNav>
 			</div>
 		);
