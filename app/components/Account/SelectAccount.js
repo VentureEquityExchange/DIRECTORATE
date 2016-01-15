@@ -3,6 +3,7 @@ import {listAccounts} from '../../ethereum/index';
 import Promise from 'bluebird';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DirectorateApp from '../DirectorateApp';
+import Wallet from './Wallet';
 
 const customContentStyle = {
   marginTop:'1%'
@@ -13,8 +14,7 @@ export default class SelectAccount extends React.Component {
     super(props);
     this.state = {
       accounts : [],
-      accountSelected : false,
-      selectedAccount : ""
+      selectedAccount : null
     }
   }
 
@@ -29,22 +29,27 @@ export default class SelectAccount extends React.Component {
     }
   }
 
-  onClick = () => {
-    console.log("Button Clicked");
-    // return(<div><DirectorateApp view='wallet' /></div>)
+  onClick = (account) => {
+    console.log(account);
+    this.setState({selectedAccount : account});
   }
 
   render = () => {
-    this.getAccounts()
-    var accounts = this.state.accounts.map((account) => {
-      return(
-        <RaisedButton
-        key={account}
-        label={account}
-        style={customContentStyle}
-        onClick={this.onClick} />
-      );
-    })
-    return (<div>{accounts}</div>)
+    if(this.state.selectedAccount == null){
+        this.getAccounts()
+        var accounts = this.state.accounts.map((account) => {
+          return(
+            <RaisedButton
+            key={account}
+            label={account}
+            style={customContentStyle}
+            onClick={this.onClick.bind(this, account)} />
+          );
+        })
+        return (<div>{accounts}</div>);
+    } else {
+      return (<Wallet account={this.state.selectedAccount} />);
+    }
+
   }
 }

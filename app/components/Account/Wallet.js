@@ -1,5 +1,5 @@
 import React from 'react';
-import DirectorateApp from './DirectorateApp';
+import DirectorateApp from '../DirectorateApp';
 import Dialog from 'material-ui/lib/dialog';
 
 

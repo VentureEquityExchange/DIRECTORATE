@@ -3,7 +3,7 @@ import Dialog from 'material-ui/lib/dialog';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DirectorateApp from './DirectorateApp';
 import ReactDOM from 'react-dom';
-import Wallet from './Wallet';
+import Wallet from './Account/Wallet';
 
 const customContentStyle = {
   width: 'auto',
