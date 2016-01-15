@@ -9,23 +9,27 @@ export default class DirectorateApp extends React.Component {
     constructor(props) {
         super(props);
         this.displayName = 'DirectorateApp';
-        this.props.view;
+        this.state = {
+          view : this.props.view,
+          account : this.props.account
+        }
+
     }
 
 
 
     render = () => {
-        switch(this.props.view){
+        switch(this.state.view){
         	case 'loading':
-        		return (<div><Loading format="modal"/></div>);
+        		return (<Loading format="modal"/>);
         		break;
           case 'select-account':
             return (<SelectAccount />)
             break;
           case 'wallet':
-            return (<div><Wallet /></div>)
+            return (<Wallet account={this.state.account} format="modal" />)
           default:
-        		return (<div><SideNav /></div>);
+        		return (<SideNav account={this.state.account}/>);
         		break;
         }
 

@@ -3,12 +3,16 @@ import LeftNav from 'material-ui/lib/left-nav';
 import RaisedButton from 'material-ui/lib/raised-button';
 import * as Ethereum from '../ethereum/index';
 import Promise from 'bluebird';
-
+import Wallet from './Account/Wallet';
 
 export default class SideNav extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = {open : false};
+		this.state = {
+			open : false,
+			account : this.props.account
+		};
+
 	}
 
 
@@ -28,9 +32,7 @@ export default class SideNav extends React.Component {
 		          	open={this.state.open}
 		          	onRequestChange={open => this.setState({open})}
 		        >
-					<RaisedButton
-						label="Close Side Nav"
-						onClick={this.handleClose} />
+					<Wallet account={this.state.account} />
 				</LeftNav>
 			</div>
 		);

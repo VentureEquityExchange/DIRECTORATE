@@ -8,8 +8,10 @@ export default class Wallet extends React.Component {
   constructor(props){
     super(props);
     this.props.format;
-    this.open = true;
-    this.props.account;
+    this.state = {
+      account : this.props.account,
+      open : true
+    }
   }
 
   render = () => {
@@ -19,14 +21,14 @@ export default class Wallet extends React.Component {
           <Dialog
             title="Wallet"
             modal={true}
-            open={this.open}
+            open={this.state.open}
           >
-          <WalletDetails account={this.props.account}/>
+          <WalletDetails account={this.state.account}/>
           </Dialog>
         )
         break;
       default:
-        return (<WalletDetails />)
+        return (<WalletDetails account={this.state.account}/>)
     }
   }
 }
@@ -34,10 +36,13 @@ export default class Wallet extends React.Component {
 class WalletDetails extends React.Component {
   constructor(props){
     super(props);
-    this.props.account;
+    this.state = {
+      account : this.props.account
+    }
   }
 
   render = () => {
-    return (<div>Wallet Details Template</div>)
+    console.log(this.state.account);
+    return (<div>Address: {this.state.account}</div>)
   }
 }

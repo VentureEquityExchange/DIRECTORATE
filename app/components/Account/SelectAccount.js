@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {listAccounts} from '../../ethereum/index';
 import Promise from 'bluebird';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -30,7 +31,6 @@ export default class SelectAccount extends React.Component {
   }
 
   onClick = (account) => {
-    console.log(account);
     this.setState({selectedAccount : account});
   }
 
@@ -40,15 +40,15 @@ export default class SelectAccount extends React.Component {
         var accounts = this.state.accounts.map((account) => {
           return(
             <RaisedButton
-            key={account}
-            label={account}
-            style={customContentStyle}
-            onClick={this.onClick.bind(this, account)} />
+              key={account}
+              label={account}
+              style={customContentStyle}
+              onClick={this.onClick.bind(this, account)} />
           );
         })
         return (<div>{accounts}</div>);
     } else {
-      return (<Wallet account={this.state.selectedAccount} />);
+      return (<DirectorateApp account={this.state.selectedAccount}/>);
     }
 
   }
