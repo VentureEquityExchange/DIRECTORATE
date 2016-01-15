@@ -17,7 +17,7 @@ export default class DirectorateApp extends React.Component {
     render = () => {
         switch(this.props.view){
         	case 'loading':
-        		return (<div><Loading /></div>);
+        		return (<div><Loading format="modal"/></div>);
         		break;
           case 'select-account':
             return (<SelectAccount />)

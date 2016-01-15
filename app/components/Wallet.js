@@ -2,11 +2,14 @@ import React from 'react';
 import DirectorateApp from './DirectorateApp';
 import Dialog from 'material-ui/lib/dialog';
 
+
+
 export default class Wallet extends React.Component {
   constructor(props){
     super(props);
     this.props.format;
     this.open = true;
+    this.props.account;
   }
 
   render = () => {
@@ -18,7 +21,7 @@ export default class Wallet extends React.Component {
             modal={true}
             open={this.open}
           >
-          <WalletDetails />
+          <WalletDetails account={this.props.account}/>
           </Dialog>
         )
         break;
@@ -31,6 +34,7 @@ export default class Wallet extends React.Component {
 class WalletDetails extends React.Component {
   constructor(props){
     super(props);
+    this.props.account;
   }
 
   render = () => {

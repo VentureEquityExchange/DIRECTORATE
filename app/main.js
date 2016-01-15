@@ -5,14 +5,14 @@ import DirectorateApp from './components/DirectorateApp';
 import * as Ethereum from './ethereum/index';
 import Promise from 'bluebird';
 
-Promise.delay(5000).then(() => {
-	Ethereum.listAccounts().then((accounts) => {
-		console.log(accounts);
-
-	}).catch((error) =>{
-		console.log(error);
-	})
-})
+// Promise.delay(5000).then(() => {
+// 	Ethereum.listAccounts().then((accounts) => {
+// 		console.log(accounts);
+//
+// 	}).catch((error) =>{
+// 		console.log(error);
+// 	})
+// })
 
 // Ethereum.socketPath((path) => {
 // 	console.log(path);
@@ -26,4 +26,4 @@ Promise.delay(5000).then(() => {
 
 
 
-ReactDOM.render(<DirectorateApp view="select-account"/>, document.getElementById('DirectorateApp'));
+ReactDOM.render(<DirectorateApp view="loading"/>, document.getElementById('DirectorateApp'));

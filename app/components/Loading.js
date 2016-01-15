@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import Wallet from './Wallet';
 
 const customContentStyle = {
-  width: '100%',
+  width: 'auto',
   maxWidth: 'none',
 };
 
@@ -66,7 +66,7 @@ export default class Loading extends React.Component {
     return (
       <div>
         {this.state.open ? <LoadingFormat format={this.props.format} open={this.state.open} /> : null}
-        {this.state.loaded ? <DirectorateApp view="wallet"/> : null}
+        {this.state.loaded ? <DirectorateApp view="select-account"/> : null}
       </div>
     );
   }
