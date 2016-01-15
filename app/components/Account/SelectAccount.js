@@ -49,7 +49,7 @@ export default class SelectAccount extends React.Component {
         })
         return (<div>{accounts}</div>);
     } else {
-      return (<DirectorateApp account={this.state.selectedAccount}/>);
+      return (<DirectorateApp account={this.state.selectedAccount} view="wallet"/>);
     }
 
   }

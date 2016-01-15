@@ -43,6 +43,6 @@ class WalletDetails extends React.Component {
 
   render() {
     console.log(this.state.account);
-    return (<div>Address: {this.state.account}</div>)
+    return (<div style={{backgroundColor:'red', width:'100%', height:'100%'}}>Address: {this.state.account}</div>)
   }
 }

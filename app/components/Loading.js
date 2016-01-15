@@ -66,7 +66,7 @@ export default class Loading extends React.Component {
     return (
       <div>
         {this.state.open ? <LoadingFormat format={this.props.format} open={this.state.open} /> : null}
-        {this.state.loaded ? <DirectorateApp view="select-account"/> : null}
+        {this.state.loaded ? <DirectorateApp view="grid"/> : null}
       </div>
     );
   }

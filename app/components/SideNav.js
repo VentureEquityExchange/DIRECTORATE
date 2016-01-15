@@ -33,6 +33,9 @@ export default class SideNav extends React.Component {
 		          	onRequestChange={open => this.setState({open})}
 		        >
 					<Wallet account={this.state.account} />
+					<RaisedButton
+						label="Close"
+						onClick={this.handleClose} />
 				</LeftNav>
 			</div>
 		);
