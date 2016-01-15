@@ -4,6 +4,7 @@ import SideNav from './SideNav';
 import Loading from './Loading';
 import Wallet from './Account/Wallet';
 import SelectAccount from './Account/SelectAccount';
+import Grid from './Grid';
 
 export default class DirectorateApp extends React.Component {
     constructor(props) {
@@ -16,9 +17,7 @@ export default class DirectorateApp extends React.Component {
 
     }
 
-
-
-    render = () => {
+    render() {
         switch(this.state.view){
         	case 'loading':
         		return (<Loading format="modal"/>);
@@ -28,6 +27,10 @@ export default class DirectorateApp extends React.Component {
             break;
           case 'wallet':
             return (<Wallet account={this.state.account} format="modal" />)
+            break;
+          case 'grid':
+              return (<Grid />)
+              break;
           default:
         		return (<SideNav account={this.state.account}/>);
         		break;

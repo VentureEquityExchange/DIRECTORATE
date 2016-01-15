@@ -20,7 +20,7 @@ class LoadingFormat extends React.Component {
     this.loading = true;
   }
 
-  render = () => {
+  render() {
     switch (this.props.format) {
       case 'modal':
         return (
@@ -55,13 +55,13 @@ export default class Loading extends React.Component {
     }
   }
 
-  handleClose = () => {
+  handleClose() {
     setTimeout(() => {
         this.setState({open : false, loaded : true});
     }, 5000)
   }
 
-  render = () => {
+  render() {
     this.handleClose();
     return (
       <div>

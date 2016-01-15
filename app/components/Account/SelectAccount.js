@@ -5,6 +5,7 @@ import Promise from 'bluebird';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DirectorateApp from '../DirectorateApp';
 import Wallet from './Wallet';
+import ReactGridLayout from 'react-grid-layout';
 
 const customContentStyle = {
   marginTop:'1%'
@@ -19,7 +20,7 @@ export default class SelectAccount extends React.Component {
     }
   }
 
-  getAccounts = () => {
+  getAccounts(){
     if(this.state.accounts.length == 0){
       listAccounts().then((accounts) => {
         console.log(accounts);
@@ -30,11 +31,11 @@ export default class SelectAccount extends React.Component {
     }
   }
 
-  onClick = (account) => {
+  onClick(account){
     this.setState({selectedAccount : account});
   }
 
-  render = () => {
+  render(){
     if(this.state.selectedAccount == null){
         this.getAccounts()
         var accounts = this.state.accounts.map((account) => {

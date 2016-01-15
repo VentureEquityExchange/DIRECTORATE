@@ -20,9 +20,11 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "bluebird": "npm:bluebird@3.1.1",
     "core-js": "npm:core-js@1.2.6",
+    "lodash": "npm:lodash@4.0.0",
     "material-ui": "npm:material-ui@0.14.2",
     "react": "npm:react@0.14.6",
     "react-dom": "npm:react-dom@0.14.6",
+    "react-grid-layout": "npm:react-grid-layout@0.10.0-beta1",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -221,6 +223,9 @@ System.config({
       "lodash._isiterateecall": "npm:lodash._isiterateecall@3.0.9",
       "lodash.isarray": "npm:lodash.isarray@3.0.4"
     },
+    "npm:lodash@4.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:loose-envify@1.1.0": {
       "js-tokens": "npm:js-tokens@1.0.2",
       "process": "github:jspm/nodelibs-process@0.1.2",
@@ -269,6 +274,24 @@ System.config({
     },
     "npm:react-dom@0.14.6": {
       "react": "npm:react@0.14.6"
+    },
+    "npm:react-draggable@1.1.3": {
+      "classnames": "npm:classnames@2.2.3",
+      "object-assign": "npm:object-assign@4.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:react-grid-layout@0.10.0-beta1": {
+      "deep-equal": "npm:deep-equal@1.0.1",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "object-assign": "npm:object-assign@4.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "react-draggable": "npm:react-draggable@1.1.3",
+      "react-resizable": "npm:react-resizable@1.0.1"
+    },
+    "npm:react-resizable@1.0.1": {
+      "object-assign": "npm:object-assign@4.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "react-draggable": "npm:react-draggable@1.1.3"
     },
     "npm:react-tap-event-plugin@0.2.1": {
       "fbjs": "npm:fbjs@0.2.1",

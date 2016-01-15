@@ -14,7 +14,7 @@ export default class Wallet extends React.Component {
     }
   }
 
-  render = () => {
+  render() {
     switch (this.props.format) {
       case 'modal':
         return (
@@ -41,7 +41,7 @@ class WalletDetails extends React.Component {
     }
   }
 
-  render = () => {
+  render() {
     console.log(this.state.account);
     return (<div>Address: {this.state.account}</div>)
   }

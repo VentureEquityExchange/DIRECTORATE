@@ -26,4 +26,4 @@ import Promise from 'bluebird';
 
 
 
-ReactDOM.render(<DirectorateApp view="loading"/>, document.getElementById('DirectorateApp'));
+ReactDOM.render(<DirectorateApp view="grid"/>, document.getElementById('DirectorateApp'));
