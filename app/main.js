@@ -24,4 +24,6 @@ Promise.delay(5000).then(() => {
 // 	console.log(error);
 // })
 
-ReactDOM.render(<DirectorateApp />, document.getElementById('DirectorateApp'));
+
+
+ReactDOM.render(<DirectorateApp view="select-account"/>, document.getElementById('DirectorateApp'));
