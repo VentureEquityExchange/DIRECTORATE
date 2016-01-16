@@ -20,8 +20,11 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "bluebird": "npm:bluebird@3.1.1",
     "core-js": "npm:core-js@1.2.6",
+    "crypto": "npm:crypto@0.0.3",
+    "jsonfile": "npm:jsonfile@2.2.3",
     "lodash": "npm:lodash@4.0.0",
     "material-ui": "npm:material-ui@0.14.2",
+    "path": "npm:path@0.12.7",
     "react": "npm:react@0.14.6",
     "react-dom": "npm:react-dom@0.14.6",
     "react-grid-layout": "npm:react-grid-layout@0.10.0-beta1",
@@ -138,6 +141,9 @@ System.config({
       "caniuse-api": "npm:caniuse-api@1.4.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:jsonfile@2.2.3": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2"
+    },
     "npm:jstransform@10.1.0": {
       "base62": "npm:base62@0.1.1",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -252,6 +258,10 @@ System.config({
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:path@0.12.7": {
+      "process": "npm:process@0.11.2",
+      "util": "npm:util@0.10.3"
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"

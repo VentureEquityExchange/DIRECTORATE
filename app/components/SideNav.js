@@ -11,6 +11,8 @@ import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
+@ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
+
 export default class SideNav extends React.Component {
 	constructor(props){
 		super(props);
@@ -30,7 +32,7 @@ export default class SideNav extends React.Component {
 		return (
 			<div>
 			<AppBar
-					title={"Selected Account: "+this.state.account}
+					title={"Selected Account: "+this.state.account.address}
 					iconElementLeft={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
 					iconElementRight={
 						<IconMenu

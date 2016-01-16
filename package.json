@@ -43,8 +43,11 @@
   "jspm": {
     "dependencies": {
       "bluebird": "npm:bluebird@^3.1.1",
+      "crypto": "npm:crypto@^0.0.3",
+      "jsonfile": "npm:jsonfile@^2.2.3",
       "lodash": "npm:lodash@^4.0.0",
       "material-ui": "npm:material-ui@^0.14.2",
+      "path": "npm:path@^0.12.7",
       "react": "npm:react@^0.14.6",
       "react-dom": "npm:react-dom@^0.14.6",
       "react-grid-layout": "npm:react-grid-layout@^0.10.0-beta1"

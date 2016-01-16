@@ -1,9 +1,10 @@
-import 'babel/polyfill';
+import Babel from 'babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DirectorateApp from './components/DirectorateApp';
 import * as Ethereum from './ethereum/index';
 import Promise from 'bluebird';
+
 
 // Promise.delay(5000).then(() => {
 // 	Ethereum.listAccounts().then((accounts) => {

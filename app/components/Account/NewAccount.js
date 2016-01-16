@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DefaultTheme from '../Themes/default';
+import * as Account from '../../utilities/Account/index';
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
@@ -23,13 +24,39 @@ export default class NewAccount extends React.Component {
       open : false,
       account : {
         alias : undefined,
-        address : undefined
+        address : undefined,
+        set : false
       }
     }
   }
 
-  createAccount = () => {
+  setAccountAlias = (event) => {
+    let alias = event.target.value;
+    this.state.account.alias = alias;
+  }
 
+  setAccountPassword = (event) => {
+    let password = event.target.value;
+    this.state.account.password = password;
+  }
+
+  createAccount = () => {
+    let account = {};
+    newAccount(this.state.account.password).then((address) => {
+       account = {
+        alias : this.state.account.alias,
+        address : address,
+        password : this.state.account.password,
+        set : true
+      }
+
+      return Account.setAliasStore(JSON.stringify(account));
+    }).then(() => {
+      console.log('Account Created');
+      this.setState({open : !this.state.open, account : account});
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   onClick = () => {
@@ -37,7 +64,7 @@ export default class NewAccount extends React.Component {
   }
 
   render() {
-    if(this.state.account.alias == undefined || this.state.account.address){
+    if(this.state.account.set == false){
         return (
           <div>
           <RaisedButton
@@ -55,11 +82,13 @@ export default class NewAccount extends React.Component {
               <TextField
                 hintText="Enter Account Alias"
                 defaultValue=""
-                type="text" />
+                type="text"
+                onChange={this.setAccountAlias.bind(this)} />
               <TextField
                 hintText="Enter Password"
                 defaultValue=""
-                type="password" />
+                type="password"
+                onChange={this.setAccountPassword.bind(this)} />
               <RaisedButton
                   key={"Create Account"}
                   label="Create Account"
@@ -75,7 +104,7 @@ export default class NewAccount extends React.Component {
           </div>
         );
     } else {
-      return (<DirectorateApp view="grid" account={this.state.account.address} />);
+      return (<DirectorateApp view="grid" account={this.state.account} />);
     }
   }
 

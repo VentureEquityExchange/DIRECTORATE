@@ -8,6 +8,7 @@ import Wallet from './Wallet';
 import ReactGridLayout from 'react-grid-layout';
 import Dialog from 'material-ui/lib/dialog';
 import NewAccount from './NewAccount';
+import * as Account from '../../utilities/Account/index';
 
 const customContentStyle = {
   marginTop:'1%',
@@ -20,16 +21,16 @@ export default class SelectAccount extends React.Component {
     this.props.format;
     this.state = {
       accounts : [],
-      selectedAccount : undefined,
-      open : true
+      account : undefined,
+      open : true,
+      loaded : false
     }
   }
 
   getAccounts(){
-    if(this.state.accounts.length == 0){
-      listAccounts().then((accounts) => {
-        console.log(accounts);
-        this.setState({accounts : accounts});
+    if(this.state.loaded == false){
+      Account.decryptAliases().then((aliases) => {
+        this.setState({accounts : aliases, loaded : true});
       }).catch((error) => {
         console.log(error);
       });
@@ -38,18 +39,18 @@ export default class SelectAccount extends React.Component {
 
   onClick(account){
     console.log(account);
-    this.setState({selectedAccount : account});
+    this.setState({account : account});
   }
 
   render(){
-    if(this.state.selectedAccount == undefined){
+    if(this.state.account == undefined){
         this.getAccounts()
         if(this.state.accounts.length != 0){
           var accounts = this.state.accounts.map((account) => {
             return(
               <RaisedButton
-                key={account}
-                label={account}
+                key={account.address}
+                label={account.alias}
                 style={customContentStyle}
                 onClick={this.onClick.bind(this, account)} />
             );
@@ -65,11 +66,11 @@ export default class SelectAccount extends React.Component {
             </Dialog>
           );
         } else {
-          return(<NewAccount />);
+          return(<div style={{marginTop:'50%'}}><NewAccount /></div>);
         }
 
     } else {
-      return (<DirectorateApp view="grid" account={this.state.selectedAccount} />);
+      return (<DirectorateApp view="grid" account={this.state.account} />);
     }
 
   }
