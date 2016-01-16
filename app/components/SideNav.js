@@ -10,6 +10,10 @@ import Menu from 'material-ui/lib/svg-icons/editor/drag-handle';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
+import DefaultTheme from './Themes/default';
+
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
