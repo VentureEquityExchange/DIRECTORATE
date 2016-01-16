@@ -1,9 +1,8 @@
 import React from 'react';
-import {Responsive} from 'react-grid-layout';
+import ReactGridLayout from 'react-grid-layout';
 import Wallet from './Account/Wallet'
 import SideNav from './SideNav';
 import SelectAccount from './Account/SelectAccount';
-import Paper from 'material-ui/lib/paper';
 
 export default class Grid extends React.Component {
   constructor(props) {
@@ -27,13 +26,13 @@ export default class Grid extends React.Component {
     return (
       <div>
       <SideNav account={this.state.account}/>
-      <Responsive className="layout" layout={this.state.layout}
+      <ReactGridLayout.Responsive className="layout" layout={this.state.layout}
       breakpoints={{lg: 1400, md: 996, sm: 768, xs: 480, xxs: 0}}
       cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}>
-        <div key={1}><Wallet zDepth={5}  /></div>
-        <div key={2}><SelectAccount /></div>
+        <div key={1}><Wallet /></div>
+        <div key={2}>"Something Eventually"</div>
         <div key={3}>3</div>
-      </Responsive>
+      </ReactGridLayout.Responsive>
       </div>
     );
   }

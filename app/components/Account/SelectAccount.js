@@ -6,17 +6,22 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import DirectorateApp from '../DirectorateApp';
 import Wallet from './Wallet';
 import ReactGridLayout from 'react-grid-layout';
+import Dialog from 'material-ui/lib/dialog';
+import NewAccount from './NewAccount';
 
 const customContentStyle = {
-  marginTop:'1%'
+  marginTop:'1%',
+  width:'100%'
 }
 
 export default class SelectAccount extends React.Component {
   constructor(props) {
     super(props);
+    this.props.format;
     this.state = {
       accounts : [],
-      selectedAccount : null
+      selectedAccount : undefined,
+      open : true
     }
   }
 
@@ -32,24 +37,39 @@ export default class SelectAccount extends React.Component {
   }
 
   onClick(account){
+    console.log(account);
     this.setState({selectedAccount : account});
   }
 
   render(){
-    if(this.state.selectedAccount == null){
+    if(this.state.selectedAccount == undefined){
         this.getAccounts()
-        var accounts = this.state.accounts.map((account) => {
-          return(
-            <RaisedButton
-              key={account}
-              label={account}
-              style={customContentStyle}
-              onClick={this.onClick.bind(this, account)} />
+        if(this.state.accounts.length != 0){
+          var accounts = this.state.accounts.map((account) => {
+            return(
+              <RaisedButton
+                key={account}
+                label={account}
+                style={customContentStyle}
+                onClick={this.onClick.bind(this, account)} />
+            );
+          })
+          return (
+            <Dialog
+              title="Select Account"
+              modal={true}
+              open={this.state.open}
+            >
+            <div>{accounts}</div>
+            <NewAccount />
+            </Dialog>
           );
-        })
-        return (<div>{accounts}</div>);
+        } else {
+          return(<NewAccount />);
+        }
+
     } else {
-      return (<Wallet account={this.state.selectedAccount} />);
+      return (<DirectorateApp view="grid" account={this.state.selectedAccount} />);
     }
 
   }

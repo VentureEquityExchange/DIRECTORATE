@@ -29,7 +29,7 @@ export default class DirectorateApp extends React.Component {
             return (<Wallet account={this.state.account}  />)
             break;
           case 'grid':
-              return (<Grid />);
+              return (<Grid account={this.state.account}/>);
               break;
           default:
         		return (<SideNav account={this.state.account}/>);
