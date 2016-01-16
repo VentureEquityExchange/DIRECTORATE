@@ -35,8 +35,8 @@ export default class SideNav extends React.Component {
 	render() {
 		return (
 			<div>
-			<AppBar
-					title={"Selected Account: "+this.state.account.address}
+			<AppBar style={{marginTop:'-10px', width:'110%', marginLeft:'-10px'}}
+					title={this.state.account.address}
 					iconElementLeft={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
 					iconElementRight={
 						<IconMenu
@@ -58,9 +58,11 @@ export default class SideNav extends React.Component {
 		          	open={this.state.open}
 		          	onRequestChange={open => this.setState({open})}
 		        >
-					<RaisedButton
-							label="Close"
-							onClick={this.handleClose} />
+					<AppBar
+							title={<small>{this.state.account.address}</small>}
+							iconElementLeft={<IconButton></IconButton>}
+							iconElementRight={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
+						/>
 					<Wallet account={this.state.account} />
 
 				</LeftNav>

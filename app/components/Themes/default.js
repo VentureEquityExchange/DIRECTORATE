@@ -9,7 +9,7 @@ export default {
   fontFamily: 'Roboto, sans-serif',
   palette: {
     primary1Color: Colors.blueGrey900,
-    primary2Color: Colors.blueGrey900,
+    primary2Color: Colors.blueGrey700,
     primary3Color: Colors.lightBlack,
     accent1Color: Colors.blueGrey500,
     accent2Color: Colors.grey100,
