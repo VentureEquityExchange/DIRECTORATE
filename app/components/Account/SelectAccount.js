@@ -66,7 +66,7 @@ export default class SelectAccount extends React.Component {
             </Dialog>
           );
         } else {
-          return(<div style={{marginTop:'50%'}}><NewAccount /></div>);
+          return(<NewAccount />);
         }
 
     } else {
