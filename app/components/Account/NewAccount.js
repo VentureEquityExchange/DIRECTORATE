@@ -9,6 +9,7 @@ import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DefaultTheme from '../Themes/default';
 import * as Account from '../../utilities/Account/index';
+import SelectAccount from './SelectAccount';
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
@@ -49,11 +50,10 @@ export default class NewAccount extends React.Component {
         password : this.state.account.password,
         set : true
       }
-
       return Account.setAliasStore(JSON.stringify(account));
     }).then(() => {
       console.log('Account Created');
-      this.setState({open : !this.state.open, account : account});
+      this.setState({open : false, account : account});
     }).catch((error) => {
       console.log(error);
     });
@@ -94,7 +94,7 @@ export default class NewAccount extends React.Component {
                   label="Create Account"
                   primary={true}
                   style={{width:'100%', marginTop:'1%'}}
-                  onClick={this.createAccount} />
+                  onClick={this.createAccount.bind(this)} />
               <RaisedButton
                   key={"Cancel"}
                   label="Cancel"
@@ -104,7 +104,7 @@ export default class NewAccount extends React.Component {
           </div>
         );
     } else {
-      return (<DirectorateApp view="grid" account={this.state.account} />);
+      return (<SelectAccount account={this.state.account}/>);
     }
   }
 

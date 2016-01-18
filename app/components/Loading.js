@@ -4,6 +4,8 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import DirectorateApp from './DirectorateApp';
 import ReactDOM from 'react-dom';
 import Wallet from './Account/Wallet';
+import {RouterContext, hashHistory} from 'react-router';
+
 
 const customContentStyle = {
   width: 'auto',
@@ -45,6 +47,7 @@ class LoadingFormat extends React.Component {
   }
 }
 
+
 export default class Loading extends React.Component {
   constructor(props){
     super(props);
@@ -52,16 +55,22 @@ export default class Loading extends React.Component {
     this.state = {
       open : true,
       loaded : false
-    }
+    };
+  }
+
+  setContext(){
+    this.context = this._reactInternalInstance._context;
   }
 
   handleClose() {
     setTimeout(() => {
-        this.setState({open : false, loaded : true});
+        this.context.router.replace({query : ''}, '/selectaccount');
+        // this.setState({open : false, loaded : true});
     }, 5000)
   }
 
   render() {
+    this.setContext();
     this.handleClose();
     return (
       <div>

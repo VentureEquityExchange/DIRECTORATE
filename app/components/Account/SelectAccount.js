@@ -10,6 +10,7 @@ import Dialog from 'material-ui/lib/dialog';
 import NewAccount from './NewAccount';
 import * as Account from '../../utilities/Account/index';
 
+
 const customContentStyle = {
   marginTop:'1%',
   width:'100%'
@@ -21,7 +22,7 @@ export default class SelectAccount extends React.Component {
     this.props.format;
     this.state = {
       accounts : [],
-      account : undefined,
+      account : this.props.account,
       open : true,
       loaded : false
     }

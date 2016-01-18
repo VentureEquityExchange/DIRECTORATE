@@ -5,11 +5,11 @@ const jsonfile = Promise.promisifyAll(require('jsonfile'));
 const DataStore = (require('path').dirname(require.main.filename)+'/app/data/');
 const AliasStore = DataStore+'.aliasstore';
 const algorithm = 'aes-256-ctr';
-const password = "0d1d4a88c2afd4fa8c0e1e63537ed4ad64918c";
+const salt = "0d1d4a88c2afd4fa8c0e1e63537ed4ad64918c";
 
 function encryptText(text) {
   return new Promise((resolve, reject) => {
-    let cipher = crypto.createCipher(algorithm, password);
+    let cipher = crypto.createCipher(algorithm, salt);
     if(!cipher){reject(cipher);}
     let cryptedText = cipher.update(text, 'utf', 'hex')
     cryptedText += cipher.final('hex');
@@ -20,7 +20,7 @@ function encryptText(text) {
 
 function decryptText(text) {
   return new Promise((resolve, reject) => {
-    let decipher = crypto.createDecipher(algorithm,password);
+    let decipher = crypto.createDecipher(algorithm, salt);
     if(!decipher){reject(decipher);}
     let decryptedText = decipher.update(text,'hex','utf8')
     decryptedText += decipher.final('utf8');
@@ -65,7 +65,7 @@ export function decryptAliases() {
     getAliasStore().then((aliases) => {
       if(aliases.length == 0){resolve(aliases);}
       aliases.forEach((alias) => {
-        let decipher = crypto.createDecipher(algorithm,password);
+        let decipher = crypto.createDecipher(algorithm, salt);
         if(!decipher){reject(decipher);}
         let decryptedText = decipher.update(alias,'hex','utf8')
         decryptedText += decipher.final('utf8');

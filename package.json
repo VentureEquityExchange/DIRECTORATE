@@ -44,13 +44,21 @@
     "dependencies": {
       "bluebird": "npm:bluebird@^3.1.1",
       "crypto": "npm:crypto@^0.0.3",
+      "deep-freeze": "npm:deep-freeze@^0.0.1",
+      "expect": "npm:expect@^1.13.4",
+      "history": "npm:history@^2.0.0-rc2",
       "jsonfile": "npm:jsonfile@^2.2.3",
       "lodash": "npm:lodash@^4.0.0",
       "material-ui": "npm:material-ui@^0.14.2",
       "path": "npm:path@^0.12.7",
       "react": "npm:react@^0.14.6",
       "react-dom": "npm:react-dom@^0.14.6",
-      "react-grid-layout": "npm:react-grid-layout@^0.10.0-beta1"
+      "react-grid-layout": "npm:react-grid-layout@^0.10.0-beta1",
+      "react-redux": "npm:react-redux@^4.0.6",
+      "react-router": "npm:react-router@^2.0.0-rc5",
+      "redux": "npm:redux@^3.0.5",
+      "redux-promise": "npm:redux-promise@^0.5.0",
+      "rxjs-es": "npm:rxjs-es@^5.0.0-beta.1"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
