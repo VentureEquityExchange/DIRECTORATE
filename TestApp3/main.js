@@ -1,6 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
+import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+
+
 
 const todo = (state, action) => {
   // state == individual todo passed in from todos
@@ -50,12 +54,67 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
   }
 };
 
-const todoApp = (state = {}, action) => {
-  return {
-    todos : todos(state.todos, action),
-    visibilityFilter : visibilityFilter(state.visibilityFilter, action)
+const todoApp = combineReducers({
+  todos,
+  visibilityFilter
+});
+
+let store = createStore(todoApp);
+
+let nextTodoId = 0;
+
+class TodoApp extends Component {
+  render() {
+    return (
+      <div>
+        <input ref={node => {
+          this.todoText = node;
+        }} />
+        <button onClick={() => {
+          store.dispatch({
+            type: 'ADD_TODO',
+            text: this.todoText.value,
+            id: nextTodoId++
+          });
+          this.todoText = '';
+        }}>
+          Add Todo
+        </button>
+        <ul>
+          {this.props.todos.map(todo =>
+            <li key={todo.id} onClick={() => {
+              store.dispatch({
+                type: 'TOGGLE_TODO',
+                id: todo.id
+              })
+            }} style={{
+              textDecoration :
+                todo.completed ? 'line-through' : 'none'
+            }}>
+              {todo.text}
+            </li>
+          )}
+        </ul>
+      </div>
+    )
   }
 }
+
+const render = () => {
+  ReactDOM.render((
+    <TodoApp todos={store.getState().todos} />), document.getElementById('DirectorateApp'));
+}
+
+
+store.subscribe(render);
+render();
+
+// const todoApp = (state = {}, action) => {
+//   return {
+//     todos : todos(state.todos, action),
+//     visibilityFilter : visibilityFilter(state.visibilityFilter, action)
+//   }
+// }
 
 // const TodoApp =
 
@@ -126,29 +185,29 @@ const todoApp = (state = {}, action) => {
 //
 // testToggleTodo();
 
-let store = createStore(todoApp);
 
-console.log('Initial State');
-console.log(store.getState());
-console.log('-------------');
-
-console.log('Dispatching new State');
-store.dispatch({
-  type: 'ADD_TODO',
-  id: 0,
-  text: 'Learning Redux'
-});
-console.log('Getting New State');
-console.log(store.getState());
-console.log('-------------');
-console.log('SET_VISIBILITY_FILTER');
-store.dispatch({
-  type: 'SET_VISIBILITY_FILTER',
-  filter: 'SHOW_COMPLETED'
-});
-console.log('Getting New State');
-console.log(store.getState());
-console.log('-------------');
+//
+// console.log('Initial State');
+// console.log(store.getState());
+// console.log('-------------');
+//
+// console.log('Dispatching new State');
+// store.dispatch({
+//   type: 'ADD_TODO',
+//   id: 0,
+//   text: 'Learning Redux'
+// });
+// console.log('Getting New State');
+// console.log(store.getState());
+// console.log('-------------');
+// console.log('SET_VISIBILITY_FILTER');
+// store.dispatch({
+//   type: 'SET_VISIBILITY_FILTER',
+//   filter: 'SHOW_COMPLETED'
+// });
+// console.log('Getting New State');
+// console.log(store.getState());
+// console.log('-------------');
 
 // const toggleTodo = (todo) => {
 //   return {
