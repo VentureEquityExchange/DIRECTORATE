@@ -7,7 +7,7 @@ System.config({
       "runtime",
       "optimisation.modules.system"
     ],
-    "stage": 0,
+    "stage": 1,
     "blacklist": []
   },
   paths: {
@@ -16,8 +16,8 @@ System.config({
   },
 
   map: {
-    "babel": "npm:babel-core@5.8.34",
-    "babel-runtime": "npm:babel-runtime@5.8.34",
+    "babel": "npm:babel-core@5.8.35",
+    "babel-runtime": "npm:babel-runtime@5.8.35",
     "bluebird": "npm:bluebird@3.1.1",
     "core-js": "npm:core-js@1.2.6",
     "crypto": "npm:crypto@0.0.3",
@@ -34,7 +34,11 @@ System.config({
     "react-redux": "npm:react-redux@4.0.6",
     "react-router": "npm:react-router@2.0.0-rc5",
     "redux": "npm:redux@3.0.5",
+    "redux-devtools": "npm:redux-devtools@3.0.1",
+    "redux-devtools-dock-monitor": "npm:redux-devtools-dock-monitor@1.0.1",
+    "redux-devtools-log-monitor": "npm:redux-devtools-log-monitor@1.0.2",
     "redux-promise": "npm:redux-promise@0.5.0",
+    "redux-simple-router": "npm:redux-simple-router@2.0.3",
     "rxjs-es": "npm:rxjs-es@5.0.0-beta.1",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -71,6 +75,13 @@ System.config({
       "util": "npm:util@0.10.3"
     },
     "npm:babel-runtime@5.8.34": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:babel-runtime@5.8.35": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:babel-runtime@6.3.19": {
+      "core-js": "npm:core-js@1.2.6",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:bluebird@3.1.1": {
@@ -266,6 +277,9 @@ System.config({
       "lodash._isiterateecall": "npm:lodash._isiterateecall@3.0.9",
       "lodash.isarray": "npm:lodash.isarray@3.0.4"
     },
+    "npm:lodash@3.10.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:lodash@4.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -328,6 +342,11 @@ System.config({
     "npm:react-addons-update@0.14.6": {
       "react": "npm:react@0.14.6"
     },
+    "npm:react-dock@0.2.3": {
+      "lodash.debounce": "npm:lodash.debounce@3.1.1",
+      "object-assign": "npm:object-assign@4.0.1",
+      "react": "npm:react@0.14.6"
+    },
     "npm:react-dom@0.14.6": {
       "react": "npm:react@0.14.6"
     },
@@ -343,6 +362,15 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "react-draggable": "npm:react-draggable@1.1.3",
       "react-resizable": "npm:react-resizable@1.0.1"
+    },
+    "npm:react-json-tree@0.3.0": {
+      "babel-runtime": "npm:babel-runtime@5.8.34",
+      "react": "npm:react@0.14.6",
+      "react-mixin": "npm:react-mixin@1.7.0"
+    },
+    "npm:react-mixin@1.7.0": {
+      "object-assign": "npm:object-assign@2.1.1",
+      "smart-mixin": "npm:smart-mixin@1.2.1"
     },
     "npm:react-redux@4.0.6": {
       "hoist-non-react-statics": "npm:hoist-non-react-statics@1.0.3",
@@ -381,6 +409,30 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "stream-browserify": "npm:stream-browserify@1.0.0",
       "string_decoder": "npm:string_decoder@0.10.31"
+    },
+    "npm:redux-devtools-dock-monitor@1.0.1": {
+      "babel-runtime": "npm:babel-runtime@6.3.19",
+      "parse-key": "npm:parse-key@0.2.1",
+      "react": "npm:react@0.14.6",
+      "react-dock": "npm:react-dock@0.2.3",
+      "react-pure-render": "npm:react-pure-render@1.0.2",
+      "redux-devtools": "npm:redux-devtools@3.0.1"
+    },
+    "npm:redux-devtools-log-monitor@1.0.2": {
+      "react": "npm:react@0.14.6",
+      "react-json-tree": "npm:react-json-tree@0.3.0",
+      "react-pure-render": "npm:react-pure-render@1.0.2",
+      "redux-devtools": "npm:redux-devtools@3.0.1",
+      "redux-devtools-themes": "npm:redux-devtools-themes@1.0.0"
+    },
+    "npm:redux-devtools-themes@1.0.0": {
+      "base16": "npm:base16@1.0.0"
+    },
+    "npm:redux-devtools@3.0.1": {
+      "lodash": "npm:lodash@3.10.1",
+      "react": "npm:react@0.14.6",
+      "react-redux": "npm:react-redux@4.0.6",
+      "redux": "npm:redux@3.0.5"
     },
     "npm:redux-promise@0.5.0": {
       "flux-standard-action": "npm:flux-standard-action@0.6.0"

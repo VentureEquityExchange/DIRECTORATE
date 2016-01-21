@@ -1,7 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import * as Reducers from '../reducers';
-
-const { error, network, accounts} = Reducers;
+import { error, network, accounts } from '../reducers';
 
 const app = combineReducers({
   error,

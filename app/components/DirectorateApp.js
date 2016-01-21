@@ -1,43 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import SideNav from './SideNav';
-import Loading from './Loading';
-import Wallet from './Account/Wallet';
-import SelectAccount from './Account/SelectAccount';
-import Grid from './Grid';
-import {RouterHandler} from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { routeActions } from 'redux-simple-router'
 
-export default class DirectorateApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          view : this.props.view,
-          account : this.props.account
-        }
-
-    }
-
-    render() {
-      return (<RouterHandler />);
-
-
-        // switch(this.state.view){
-        // 	case 'loading':
-        // 		return (<Loading format="modal"/>);
-        // 		break;
-        //   case 'select-account':
-        //     return (<SelectAccount />)
-        //     break;
-        //   case 'wallet':
-        //     return (<Wallet account={this.state.account}  />)
-        //     break;
-        //   case 'grid':
-        //       return (<Grid account={this.state.account}/>);
-        //       break;
-        //   default:
-        // 		return (<SideNav account={this.state.account}/>);
-        // 		break;
-        // }
-
-    }
+function DirectorateApp({ push, children}) {
+  return (
+    <div>
+      <header>
+        Links:
+        {' '}
+        <Link to="/">Home</Link>
+        {' '}
+        <Link to="/selectaccount">Foo</Link>
+      </header>
+      <div>
+        <button onClick={() => push('/selectaccount')}>Go to /foo</button>
+      </div>
+      <div style={{ marginTop: '1.5em' }}>{children}</div>
+    </div>
+  );
 }
+
+export default connect(
+  null,
+  routeActions
+)(DirectorateApp)

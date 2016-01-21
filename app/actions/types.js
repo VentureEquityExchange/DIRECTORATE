@@ -1,0 +1,5 @@
+const NETWORK = 'NETWORK';
+const LOADING = 'LOADING';
+const ERROR = 'ERROR';
+
+export { NETWORK, LOADING, ERROR }
