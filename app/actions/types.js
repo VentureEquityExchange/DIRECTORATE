@@ -1,5 +1,5 @@
 const NETWORK = 'NETWORK';
-const LOADING = 'LOADING';
+const SYNCING = 'SYNCING';
 const ERROR = 'ERROR';
 
-export { NETWORK, LOADING, ERROR }
+export { NETWORK, SYNCING, ERROR }

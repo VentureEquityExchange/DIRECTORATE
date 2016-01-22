@@ -1,4 +1,4 @@
-import { NETWORK, LOADING, ERROR } from './types';
+import { NETWORK, SYNCING, ERROR } from './types';
 
 
 export function _NETWORK(status){
@@ -8,16 +8,16 @@ export function _NETWORK(status){
   }
 }
 
-export function _LOADING(status){
+export function _SYNCING(status){
   return {
-    type : LOADING,
+    type : SYNCING,
     loading : status
   }
 }
 
 export function _ERROR(status){
   return {
-    type: ERROR,
+    type: status.code,
     error: status
   }
 }

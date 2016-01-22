@@ -67,7 +67,14 @@ export default class SelectAccount extends React.Component {
             </Dialog>
           );
         } else {
-          return(<NewAccount />);
+          return(
+            <Dialog
+              title="Select Account"
+              modal={true}
+              open={this.state.open}
+            >
+            <NewAccount />
+            </Dialog>);
         }
 
     } else {
