@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index';
 import { connect } from 'react-redux';
 import { routeActions } from 'redux-simple-router'
-
+import SelectAccount from './Account/SelectAccount';
 import Dialog from 'material-ui/lib/dialog';
 import LinearProgress from 'material-ui/lib/linear-progress';
 import * as Network from '../utilities/Network/index';
@@ -11,6 +11,7 @@ import Promise from 'bluebird';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DefaultTheme from './Themes/default';
+
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
@@ -20,6 +21,7 @@ class Loading extends Component {
 
     this.state = {
       error : undefined,
+      loading : true,
       status : {
         syncing : {},
         blockNumber : 0
@@ -32,7 +34,6 @@ class Loading extends Component {
 
     Network.getStatus().then((status) => {
       let { dispatch } = this.props;
-      let { push } = routeActions;
       let { syncing, blockNumber } = status;
 
       this.setState({
@@ -72,11 +73,16 @@ class Loading extends Component {
   }
 
   loadingEthereum = () => {
-    return (
-      <div>
-        <p>Connecting to Ethereum Network... one moment.</p>
-      </div>
-    );
+    if(this.state.status.syncing == false && this.state.status.blockNumber > 0){
+      this.setState({loading:false});
+    } else {
+      return (
+        <div>
+          <p>Connecting to Ethereum Network... one moment.</p>
+        </div>
+      );
+    }
+
   }
 
   componentWillUnmount() {
@@ -84,19 +90,28 @@ class Loading extends Component {
   }
 
   render(){
-    this.componentDidMount();
-    return (
-      <Dialog
-        title="VEX|DIRECTORATE"
-        modal={false}
-        open={true}
-      >
-        {this.state.error == undefined && this.state.status.syncing.highestBlock > 0 ? this.syncStatus() : this.loadingEthereum() }
-      </Dialog>
 
-    )
+    this.componentDidMount();
+
+    if(this.state.loading){
+      return (
+        <Dialog
+          title="VEX|DIRECTORATE"
+          modal={false}
+          open={true}
+        >
+          {this.state.error == undefined && this.state.status.syncing.highestBlock > 0 ? this.syncStatus() : this.loadingEthereum() }
+        </Dialog>
+
+      )
+    } else {
+      return(
+        <SelectAccount />
+      )
+    }
+
   }
 
 }
 
-export default connect(null, null, null, {pure : false})(Loading)
+export default connect(state => ({loading:true}), null, null, {pure : false})(Loading)

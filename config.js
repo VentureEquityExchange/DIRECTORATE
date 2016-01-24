@@ -29,6 +29,7 @@ System.config({
     "material-ui": "npm:material-ui@0.14.2",
     "path": "npm:path@0.12.7",
     "react": "npm:react@0.14.6",
+    "react-cellblock": "npm:react-cellblock@2.0.0",
     "react-dom": "npm:react-dom@0.14.6",
     "react-grid-layout": "npm:react-grid-layout@0.10.0-beta1",
     "react-redux": "npm:react-redux@4.0.6",
@@ -38,6 +39,7 @@ System.config({
     "redux-devtools-dock-monitor": "npm:redux-devtools-dock-monitor@1.0.1",
     "redux-devtools-log-monitor": "npm:redux-devtools-log-monitor@1.0.2",
     "redux-promise": "npm:redux-promise@0.5.0",
+    "redux-promise-middleware": "npm:redux-promise-middleware@2.3.3",
     "redux-simple-router": "npm:redux-simple-router@2.0.3",
     "rxjs-es": "npm:rxjs-es@5.0.0-beta.1",
     "github:jspm/nodelibs-assert@0.1.0": {
@@ -342,6 +344,15 @@ System.config({
     "npm:react-addons-update@0.14.6": {
       "react": "npm:react@0.14.6"
     },
+    "npm:react-cellblock@2.0.0": {
+      "babel-runtime": "npm:babel-runtime@5.8.35",
+      "cellblock": "npm:cellblock@1.1.2",
+      "classnames": "npm:classnames@2.2.3",
+      "eventlistener": "npm:eventlistener@0.0.1",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "react": "npm:react@0.14.6",
+      "react-dom": "npm:react-dom@0.14.6"
+    },
     "npm:react-dock@0.2.3": {
       "lodash.debounce": "npm:lodash.debounce@3.1.1",
       "object-assign": "npm:object-assign@4.0.1",
@@ -432,6 +443,9 @@ System.config({
       "lodash": "npm:lodash@3.10.1",
       "react": "npm:react@0.14.6",
       "react-redux": "npm:react-redux@4.0.6",
+      "redux": "npm:redux@3.0.5"
+    },
+    "npm:redux-promise-middleware@2.3.3": {
       "redux": "npm:redux@3.0.5"
     },
     "npm:redux-promise@0.5.0": {
