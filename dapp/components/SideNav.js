@@ -4,9 +4,10 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import * as Ethereum from '../ethereum/index';
 import Promise from 'bluebird';
 import Wallet from './Account/Wallet';
-import AppBar from 'material-ui/lib/app-bar';
+import Appbar from 'muicss/lib/react/appbar';
+
 import IconButton from 'material-ui/lib/icon-button';
-import Menu from 'material-ui/lib/svg-icons/editor/drag-handle';
+import MenuIcon from 'material-ui/lib/svg-icons/editor/drag-handle';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -33,40 +34,46 @@ export default class SideNav extends React.Component {
 	handleClose = () => {this.setState({open: false});}
 
 	render() {
-		return (
-			<div>
-			<AppBar style={{marginTop:'-10px', width:'110%', marginLeft:'-10px'}}
-					title={this.state.account.address}
-					iconElementLeft={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
-					iconElementRight={
-						<IconMenu
-							iconButtonElement={
-								<IconButton onClick={this.handleToggle}><MoreVertIcon /></IconButton>
-							}
-							targetOrigin={{horizontal: 'right', vertical: 'top'}}
-							anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-						>
-							<MenuItem primaryText="Refresh" />
-							<MenuItem primaryText="Help" />
-							<MenuItem primaryText="Sign out" />
-						</IconMenu>
-					}
-				/>
-				<LeftNav
-					docked={true}
-		          	width={600}
-		          	open={this.state.open}
-		          	onRequestChange={open => this.setState({open})}
-		        >
-					<AppBar
-							title={<small>{this.state.account.address}</small>}
-							iconElementLeft={<IconButton></IconButton>}
-							iconElementRight={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
-						/>
-					<Wallet account={this.state.account} />
-
-				</LeftNav>
-			</div>
-		);
+		return (<div><Appbar></Appbar></div>);
 	}
 }
+
+
+
+/*
+<div style={{marginTop:'-10px', marginLeft:'-7%', width:'125%'}}>
+<AppBar
+		title="Title"
+		iconElementLeft={<IconButton style={{marginLeft:'25px'}} onClick={this.handleToggle}><Menu /></IconButton>}
+		iconElementRight={
+			<IconMenu
+				iconButtonElement={
+					<IconButton onClick={this.handleToggle}><MoreVertIcon /></IconButton>
+				}
+				targetOrigin={{horizontal: 'right', vertical: 'top'}}
+				anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+			>
+				<MenuItem primaryText="Refresh" />
+				<MenuItem primaryText="Help" />
+				<MenuItem primaryText="Sign out" />
+			</IconMenu>
+		}
+	/>
+
+	<LeftNav
+		docked={true}
+					width={600}
+					open={this.state.open}
+					onRequestChange={open => this.setState({open})}
+			>
+		<AppBar
+				title={<small>Hello</small>}
+				iconElementLeft={<IconButton></IconButton>}
+				iconElementRight={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
+			/>
+
+
+	</LeftNav>
+</div>
+
+*/

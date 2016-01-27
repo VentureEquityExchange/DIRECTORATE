@@ -12,14 +12,18 @@ class GridComponent extends Component {
     super(props);
   }
 
-  onLayoutChange = (layout) => {
+  static propTypes = {
+    onLayoutChange: React.PropTypes.func.isRequired
+  }
+
+  onLayoutChange(layout){
     this.props.onLayoutChange(layout);
   }
 
   render() {
 
     return (
-      <ReactGridLayout layout={this.props.layout} onLayoutChange={this.onLayoutChange}>
+      <Responsive layout={this.props.layout} onLayoutChange={this.onLayoutChange}>
         <div key={1}><Wallet /></div>
         <div key={2}>Test</div>
         <div key={3}>Test</div>
@@ -29,12 +33,11 @@ class GridComponent extends Component {
         <div key={7}>Test</div>
         <div key={8}>Test</div>
         <div key={9}>Test</div>
-      </ReactGridLayout>
+      </Responsive>
     );
   }
 }
 
-GridComponent.propTypes = { onLayoutChange : React.PropTypes.func.isRequired }
 
 const mapStateToProps = (state) => {
   return {
@@ -63,7 +66,8 @@ const mapStateToProps = (state) => {
     isResizable: true,
     useCSSTransforms: true,
     listenToWindowResize: true,
-    verticalCompact: true
+    verticalCompact: true,
+    onLayoutChange: React.PropTypes.func.isRequired
   }
 }
 

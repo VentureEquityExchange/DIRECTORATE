@@ -95,3 +95,5 @@ export function setAliasStore(text) {
     });
   })
 }
+
+// export function getBalance()

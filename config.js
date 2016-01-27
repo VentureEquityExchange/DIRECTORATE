@@ -7,7 +7,7 @@ System.config({
       "runtime",
       "optimisation.modules.system"
     ],
-    "stage": 1,
+    "stage": 0,
     "blacklist": []
   },
   paths: {
@@ -27,13 +27,18 @@ System.config({
     "jsonfile": "npm:jsonfile@2.2.3",
     "lodash": "npm:lodash@4.0.0",
     "material-ui": "npm:material-ui@0.14.2",
+    "muicss": "npm:muicss@0.3.0",
     "path": "npm:path@0.12.7",
     "react": "npm:react@0.14.6",
+    "react-card": "npm:react-card@1.0.2",
     "react-cellblock": "npm:react-cellblock@2.0.0",
     "react-dom": "npm:react-dom@0.14.6",
+    "react-essence": "npm:react-essence@0.1.9",
     "react-grid-layout": "npm:react-grid-layout@0.10.0-beta1",
     "react-redux": "npm:react-redux@4.0.6",
     "react-router": "npm:react-router@2.0.0-rc5",
+    "react-tap-event-plugin": "npm:react-tap-event-plugin@0.2.1",
+    "react-toolbox": "npm:react-toolbox@0.14.1",
     "redux": "npm:redux@3.0.5",
     "redux-devtools": "npm:redux-devtools@3.0.1",
     "redux-devtools-dock-monitor": "npm:redux-devtools-dock-monitor@1.0.1",
@@ -306,6 +311,9 @@ System.config({
       "react-tap-event-plugin": "npm:react-tap-event-plugin@0.2.1",
       "warning": "npm:warning@2.1.0"
     },
+    "npm:muicss@0.3.0": {
+      "react": "npm:react@0.14.6"
+    },
     "npm:object.entries@1.0.3": {
       "define-properties": "npm:define-properties@1.1.2",
       "es-abstract": "npm:es-abstract@1.5.0",
@@ -335,6 +343,9 @@ System.config({
     "npm:react-addons-create-fragment@0.14.6": {
       "react": "npm:react@0.14.6"
     },
+    "npm:react-addons-css-transition-group@0.14.6": {
+      "react": "npm:react@0.14.6"
+    },
     "npm:react-addons-pure-render-mixin@0.14.6": {
       "react": "npm:react@0.14.6"
     },
@@ -342,6 +353,11 @@ System.config({
       "react": "npm:react@0.14.6"
     },
     "npm:react-addons-update@0.14.6": {
+      "react": "npm:react@0.14.6"
+    },
+    "npm:react-card@1.0.2": {
+      "classnames": "npm:classnames@2.2.3",
+      "process": "github:jspm/nodelibs-process@0.1.2",
       "react": "npm:react@0.14.6"
     },
     "npm:react-cellblock@2.0.0": {
@@ -365,6 +381,10 @@ System.config({
       "classnames": "npm:classnames@2.2.3",
       "object-assign": "npm:object-assign@4.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:react-essence@0.1.9": {
+      "events": "github:jspm/nodelibs-events@0.1.1",
+      "react": "npm:react@0.14.6"
     },
     "npm:react-grid-layout@0.10.0-beta1": {
       "deep-equal": "npm:deep-equal@1.0.1",
@@ -406,6 +426,13 @@ System.config({
     "npm:react-tap-event-plugin@0.2.1": {
       "fbjs": "npm:fbjs@0.2.1",
       "react": "npm:react@0.14.6"
+    },
+    "npm:react-toolbox@0.14.1": {
+      "classnames": "npm:classnames@2.2.3",
+      "normalize.css": "npm:normalize.css@3.0.3",
+      "react": "npm:react@0.14.6",
+      "react-addons-css-transition-group": "npm:react-addons-css-transition-group@0.14.6",
+      "react-dom": "npm:react-dom@0.14.6"
     },
     "npm:react@0.14.6": {
       "fbjs": "npm:fbjs@0.6.1",

@@ -45,6 +45,7 @@ function createMainWindow() {
 		height: 800
 	});
 
+  win.setFullScreen(true)
 	win.loadURL(`file://${__dirname}/index.html`);
 	win.on('closed', onClosed);
 

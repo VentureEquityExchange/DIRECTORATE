@@ -9,11 +9,11 @@ import ReactGridLayout from 'react-grid-layout';
 import Dialog from 'material-ui/lib/dialog';
 import NewAccount from './NewAccount';
 import * as Account from '../../utilities/Account/index';
-
+import * as Actions from '../../actions/index';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DefaultTheme from '../Themes/default';
-
+import { connect } from 'react-redux';
 
 const customContentStyle = {
   marginTop:'1%',
@@ -23,30 +23,40 @@ const customContentStyle = {
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
-export default class SelectAccount extends Component {
+class SelectAccountComponent extends Component {
   constructor(props) {
     super(props);
-    this.state.accounts = this.props.accounts;
-    this.state.account = this.props.account;
   }
 
+  componentDidMount(){
+    let { dispatch, Accounts } = this.props;
 
-  onClick(account){
-    console.log(account);
-    this.setState({account : account, view:'Grid'});
+    console.log(Accounts);
+
+    if(!Accounts){
+      setInterval(() => {
+        dispatch(Actions._ACCOUNTS());
+      });
+    } else if(Accounts.length == 0){
+      console.log("No Accounts found");
+      dispatch(Actions._ACCOUNTS());
+
+    }
+
   }
 
   render(){
+    console.log(this.props);
 
-    var accounts = this.state.accounts.map((account) => {
-      return(
-        <RaisedButton
-          key={account.address}
-          label={account.alias}
-          style={customContentStyle}
-          onClick={this.onClick.bind(this, account)} />
-      );
-    });
+    // var accounts = this.props.Accounts.map((account) => {
+    //   return(
+    //     <RaisedButton
+    //       key={account.address}
+    //       label={account.alias}
+    //       style={customContentStyle}
+    //       onClick={this.onClick.bind(this, account)} />
+    //   );
+    // });
 
     return (
       <Dialog
@@ -54,9 +64,21 @@ export default class SelectAccount extends Component {
         modal={true}
         open={true}
       >
-      {accounts}
+      Testing
 
       </Dialog>
     );
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    Accounts : state.Accounts.Accounts,
+    Account : state.Account
+  }
+}
+
+const SelectAccount = connect(mapStateToProps)(SelectAccountComponent);
+
+export default SelectAccount;

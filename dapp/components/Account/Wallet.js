@@ -8,46 +8,72 @@ import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
 import { connect } from 'react-redux';
 
+const injectTapEventPlugin = require('react-tap-event-plugin');
+injectTapEventPlugin();
 
 class WalletComponent extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      expand : true
+    }
+  }
 
+  expandCard = () => {
+    let { expand } = this.state;
+    this.setState({expand : !expand});
   }
 
   render() {
-    console.log(this.props);
-    return (
-      <Card initiallyExpanded={true}>
-        <CardHeader
-          title="Without Avatar"
-          subtitle="Subtitle"
-          actAsExpander={true}
-          showExpandableButton={true} />
-        <CardText expandable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
-        <CardActions expandable={true}>
-          <FlatButton label="Action1"/>
-          <FlatButton label="Action2"/>
-        </CardActions>
-        <CardText expandable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
-      </Card>
-    );
+    let { expand } = this.state;
+    switch(expand){
+      case true:
+        return (
+          <Card initiallyExpanded={expand}>
+            <CardHeader
+              title="Account Wallet"
+              subtitle="0x0"
+              actAsExpander={true}
+              showExpandableButton={true}
+              onClick={this.expandCard.bind(this)}
+               />
+            <CardText expandable={expand}>
+              {this.props.balance}
+            </CardText>
+            <CardActions expandable={expand}>
+              <FlatButton label="Action1"/>
+              <FlatButton label="Action2"/>
+            </CardActions>
+            <CardText expandable={expand} >
+              {this.props.message}
+            </CardText>
+          </Card>
+        );
+      case false:
+        console.log('close');
+        return (
+          <Card initiallyExpanded={expand} expand={expand}>
+            <CardHeader
+              title="Account Wallet"
+              subtitle="0x0"
+              actAsExpander={true}
+              showExpandableButton={true}
+              onClick={this.expandCard.bind(this)}
+               />
+          </Card>
+        );
+    }
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    Account : 'test'
+    message : `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`,
+    balance : 0
   }
 }
 

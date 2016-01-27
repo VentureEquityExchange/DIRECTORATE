@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import SelectAccount from './Account/SelectAccount';
-import Loading from './Loading';
-import Grid from './Grid';
-// import NewAccount from './Account/NewAccount';
+import { Loading, Layout, SelectAccount } from './index';
 
 export default class DirectorateApp extends Component {
 
@@ -10,7 +7,8 @@ export default class DirectorateApp extends Component {
     return (
       <div>
         <Loading />
-        <Grid />
+        <Layout />
+        <SelectAccount />
       </div>
     );
   }

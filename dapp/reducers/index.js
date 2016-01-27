@@ -1,3 +1,4 @@
 import Network from './Network';
+import Accounts from './Accounts';
 
-export { Network }
+export { Network, Accounts }

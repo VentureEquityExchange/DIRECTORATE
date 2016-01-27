@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 import * as Network from '../utilities/Network/index';
-
+import * as Accounts from '../utilities/Account/index';
 
 export function _NETWORK(){
   return {
@@ -9,6 +9,28 @@ export function _NETWORK(){
       return new Promise((resolve, reject) => {
         Network.getStatus().then(status => {
           resolve(status);
+        }).catch(error => {
+          reject(error);
+        });
+      });
+    }
+  }
+}
+
+export function _ACCOUNT(account){
+  return {
+    type : 'SET_ACCOUNT',
+    Account : account
+  }
+}
+
+export function _ACCOUNTS(){
+  return {
+    types : ['ACCOUNT_REQUEST', 'ACCOUNT_SUCCESS', 'ACCOUNT_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        Accounts.getAliasStore().then(aliases => {
+          resolve(aliases);
         }).catch(error => {
           reject(error);
         });
