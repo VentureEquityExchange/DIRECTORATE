@@ -26,46 +26,44 @@ const customContentStyle = {
 class SelectAccountComponent extends Component {
   constructor(props) {
     super(props);
+
   }
 
   componentDidMount(){
     let { dispatch, Accounts } = this.props;
-
     console.log(Accounts);
-
-    if(!Accounts){
-      setInterval(() => {
-        dispatch(Actions._ACCOUNTS());
-      });
-    } else if(Accounts.length == 0){
-      console.log("No Accounts found");
-      dispatch(Actions._ACCOUNTS());
-
-    }
+    dispatch(Actions._ACCOUNTS());
 
   }
 
+  onClick = (account) => {
+    let { dispatch } = this.props;
+    dispatch(Actions._ACCOUNT(account));
+  }
+
   render(){
+    let { set, Account } = this.props.Account;
+
     console.log(this.props);
 
-    // var accounts = this.props.Accounts.map((account) => {
-    //   return(
-    //     <RaisedButton
-    //       key={account.address}
-    //       label={account.alias}
-    //       style={customContentStyle}
-    //       onClick={this.onClick.bind(this, account)} />
-    //   );
-    // });
+    var accounts = this.props.Accounts.map((account) => {
+      return(
+        <RaisedButton
+          key={account.address}
+          label={account.alias}
+          style={customContentStyle}
+          onClick={this.onClick.bind(this, account)} />
+      );
+    });
 
     return (
       <Dialog
         title="Select Account"
         modal={true}
-        open={true}
+        open={set}
       >
-      Testing
-
+      {accounts}
+      <NewAccount />
       </Dialog>
     );
   }
@@ -75,7 +73,7 @@ class SelectAccountComponent extends Component {
 const mapStateToProps = (state) => {
   return {
     Accounts : state.Accounts.Accounts,
-    Account : state.Account
+    Account : state.CreateAccount
   }
 }
 

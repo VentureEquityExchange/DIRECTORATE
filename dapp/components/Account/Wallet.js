@@ -26,16 +26,18 @@ class WalletComponent extends Component {
 
   render() {
     let { expand } = this.state;
+    let { Account } = this.props.Account;
+    
     switch(expand){
       case true:
         return (
           <Card initiallyExpanded={expand}>
             <CardHeader
               title="Account Wallet"
-              subtitle="0x0"
+              subtitle={Account.address}
               actAsExpander={true}
               showExpandableButton={true}
-              onClick={this.expandCard.bind(this)}
+              onClick={this.expandCard}
                />
             <CardText expandable={expand}>
               {this.props.balance}
@@ -55,7 +57,7 @@ class WalletComponent extends Component {
           <Card initiallyExpanded={expand} expand={expand}>
             <CardHeader
               title="Account Wallet"
-              subtitle="0x0"
+              subtitle={Account.address}
               actAsExpander={true}
               showExpandableButton={true}
               onClick={this.expandCard.bind(this)}
@@ -73,7 +75,8 @@ const mapStateToProps = (state) => {
     Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
     Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
     Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`,
-    balance : 0
+    balance : 0,
+    Account : state.CreateAccount
   }
 }
 

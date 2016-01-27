@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import Snackbar from 'material-ui/lib/snackbar';
 import LinearProgress from 'material-ui/lib/linear-progress';
-import * as Network from '../utilities/Network/index';
 import Promise from 'bluebird';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
