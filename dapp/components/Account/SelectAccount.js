@@ -4,10 +4,9 @@ import {listAccounts} from '../../ethereum/index';
 import Promise from 'bluebird';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DirectorateApp from '../DirectorateApp';
-import Wallet from './Wallet';
+import { Wallet, NewAccount, ImportAccount } from '../index';
 import ReactGridLayout from 'react-grid-layout';
 import Dialog from 'material-ui/lib/dialog';
-import NewAccount from './NewAccount';
 import * as Account from '../../utilities/Account/index';
 import * as Actions from '../../actions/index';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
@@ -38,13 +37,18 @@ class SelectAccountComponent extends Component {
 
   onClick = (account) => {
     let { dispatch } = this.props;
-    dispatch(Actions._ACCOUNT(account));
+    dispatch(Actions.SET_ACCOUNT(account));
   }
 
   render(){
-    let { set, Account } = this.props.Account;
+    let { Account } = this.props.Account;
 
+    let showDialog = true;
     console.log(this.props);
+    if(this.props.Account.Account.set != null || this.props.AccountCreated.Account.set != null || this.props.SetAccount.Account.set != null){
+      showDialog = false;
+    }
+
 
     var accounts = this.props.Accounts.map((account) => {
       return(
@@ -56,14 +60,18 @@ class SelectAccountComponent extends Component {
       );
     });
 
+
+
     return (
       <Dialog
         title="Select Account"
         modal={true}
-        open={set}
+        open={showDialog}
+        autoScrollBodyContent={true}
       >
       {accounts}
       <NewAccount />
+      <ImportAccount />
       </Dialog>
     );
   }
@@ -73,7 +81,9 @@ class SelectAccountComponent extends Component {
 const mapStateToProps = (state) => {
   return {
     Accounts : state.Accounts.Accounts,
-    Account : state.CreateAccount
+    Account : state.ImportAccount,
+    AccountCreated : state.CreateAccount,
+    SetAccount : state.SetAccount
   }
 }
 

@@ -27,7 +27,7 @@ class WalletComponent extends Component {
   render() {
     let { expand } = this.state;
     let { Account } = this.props.Account;
-    
+
     switch(expand){
       case true:
         return (
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
     Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
     Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`,
     balance : 0,
-    Account : state.CreateAccount
+    Account : state.SetAccount
   }
 }
 

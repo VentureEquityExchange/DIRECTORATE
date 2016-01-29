@@ -12,16 +12,30 @@ class LayoutComponent extends Component {
 
   render(){
     return (
-      <Grid>
+      <Grid >
+        <NavBar />
         <Row>
-          <NavBar />
+          <SideNav />
         </Row>
         <br/>
         <Row>
-          <Column width="1/2">
+        <Column width="1/1">
+          <Wallet />
+        </Column>
+        </Row>
+        <br/>
+        <Row>
+          <Column width="1/15">
             <Wallet />
           </Column>
-          <Column width="1/2">
+          <Column width="7/15">
+            <Wallet />
+            <br/>
+            <Wallet />
+          </Column>
+          <Column width="7/15">
+            <Wallet />
+            <br/>
             <Wallet />
           </Column>
         </Row>
@@ -29,14 +43,7 @@ class LayoutComponent extends Component {
         <Row>
           <Column width="2/3">
             <Wallet />
-          </Column>
-          <Column width="1/3">
-            <Wallet />
-          </Column>
-        </Row>
-        <br/>
-        <Row>
-          <Column width="2/3">
+            <br/>
             <Wallet />
           </Column>
           <Column width="1/3">

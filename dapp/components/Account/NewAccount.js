@@ -56,13 +56,13 @@ class NewAccountComponent extends Component {
   }
 
   render() {
-    // let { dispatch } = this.props;
+    let { dispatch } = this.props;
     let { open } = this.state;
     let { Account } = this.props.Account;
 
-    // if(Account.address != undefined){
-    //     dispatch(Actions._ACCOUNT(Account));
-    // }
+    if(Account.set){
+      dispatch(Actions.SET_ACCOUNT(Account));
+    }
 
 
     return (
@@ -80,7 +80,7 @@ class NewAccountComponent extends Component {
         open={open}
       >
           <TextField
-            hintText="Enter Account Alias"
+            hintText="Enter Account Title"
             defaultValue=""
             type="text"
             onChange={this.setAccountAlias.bind(this)} />

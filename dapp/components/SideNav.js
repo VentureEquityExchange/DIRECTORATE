@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import LeftNav from 'material-ui/lib/left-nav';
 import RaisedButton from 'material-ui/lib/raised-button';
 import * as Ethereum from '../ethereum/index';
 import Promise from 'bluebird';
 import Wallet from './Account/Wallet';
 import Appbar from 'muicss/lib/react/appbar';
-
+import * as Actions from '../actions/index';
 import IconButton from 'material-ui/lib/icon-button';
 import MenuIcon from 'material-ui/lib/svg-icons/editor/drag-handle';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
@@ -14,66 +14,65 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DefaultTheme from './Themes/default';
-
+import { connect } from 'react-redux';
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
-export default class SideNav extends React.Component {
+class SideNavComponent extends Component {
 	constructor(props){
 		super(props);
-		this.props.account;
-		this.state = {
-			open : false,
-			account : this.props.account
-		};
+		this.props
 	}
 
+	onClick = (side) => {
+    let { dispatch } = this.props;
 
-	handleToggle = () => {this.setState({open: !this.state.open});}
-
-	handleClose = () => {this.setState({open: false});}
+    dispatch(Actions.SIDE_NAV(side, false));
+  }
 
 	render() {
-		return (<div><Appbar></Appbar></div>);
+		let { left, right } = this.props.SideNav;
+
+		return (
+			<div>
+			<LeftNav
+			docked={true}
+						width={600}
+						open={left}
+						onRequestChange={open => this.setState({open})}
+				>
+				<RaisedButton
+          label={"Close Side Nav"}
+          onClick={this.onClick.bind(this, 'left')}
+					secondary={true}
+					style={{width:'100%'}} />
+			</LeftNav>
+			<LeftNav
+			docked={true}
+						width={600}
+						open={right}
+						openRight={true}
+						onRequestChange={open => this.setState({open})}
+				>
+				<RaisedButton
+          label={"Close Side Nav"}
+          onClick={this.onClick.bind(this, 'right')}
+					secondary={true}
+					style={{width:'100%'}} />
+			</LeftNav>
+			</div>
+		);
 	}
 }
 
 
+const mapStateToProps = (state) => {
+	return {
+		SideNav : state.SideNavigation
+	}
+}
 
-/*
-<div style={{marginTop:'-10px', marginLeft:'-7%', width:'125%'}}>
-<AppBar
-		title="Title"
-		iconElementLeft={<IconButton style={{marginLeft:'25px'}} onClick={this.handleToggle}><Menu /></IconButton>}
-		iconElementRight={
-			<IconMenu
-				iconButtonElement={
-					<IconButton onClick={this.handleToggle}><MoreVertIcon /></IconButton>
-				}
-				targetOrigin={{horizontal: 'right', vertical: 'top'}}
-				anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-			>
-				<MenuItem primaryText="Refresh" />
-				<MenuItem primaryText="Help" />
-				<MenuItem primaryText="Sign out" />
-			</IconMenu>
-		}
-	/>
-
-	<LeftNav
-		docked={true}
-					width={600}
-					open={this.state.open}
-					onRequestChange={open => this.setState({open})}
-			>
-		<AppBar
-				title={<small>Hello</small>}
-				iconElementLeft={<IconButton></IconButton>}
-				iconElementRight={<IconButton onClick={this.handleToggle}><Menu /></IconButton>}
-			/>
+const SideNav = connect(mapStateToProps)(SideNavComponent);
 
 
-	</LeftNav>
-</div>
-
-*/
+export default SideNav;

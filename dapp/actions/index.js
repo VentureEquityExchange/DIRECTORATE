@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import * as Network from '../utilities/Network/index';
 import * as Accounts from '../utilities/Account/index';
-import { newAccount } from '../ethereum/index';
+import { newAccount, listAccounts, unlockAccount } from '../ethereum/index';
 
 export function _NETWORK(){
   return {
@@ -10,6 +10,21 @@ export function _NETWORK(){
       return new Promise((resolve, reject) => {
         Network.getStatus().then(status => {
           resolve(status);
+        }).catch(error => {
+          reject(error);
+        });
+      });
+    }
+  }
+}
+
+export function LIST_ACCOUNTS(){
+  return {
+    types : ['LA_REQUEST', 'LA_SUCCESS', 'LA_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        listAccounts().then(accounts => {
+          resolve(accounts);
         }).catch(error => {
           reject(error);
         });
@@ -39,7 +54,48 @@ export function CREATE_ACCOUNT(account){
   }
 }
 
-export function _ACCOUNT(account){
+export function SIDE_NAV(side, open){
+  switch(side){
+    case 'left':
+      return {
+        type : 'LEFT_NAV',
+        open : open
+      };
+    case 'right': {
+      return {
+        type : 'RIGHT_NAV',
+        open : open
+      };
+    }
+  }
+}
+
+export function IMPORT_ACCOUNT(account){
+  return {
+    types : ['IMPORT_REQUEST', 'IMPORT_SUCCESS', 'IMPORT_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        unlockAccount(account.address, account.password).then(unlocked => {
+          account.set = true;
+          return Accounts.setAliasStore(JSON.stringify(account));
+        }).then(() => {
+          console.log('Alias Store Created');
+          resolve(account);
+          return null;
+        }).catch(error => {
+          // this throws a warning saying rejecting non-error;
+          // no worries, we are handing this error in our Redux.
+          // Ignoring the warning.
+          reject(error);
+          return null;
+        });
+      });
+    }
+  }
+}
+
+export function SET_ACCOUNT(account){
+  console.log(account);
   return {
     type : 'SET_ACCOUNT',
     Account : account

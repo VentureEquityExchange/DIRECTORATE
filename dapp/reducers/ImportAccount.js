@@ -1,18 +1,18 @@
-export default function CREATE_ACCOUNT(state = { Account : { set : null }, set : true, }, action){
+export default function IMPORT_ACCOUNT(state = { Account : { set : null }}, action){
 
   switch(action.type){
-    case 'CR_REQUEST':
+    case 'IMPORT_REQUEST':
       return {
         ...state
       };
-    case 'CR_SUCCESS':
+    case 'IMPORT_SUCCESS':
       return {
         ...state,
         Account : action.result,
-        set : false,
         error : undefined
       };
-    case 'CR_FAILURE':
+    case 'IMPORT_FAILURE':
+      console.log(action);
       return {
         ...state,
         error : action.error

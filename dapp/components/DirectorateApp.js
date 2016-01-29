@@ -1,15 +1,29 @@
 import React, { Component } from 'react'
-import { Loading, Layout, SelectAccount } from './index';
+import { Loading, Layout, SelectAccount, Grid } from './index';
+import { connect } from 'react-redux';
 
-export default class DirectorateApp extends Component {
+class DirectorateAppComponent extends Component {
 
   render(){
+    let { set } = this.props.SetAccount.Account;
+
     return (
       <div>
         <Loading />
-        <Layout />
+        {set ? <Layout /> : null }
         <SelectAccount />
       </div>
     );
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    SetAccount : state.SetAccount
+  }
+}
+
+const DirectorateApp = connect(mapStateToProps)(DirectorateAppComponent);
+
+export default DirectorateApp;

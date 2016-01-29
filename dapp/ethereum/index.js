@@ -84,7 +84,6 @@ export function listAccounts() {
 		let payload = {jsonrpc: '2.0',method: 'personal_listAccounts',params: [],id: 1};
 		gethIPC(payload, (error, data) => {
 			if(error){reject(error);}
-			if(data.error){reject(data.error);}
 			resolve(data.result);
 		});
 	})

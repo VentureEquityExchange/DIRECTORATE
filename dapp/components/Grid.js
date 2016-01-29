@@ -20,10 +20,16 @@ class GridComponent extends Component {
     this.props.onLayoutChange(layout);
   }
 
+  onBreakpointChange(breakpoint) {
+    this.setState({
+      currentBreakpoint: breakpoint
+    });
+  }
+
   render() {
 
     return (
-      <Responsive layout={this.props.layout} onLayoutChange={this.onLayoutChange}>
+      <Responsive layout={this.props.layout} onBreakpointChange={this.onBreakpointChange} onLayoutChange={this.onLayoutChange} {...this.props}>
         <div key={1}><Wallet /></div>
         <div key={2}>Test</div>
         <div key={3}>Test</div>
