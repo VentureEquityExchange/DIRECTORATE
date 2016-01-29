@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import * as Network from '../utilities/Network/index';
 import * as Accounts from '../utilities/Account/index';
-import { newAccount, listAccounts, unlockAccount } from '../ethereum/index';
+import { newAccount, listAccounts, unlockAccount, web3 } from '../ethereum/index';
 
 export function _NETWORK(){
   return {
@@ -70,6 +70,22 @@ export function SIDE_NAV(side, open){
   }
 }
 
+export function GET_BALANCE(account){
+  return {
+    types : ['BALANCE_REQUEST', 'BALANCE_SUCCESS', 'BALANCE_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        web3.eth.getBalance(account, (error, balance ) => {
+          if(error){reject(error)}
+          let Balance = web3.fromWei(balance, 'ether');
+
+          resolve(Number(Balance.c[0]+'.'+Balance.c[1]));
+        });
+      });
+    }
+  }
+}
+
 export function IMPORT_ACCOUNT(account){
   return {
     types : ['IMPORT_REQUEST', 'IMPORT_SUCCESS', 'IMPORT_FAILURE'],
@@ -95,20 +111,18 @@ export function IMPORT_ACCOUNT(account){
 }
 
 export function SET_ACCOUNT(account){
-  console.log(account);
   return {
     type : 'SET_ACCOUNT',
     Account : account
   }
 }
 
-export function _ACCOUNTS(){
+export function GET_ACCOUNTS(){
   return {
     types : ['ACCOUNTS_REQUEST', 'ACCOUNTS_SUCCESS', 'ACCOUNTS_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
         Accounts.decryptAliases().then(aliases => {
-          console.log(aliases);
           resolve(aliases);
         }).catch(error => {
           reject(error);

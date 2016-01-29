@@ -25,10 +25,7 @@ class LayoutComponent extends Component {
         </Row>
         <br/>
         <Row>
-          <Column width="1/15">
-            <Wallet />
-          </Column>
-          <Column width="7/15">
+          <Column width="8/15">
             <Wallet />
             <br/>
             <Wallet />

@@ -30,8 +30,7 @@ class SelectAccountComponent extends Component {
 
   componentDidMount(){
     let { dispatch, Accounts } = this.props;
-    console.log(Accounts);
-    dispatch(Actions._ACCOUNTS());
+    dispatch(Actions.GET_ACCOUNTS());
 
   }
 
@@ -44,7 +43,7 @@ class SelectAccountComponent extends Component {
     let { Account } = this.props.Account;
 
     let showDialog = true;
-    console.log(this.props);
+
     if(this.props.Account.Account.set != null || this.props.AccountCreated.Account.set != null || this.props.SetAccount.Account.set != null){
       showDialog = false;
     }

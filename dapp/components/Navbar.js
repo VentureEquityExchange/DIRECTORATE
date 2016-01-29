@@ -40,7 +40,9 @@ class NavBarComponent extends React.Component {
   }
 
 	render() {
-		return (
+    let { Account } = this.props.Account;
+
+    return (
       <Toolbar style={NavBarStyle}>
         <ToolbarGroup firstChild={true} float="left">
         <IconButton onClick={this.onClick.bind(this, 'left')}>
@@ -49,7 +51,7 @@ class NavBarComponent extends React.Component {
 
         </ToolbarGroup>
         <ToolbarGroup float="right">
-          <ToolbarTitle text="VEX|DIRECTORATE" />
+          <ToolbarTitle text="VΞX|DIRECTORATE" />
           <FontIcon className="muidocs-icon-custom-sort" />
           <IconMenu
             iconButtonElement={
@@ -60,7 +62,7 @@ class NavBarComponent extends React.Component {
           >
           </IconMenu>
           <ToolbarSeparator />
-          <FlatButton label="Settings" primary={true} onClick={this.onClick}/>
+          <FlatButton label={Account.alias} primary={true} onClick={this.onClick}/>
         </ToolbarGroup>
       </Toolbar>
     );
@@ -69,7 +71,7 @@ class NavBarComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    bt1 : 'NETWORK STATS'
+    Account : state.SetAccount
 
   }
 }

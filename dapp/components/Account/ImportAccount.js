@@ -92,8 +92,6 @@ class ImportAccountComponent extends Component {
     let { Account } = this.props.Account;
     let { set } = Account;
 
-    console.log(this.props.Account);
-    console.log(set);
 
     switch(set){
       case false:
