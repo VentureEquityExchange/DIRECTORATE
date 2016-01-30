@@ -43,13 +43,13 @@ class WalletComponent extends Component {
 
   expandCard = () => {
     let { expand } = this.state;
-    this.setState({expand : !expand});
+    this.setState({expand : !expand, sendToAddress : undefined, sendAmount : 0});
   }
 
-  toggleTransaction = () => {
-      let { toggleTransaction } = this.state;
-      this.setState({toggleTransaction: !toggleTransaction});
-  }
+  // toggleTransaction = () => {
+  //     let { toggleTransaction } = this.state;
+  //     this.setState({toggleTransaction: !toggleTransaction});
+  // }
 
   sendToAddress = (event) => {
     this.state.sendToAddress = event.target.value;
@@ -72,7 +72,7 @@ class WalletComponent extends Component {
       alert(`Please enter a positive number. Cannot send ${sendAmount} value.`)
     } else {
       dispatch(Actions.SEND_TRANSACTION(Account, sendToAddress, sendAmount));
-      this.toggleTransaction();
+      this.expandCard();
     }
 
   }
@@ -89,7 +89,7 @@ class WalletComponent extends Component {
     let { Transactions } = this.props;
     let { txhash, Transaction, error } = Transactions;
 
-    console.log(this.props);
+    // console.log(this.props);
 
     switch(expand){
       case true:
@@ -102,16 +102,11 @@ class WalletComponent extends Component {
               showExpandableButton={true}
               onClick={this.expandCard}
                />
-            <CardText expandable={!expand}>
-              <strong>Balance: {Balance == null ? 'loading...' : Balance + " Ξther" } </strong>
-            </CardText>
             {
-              !toggleTransaction ?
-              <div>
-                <CardActions expandable={expand}>
-                  <FlatButton label="Send Ξther" onClick={this.toggleTransaction}/>
-                </CardActions>
-              </div> : <div>
+              !expand ? null : <div>
+                <CardText >
+                  <strong>Balance: {Balance == null ? 'loading...' : Balance + " Ξther" } </strong>
+                </CardText>
                 <CardText>
                   <TextField
                     hintText={`e.g. ${Account.address}`}
@@ -138,7 +133,7 @@ class WalletComponent extends Component {
                       label="Cancel"
                       primary={true}
                       style={{width:'100%', marginTop:'1%'}}
-                      onClick={this.toggleTransaction} />
+                      onClick={this.expandCard} />
                 </CardText>
               </div>
             }
@@ -146,7 +141,7 @@ class WalletComponent extends Component {
 
         );
       case false:
-        console.log('close');
+        // console.log('close');
         return (
           <Card initiallyExpanded={expand} expand={expand}>
             <CardHeader

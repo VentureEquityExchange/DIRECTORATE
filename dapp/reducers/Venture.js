@@ -1,5 +1,23 @@
-export default function VENTURE(state = { Venture : undefined}, action){
+export default function VENTURE(state = { Ventures : undefined}, action){
   switch(action.type){
+    case 'GET_VENTURES_REQUEST':
+      return {
+        ...state
+      };
+    case 'GET_VENTURES_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        Ventures : action.result,
+        error : undefined
+      };
+    case 'GET_VENTURES_FAILURE':
+      console.log(action);
+      return {
+        ...state,
+        error : action.error,
+        Ventures : undefined
+      };
     case 'VENTURE_REQUEST':
       return {
         ...state
@@ -8,7 +26,7 @@ export default function VENTURE(state = { Venture : undefined}, action){
       console.log(action);
       return {
         ...state,
-        Venture : action.result,
+        Ventures : action.result,
         error : undefined
       };
     case 'VENTURE_FAILURE':
@@ -16,7 +34,7 @@ export default function VENTURE(state = { Venture : undefined}, action){
       return {
         ...state,
         error : action.error,
-        Venture : undefined
+        Ventures : undefined
       };
     default:
       return state;

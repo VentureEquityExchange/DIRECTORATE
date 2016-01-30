@@ -62,7 +62,7 @@ class NavBarComponent extends React.Component {
           >
           </IconMenu>
           <ToolbarSeparator />
-          <FlatButton label={Account.alias} primary={true} onClick={this.onClick}/>
+          <FlatButton label={Account.alias} secondary={true}/>
         </ToolbarGroup>
       </Toolbar>
     );

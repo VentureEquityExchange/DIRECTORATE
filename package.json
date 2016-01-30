@@ -33,11 +33,13 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
+    "bluebird": "^3.1.5",
     "browserify": "^13.0.0",
     "electron-packager": "^5.2.0",
     "electron-prebuilt": "^0.36.3",
     "gulp": "^3.9.0",
     "jspm": "^0.16.23",
+    "solc": "^0.2.0-1",
     "vinyl-source-stream": "^1.1.0"
   },
   "jspm": {
@@ -46,6 +48,7 @@
       "crypto": "npm:crypto@^0.0.3",
       "deep-freeze": "npm:deep-freeze@^0.0.1",
       "expect": "npm:expect@^1.13.4",
+      "fs": "npm:fs@^0.0.2",
       "history": "npm:history@^2.0.0-rc2",
       "jsonfile": "npm:jsonfile@^2.2.3",
       "lodash": "npm:lodash@^4.0.0",
@@ -78,6 +81,7 @@
     }
   },
   "dependencies": {
+    "bluebird": "^3.1.5",
     "react": "^0.14.6",
     "react-tap-event-plugin": "^0.2.1",
     "web3": "^0.15.1"

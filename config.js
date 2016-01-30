@@ -23,6 +23,7 @@ System.config({
     "crypto": "npm:crypto@0.0.3",
     "deep-freeze": "npm:deep-freeze@0.0.1",
     "expect": "npm:expect@1.13.4",
+    "fs": "npm:fs@0.0.2",
     "history": "npm:history@2.0.0-rc2",
     "jsonfile": "npm:jsonfile@2.2.3",
     "lodash": "npm:lodash@4.0.0",
