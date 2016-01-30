@@ -3,7 +3,7 @@ import LeftNav from 'material-ui/lib/left-nav';
 import RaisedButton from 'material-ui/lib/raised-button';
 import * as Ethereum from '../ethereum/index';
 import Promise from 'bluebird';
-import Wallet from './Account/Wallet';
+import { Wallet } from './index';
 import Appbar from 'muicss/lib/react/appbar';
 import * as Actions from '../actions/index';
 import IconButton from 'material-ui/lib/icon-button';
@@ -46,6 +46,7 @@ class SideNavComponent extends Component {
           onClick={this.onClick.bind(this, 'left')}
 					secondary={true}
 					style={{width:'100%'}} />
+
 			</LeftNav>
 			<LeftNav
 			docked={true}
@@ -59,6 +60,7 @@ class SideNavComponent extends Component {
           onClick={this.onClick.bind(this, 'right')}
 					secondary={true}
 					style={{width:'100%'}} />
+				<Wallet />
 			</LeftNav>
 			</div>
 		);

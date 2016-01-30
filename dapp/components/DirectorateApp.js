@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Loading, Layout, SelectAccount, Grid } from './index';
+import { Loading, Layout, SelectAccount, Grid, SelectVenture } from './index';
 import { connect } from 'react-redux';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
@@ -24,7 +24,8 @@ class DirectorateAppComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    SetAccount : state.SetAccount
+    SetAccount : state.SetAccount,
+    Venture : state.Venture
   }
 }
 

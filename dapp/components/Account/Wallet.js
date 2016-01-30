@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import RaisedButton from 'material-ui/lib/raised-button';
+import Snackbar from 'material-ui/lib/snackbar';
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
@@ -20,8 +21,9 @@ class WalletComponent extends Component {
   constructor(props){
     super(props);
     this.state = {
-      expand : true,
-      sendTransactionDialog : false,
+      txhashNotification : true,
+      expand : false,
+      toggleTransaction : false,
       getTransactionDialog : false,
       sendToAddress : undefined,
       sendAmount : 0
@@ -34,7 +36,7 @@ class WalletComponent extends Component {
     let { address } = Account;
     setTimeout(() => {
         dispatch(Actions.GET_BALANCE(address));
-    }, 3000);
+    }, 1500);
 
   }
 
@@ -44,9 +46,9 @@ class WalletComponent extends Component {
     this.setState({expand : !expand});
   }
 
-  sendTransactionDialog = () => {
-      let { sendTransactionDialog } = this.state;
-      this.setState({sendTransactionDialog: !sendTransactionDialog});
+  toggleTransaction = () => {
+      let { toggleTransaction } = this.state;
+      this.setState({toggleTransaction: !toggleTransaction});
   }
 
   sendToAddress = (event) => {
@@ -58,17 +60,36 @@ class WalletComponent extends Component {
   }
 
   sendTransaction = (address) => {
+    let { dispatch } = this.props;
+    let { Account } = this.props.Account;
     let { sendToAddress, sendAmount } = this.state;
+
     console.log(sendToAddress);
     console.log(sendAmount);
-    console.log('Make Call to Ethereum node to send transaction.');
+    console.log('Making Call to Ethereum node to send transaction.');
+
+    if(sendAmount <= 0){
+      alert(`Please enter a positive number. Cannot send ${sendAmount} value.`)
+    } else {
+      dispatch(Actions.SEND_TRANSACTION(Account, sendToAddress, sendAmount));
+      this.toggleTransaction();
+    }
+
+  }
+
+  closeSnackBar = () => {
+      this.setState({txhashNotification : false});
   }
 
   render() {
-    let { expand } = this.state;
+    let { expand, txhashNotification } = this.state;
     let { Account } = this.props.Account;
     let { Balance } = this.props.Balance;
-    let { sendTransactionDialog } = this.state;
+    let { toggleTransaction } = this.state;
+    let { Transactions } = this.props;
+    let { txhash, Transaction, error } = Transactions;
+
+    console.log(this.props);
 
     switch(expand){
       case true:
@@ -81,42 +102,46 @@ class WalletComponent extends Component {
               showExpandableButton={true}
               onClick={this.expandCard}
                />
-            <CardText expandable={expand}>
+            <CardText expandable={!expand}>
               <strong>Balance: {Balance == null ? 'loading...' : Balance + " Ξther" } </strong>
             </CardText>
-            {!sendTransactionDialog ? null :
-              <CardText>
-                <TextField
-                  hintText={`e.g. ${Account.address}`}
-                  defaultValue=""
-                  type="text"
-                  onChange={this.sendToAddress.bind(this)}
-                  style={{width:'100%', marginTop:'1%'}} />
-                  Send To Address
-                <TextField
-                  hintText={"Amount (Ξther)"}
-                  defaultValue={0}
-                  type="number"
-                  onChange={this.sendAmount.bind(this)}
-                  style={{width:'100%', marginTop:'1%'}} />
-                  Send Amount (Ξther)
-                <RaisedButton
-                    label="Send Transaction"
-                    secondary={true}
-                    style={{width:'100%', marginTop:'1%'}}
-                    onClick={this.sendTransaction.bind(this)} />
-                <RaisedButton
-                    label="Cancel"
-                    primary={true}
-                    style={{width:'100%', marginTop:'1%'}}
-                    onClick={this.sendTransactionDialog} />
-              </CardText>
-            }
+            {
+              !toggleTransaction ?
+              <div>
+                <CardActions expandable={expand}>
+                  <FlatButton label="Send Ξther" onClick={this.toggleTransaction}/>
+                </CardActions>
+              </div> : <div>
+                <CardText>
+                  <TextField
+                    hintText={`e.g. ${Account.address}`}
+                    defaultValue=""
+                    type="text"
+                    onChange={this.sendToAddress.bind(this)}
+                    style={{width:'100%', marginTop:'1%'}} />
+                    Send To Address
+                  <TextField
+                    hintText={"Amount (Ξther)"}
+                    defaultValue={0}
+                    type="number"
+                    onChange={this.sendAmount.bind(this)}
+                    style={{width:'100%', marginTop:'1%'}} />
+                    Send Amount (Ξther)
+                  <br/>
 
-            <CardActions expandable={expand}>
-              <FlatButton label="Send Transaction" onClick={this.sendTransactionDialog}/>
-              <FlatButton label="Get Transaction"/>
-            </CardActions>
+                  <RaisedButton
+                      label="Send Transaction"
+                      secondary={true}
+                      style={{width:'100%', marginTop:'1%'}}
+                      onClick={this.sendTransaction.bind(this)} />
+                  <RaisedButton
+                      label="Cancel"
+                      primary={true}
+                      style={{width:'100%', marginTop:'1%'}}
+                      onClick={this.toggleTransaction} />
+                </CardText>
+              </div>
+            }
           </Card>
 
         );
@@ -145,7 +170,8 @@ const mapStateToProps = (state) => {
     Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
     Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`,
     Account : state.SetAccount,
-    Balance : state.AccountBalance
+    Balance : state.AccountBalance,
+    Transactions : state.Transactions
   }
 }
 

@@ -41,12 +41,12 @@ function onClosed() {
 
 function createMainWindow() {
 	const win = new BrowserWindow({
-		width: 960,
-		height: 500,
+		width: 600,
+		height: 750,
     minWidth: 600,
     minHeight: 400,
     frame : false,
-    fullscreen : true
+    fullscreen : false
 	});
 
   // win.setFullScreen(true)

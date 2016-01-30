@@ -7,5 +7,19 @@ import Wallet from './Account/Wallet';
 import NavBar from './NavBar';
 import ImportAccount from './Account/ImportAccount';
 import NewAccount from './Account/NewAccount';
+import MarketInsights from './MarketInsights';
+import SelectVenture from './Venture/SelectVenture';
 
-export { DirectorateApp, Loading, SelectAccount, Layout, SideNav, Wallet, NavBar, NewAccount, ImportAccount };
+export {
+  DirectorateApp,
+  Loading,
+  SelectAccount,
+  Layout,
+  SideNav,
+  Wallet,
+  NavBar,
+  NewAccount,
+  ImportAccount,
+  MarketInsights,
+  SelectVenture
+};

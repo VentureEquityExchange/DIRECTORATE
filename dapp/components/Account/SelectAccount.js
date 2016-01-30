@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import {listAccounts} from '../../ethereum/index';
-import Promise from 'bluebird';
 import RaisedButton from 'material-ui/lib/raised-button';
-import DirectorateApp from '../DirectorateApp';
 import { Wallet, NewAccount, ImportAccount } from '../index';
-import ReactGridLayout from 'react-grid-layout';
 import Dialog from 'material-ui/lib/dialog';
 import * as Account from '../../utilities/Account/index';
 import * as Actions from '../../actions/index';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
-import DefaultTheme from '../Themes/default';
 import { connect } from 'react-redux';
 
 const customContentStyle = {
@@ -19,8 +11,6 @@ const customContentStyle = {
   width:'100%'
 }
 
-
-@ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
 class SelectAccountComponent extends Component {
   constructor(props) {

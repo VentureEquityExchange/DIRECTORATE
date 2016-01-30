@@ -420,3 +420,14 @@ export function metrics(raw) {
 		});
 	})
 }
+
+export function getTransactionByHash(txhash) {
+	return new Promise((resolve, reject) => {
+		let payload = {jsonrpc: '2.0',method: 'eth_getTransactionByHash',params: [txhash],id: 1};
+		gethIPC(payload, (error, data) => {
+			if(error){reject(error);}
+			if(data.error){reject(data.error);}
+			resolve(data.result);
+		});
+	});
+}

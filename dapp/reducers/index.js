@@ -6,6 +6,8 @@ import ImportAccount from './ImportAccount';
 import SideNavigation from './SideNavigation';
 import SetAccount from './SetAccount';
 import AccountBalance from './AccountBalance';
+import Transactions from './Transactions';
+import Venture from './Venture';
 
 export {
   Network,
@@ -15,5 +17,7 @@ export {
   ImportAccount,
   SideNavigation,
   SetAccount,
-  AccountBalance
+  AccountBalance,
+  Transactions,
+  Venture
 }
