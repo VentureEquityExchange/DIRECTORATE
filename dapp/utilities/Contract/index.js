@@ -9,6 +9,8 @@ import { web3 } from '../../ethereum/index';
 
 export function deploy(abi, code, address){
   return new Promise((resolve, reject) => {
+    // general deploy method for contracts without instantiating variables...
+    
     web3.eth.contract(JSON.parse(abi)).new({from: address, data : code, gas : 3141592},
       (error, deployed) => {
         if(error){reject(error);}

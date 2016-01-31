@@ -1,4 +1,4 @@
-export default function VENTURE(state = { Ventures : undefined}, action){
+export default function VENTURE(state = { Ventures : [], Venture : undefined }, action){
   switch(action.type){
     case 'GET_VENTURES_REQUEST':
       return {
@@ -16,25 +16,25 @@ export default function VENTURE(state = { Ventures : undefined}, action){
       return {
         ...state,
         error : action.error,
-        Ventures : undefined
+        Ventures : []
       };
-    case 'VENTURE_REQUEST':
+    case 'NEW_VENTURE_REQUEST':
       return {
         ...state
       };
-    case 'VENTURE_SUCCESS':
+    case 'NEW_VENTURE_SUCCESS':
       console.log(action);
       return {
         ...state,
-        Ventures : action.result,
+        Ventures : state.Ventures.concat(action.result),
         error : undefined
       };
-    case 'VENTURE_FAILURE':
+    case 'NEW_VENTURE_FAILURE':
       console.log(action);
       return {
         ...state,
         error : action.error,
-        Ventures : undefined
+        Venture : undefined
       };
     default:
       return state;

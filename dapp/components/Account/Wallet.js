@@ -109,7 +109,7 @@ class WalletComponent extends Component {
                 </CardText>
                 <CardText>
                   <TextField
-                    hintText={`e.g. ${Account.address}`}
+                    hintText={`${Account.address}`}
                     defaultValue=""
                     type="text"
                     onChange={this.sendToAddress.bind(this)}

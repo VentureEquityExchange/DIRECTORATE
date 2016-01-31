@@ -44,6 +44,7 @@
   },
   "jspm": {
     "dependencies": {
+      "async": "npm:async@^1.5.2",
       "bluebird": "npm:bluebird@^3.1.1",
       "crypto": "npm:crypto@^0.0.3",
       "deep-freeze": "npm:deep-freeze@^0.0.1",

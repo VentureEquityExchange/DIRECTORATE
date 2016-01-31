@@ -30,10 +30,11 @@ class SelectVentureComponent extends Component {
 
   componentDidMount(){
     let { dispatch } = this.props;
+    let { Account } = this.props.Account;
     console.log('Make call to DirectorIndex contract and send back results');
 
     setTimeout(() => {
-      dispatch(Actions.GET_VENTURES());
+      dispatch(Actions.GET_VENTURES(Account));
     }, 2000)
 
   }
@@ -54,6 +55,9 @@ class SelectVentureComponent extends Component {
   newVenture = () => {
     let { dispatch } = this.props;
     let { expand, venture } = this.state;
+    let { Account } = this.props.Account;
+
+    console.log(Account);
 
     if(!this.state.expand){
       this.setState({expand : !expand});
@@ -61,40 +65,60 @@ class SelectVentureComponent extends Component {
       let directors = venture.directors.map((director) => {
         return (`- Director: ${director}`);
       });
-      let confidence = confirm(`
+
+      if(!confirm(`
         Confirm new venture with the following details:
 
         - Name: ${venture.name}
         ${directors}`
-      );
-
-      if(!confidence){
+      )){
+        console.log('Canceled.');
       } else {
-        dispatch(Actions.NEW_VENTURE(venture));
+        dispatch(Actions.NEW_VENTURE(Account, venture));
+        this.setState({expand : !expand});
       }
 
     }
   }
 
+  SelectVenture = (venture) => {
+    console.log(venture);
+  }
+
   render(){
     let { set, address } = this.props.Account.Account;
     let { expand } = this.state;
-
+    let { Ventures } = this.props.Venture;
     console.log(this.props);
+
+    let DAVs;
+
+    if(Ventures.length > 0){
+      DAVs = Ventures.map((venture, i) => {
+        return (
+          <RaisedButton key={i} label={venture.name} style={customContentStyle} onClick={this.SelectVenture.bind(this, venture)}/>
+        );
+      })
+    }
+
+
     return (
       <Card initiallyExpanded={true}>
         <CardHeader
-          title={"Select Venture"}
+          title={"Select DAV"}
         />
+        <CardActions expandable={true}>
+          { Ventures.length > 0 ? DAVs : null }
+        </CardActions>
         {
           !expand ? null : <CardText>
             <TextField
-              hintText={`Enter Venture Name`}
+              hintText={`Enter DAV Name`}
               defaultValue=""
               type="text"
               onChange={this.ventureName.bind(this)}
               style={{width:'100%', marginTop:'1%'}} />
-              Enter Venture Name
+              Enter DAV Name
             <br/>
             <TextField
               hintText={`
@@ -107,13 +131,13 @@ class SelectVentureComponent extends Component {
               type="text"
               onChange={this.ventureDirectors.bind(this)}
               style={{width:'100%', marginTop:'3%'}} />
-              {`Enter Director Addresses as a quoted, comma separated list of ethereum addresses. See example above.`}
+              {`Enter director addresses of DAV as a quoted, comma separated list of Ethereum addresses. See example above.`}
             <br/>
           </CardText>
         }
 
         <CardActions expandable={true}>
-          <RaisedButton secondary={true} label="New Venture" style={customContentStyle} onClick={this.newVenture}/>
+          <RaisedButton secondary={true} label="New Decentralized Autonomous Venture | DAV" style={customContentStyle} onClick={this.newVenture}/>
         </CardActions>
       </Card>
     );

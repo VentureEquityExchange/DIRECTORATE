@@ -13,6 +13,7 @@ import {
 } from '../ethereum/index';
 
 import * as Contract from '../utilities/Contract/index';
+import * as DAV from '../utilities/Contract/DAV';
 
 
 
@@ -160,15 +161,14 @@ export function GET_VENTURES(Account){
     types : ['GET_VENTURES_REQUEST', 'GET_VENTURES_SUCCESS', 'GET_VENTURES_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        Contract.details('DirectorIndex').then((c) => {
 
-          console.log(c)
-          let DirectorIndex = web3.eth.contract(JSON.parse(c.abi)).at(c.address);
-          DirectorIndex.GetVentures.call((error, data) => {
-            console.log(error);
-            console.log(data);
-            resolve(data);
-          });
+        DAV.GetVentures(Account).then((ventures) => {
+
+          return DAV.GetVenturesDetails(ventures);
+        }).then((details) => {
+
+          console.log(details);
+          resolve(details);
 
         }).catch((error) => {
 
@@ -178,6 +178,85 @@ export function GET_VENTURES(Account){
         });
 
       });
+    }
+  }
+}
+
+export function NEW_VENTURE(Account, venture){
+
+  console.log(Account);
+  console.log(venture);
+
+  return {
+    types : ['NEW_VENTURE_REQUEST', 'NEW_VENTURE_SUCCESS', 'NEW_VENTURE_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        // lets use this action as our entry point into deploying the DAV onto the blockchain.
+        // first we need to compile our Directorate contract and deploy, then we need to deploy the bylaws, etc. contracts..
+
+        // this process will include several promises..
+        let C = new Object();
+
+        Contract.compile('Directorate').then((compiled) => {
+
+          console.log(compiled);
+          return unlockAccount(Account.address, Account.password);
+
+        }).then((unlocked) => {
+
+          console.log(unlocked);
+          return minerStart(2);
+
+        }).then((data) => {
+
+          console.log(data);
+          return Contract.details('Directorate');
+
+        }).then((c) => {
+
+          console.log(c);
+
+          return DAV.DeployDirectorate(c.abi, c.code, Account.address, venture);
+
+        }).then((deployed) => {
+          console.log(deployed);
+
+          return Contract.saveAddress('Directorate', deployed.address);
+
+        }).then((data) => {
+
+          console.log(data);
+          return minerStop(2);
+
+        }).then((data) => {
+
+          return Contract.details('Directorate');
+
+        }).then((c) => {
+          C = c;
+          console.log(c);
+
+          return DAV.AddDirectorToIndex(Account);
+
+        }).then((txhash) => {
+
+          console.log(txhash);
+
+          return DAV.AddVentureToDirectorIndex(Account, C);
+        }).then((txhash) => {
+
+          console.log(txhash);
+          resolve({name : venture.name, address : C.address});
+
+        }).catch((error) => {
+
+          console.log(error);
+          reject(error);
+
+        });
+
+
+      })
     }
   }
 }
