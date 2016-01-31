@@ -1,6 +1,11 @@
 export default function IMPORT_ACCOUNT(state = { Account : { set : null }}, action){
 
   switch(action.type){
+    case 'IMPORT_ACCOUNT_SELECTED':
+      return {
+        ...state,
+        Account : action.SelectedAccount
+      }
     case 'IMPORT_REQUEST':
       return {
         ...state

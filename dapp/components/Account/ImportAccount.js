@@ -4,9 +4,7 @@ import DirectorateApp from '../DirectorateApp';
 import TextField from 'material-ui/lib/text-field';
 import Dialog from 'material-ui/lib/dialog';
 import RaisedButton from 'material-ui/lib/raised-button';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
-import DefaultTheme from '../Themes/default';
+
 import * as Account from '../../utilities/Account/index';
 import SelectAccount from './SelectAccount';
 import * as Actions from '../../actions/index';
@@ -22,8 +20,6 @@ const customContentStyle = {
   marginTop:'1%',
   width:'100%'
 }
-
-@ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
 
 class ImportAccountComponent extends Component {
   constructor(props) {
@@ -43,7 +39,7 @@ class ImportAccountComponent extends Component {
     let { dispatch } = this.props;
     setTimeout(() => {
         dispatch(Actions.LIST_ACCOUNTS());
-    }, 3000);
+    }, 1500);
 
   }
 
@@ -62,6 +58,8 @@ class ImportAccountComponent extends Component {
     let { dispatch } = this.props;
     let { account } = this.state;
 
+    console.log(account);
+
     dispatch(Actions.IMPORT_ACCOUNT(account));
     this.setState({open : !this.state.open});
   }
@@ -70,16 +68,19 @@ class ImportAccountComponent extends Component {
     let { dispatch } = this.props;
     let { account } = data;
 
-    if(typeof account == 'string'){
-        this.state.account.address = account;
-        this.state.account.set = false;
 
-        dispatch(Actions.SET_ACCOUNT(this.state.account));
+    if(!data){
+      this.state.account.set = false;
+      dispatch(Actions.IMPORT_ACCOUNT_SELECTED(this.state.account));
     } else {
-      this.state.account.set = true;
-      this.setState({open : !this.state.open});
+      this.state.account.address = account;
+      this.state.account.set = null;
+      dispatch(Actions.IMPORT_ACCOUNT_SELECTED(this.state.account));
     }
+  }
 
+  openModal = () => {
+    this.setState({open : !this.state.open});
   }
 
 
@@ -88,13 +89,14 @@ class ImportAccountComponent extends Component {
   render() {
     // let { dispatch } = this.props;
     let { open } = this.state;
-    let { Accounts } = this.props.Accounts;
+    let { AllAccounts } = this.props.Accounts;
     let { Account } = this.props.Account;
     let { set } = Account;
 
 
     switch(set){
-      case false:
+
+      case null:
         return (
           <Dialog
             title="Set Account Details"
@@ -122,15 +124,15 @@ class ImportAccountComponent extends Component {
                 key={"Cancel"}
                 label="Cancel"
                 style={customContentStyle}
-                onClick={this.onClick} />
+                onClick={this.onClick.bind(this, false)} />
             { this.props.Account.error != undefined ? alert('Invalid Password') : null }
           </Dialog>
         );
       default:
-        var accounts = Accounts.map((account) => {
+        var accounts = AllAccounts.map((account, i) => {
           return(
             <RaisedButton
-                key={account}
+                key={i}
                 label={account}
                 onClick={this.onClick.bind(this, {account})}
                 style={customContentStyle} />
@@ -144,7 +146,7 @@ class ImportAccountComponent extends Component {
               label="Import Account"
               secondary={true}
               style={customContentStyle}
-              onClick={this.onClick} />
+              onClick={this.openModal} />
           <Dialog
             title="Import Account"
             modal={false}
@@ -156,7 +158,7 @@ class ImportAccountComponent extends Component {
                   key={"Cancel"}
                   label="Cancel"
                   style={customContentStyle}
-                  onClick={this.onClick} />
+                  onClick={this.openModal} />
           </Dialog>
           </div>
         );
@@ -167,8 +169,8 @@ class ImportAccountComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Accounts : state.ListAccounts,
-    Account : state.ImportAccount
+    Accounts : state.Accounts,
+    Account : state.Account,
   }
 }
 

@@ -1,14 +1,86 @@
 const Promise = require('bluebird');
-import { web3 } from '../../ethereum/index';
+import { web3, unlockAccount, minerStart, minerStop } from '../../ethereum/index';
 import * as Contract from './index';
 import async from 'async';
 
 /*
 
-These functions handle the deployment of sections of the DAV....
+These functions handle the deployment of sections of the DAV...
 
 
 */
+
+export function NewVenture(Account, venture){
+  return new Promise((resolve, reject) => {
+    // lets use this action as our entry point into deploying the DAV onto the blockchain.
+    // first we need to compile our Directorate contract and deploy, then we need to deploy the bylaws, etc. contracts..
+
+    // this process will include several promises..
+    let C = new Object();
+
+    Contract.compile('Directorate').then((compiled) => {
+
+      console.log(compiled);
+      return unlockAccount(Account.address, Account.password);
+
+    }).then((unlocked) => {
+
+      console.log(unlocked);
+      return minerStart(2);
+
+    }).then((data) => {
+
+      console.log(data);
+      return Contract.details('Directorate');
+
+    }).then((c) => {
+
+      console.log(c);
+
+      return DeployDirectorate(c.abi, c.code, Account.address, venture);
+
+    }).then((deployed) => {
+      console.log(deployed);
+
+      return Contract.saveAddress('Directorate', deployed.address);
+
+    }).then((data) => {
+
+      console.log(data);
+      return minerStop(2);
+
+    }).then((data) => {
+
+      return Contract.details('Directorate');
+
+    }).then((c) => {
+      C = c;
+      console.log(c);
+
+      return AddDirectorToIndex(Account);
+
+    }).then((txhash) => {
+
+      console.log(txhash);
+
+      return AddVentureToDirectorIndex(Account, C);
+    }).then((txhash) => {
+
+      console.log(txhash);
+
+
+
+      resolve({name : venture.name, address : C.address});
+
+    }).catch((error) => {
+
+      console.log(error);
+      reject(error);
+
+    });
+  });
+}
+
 
 export function GetVentures(Account){
   console.log(Account);

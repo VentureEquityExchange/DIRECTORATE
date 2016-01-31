@@ -22,6 +22,7 @@ class SelectVentureComponent extends Component {
     super(props);
     this.state = {
       expand : false,
+      status : "Loading...",
       venture : {
         title : undefined
       }
@@ -35,6 +36,7 @@ class SelectVentureComponent extends Component {
 
     setTimeout(() => {
       dispatch(Actions.GET_VENTURES(Account));
+      this.setState({status: "No DAVs Found."})
     }, 2000)
 
   }
@@ -87,7 +89,7 @@ class SelectVentureComponent extends Component {
 
   render(){
     let { set, address } = this.props.Account.Account;
-    let { expand } = this.state;
+    let { expand, status } = this.state;
     let { Ventures } = this.props.Venture;
     console.log(this.props);
 
@@ -108,7 +110,7 @@ class SelectVentureComponent extends Component {
           title={"Select DAV"}
         />
         <CardActions expandable={true}>
-          { Ventures.length > 0 ? DAVs : <div>Loading DAVs...</div> }
+          { Ventures.length > 0 ? DAVs : <div>{status}</div> }
         </CardActions>
         {
           !expand ? null : <CardText>
@@ -146,9 +148,8 @@ class SelectVentureComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Account : state.SetAccount,
-    Venture : state.Venture,
-    Balance : state.Balance
+    Account : state.Account,
+    Venture : state.Venture
   }
 }
 

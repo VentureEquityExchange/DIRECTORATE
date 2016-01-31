@@ -83,8 +83,7 @@ class WalletComponent extends Component {
 
   render() {
     let { expand, txhashNotification } = this.state;
-    let { Account } = this.props.Account;
-    let { Balance } = this.props.Balance;
+    let { Account, Balance } = this.props.Account;
     let { toggleTransaction } = this.state;
     let { Transactions } = this.props;
     let { txhash, Transaction, error } = Transactions;
@@ -164,8 +163,7 @@ const mapStateToProps = (state) => {
     Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
     Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
     Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`,
-    Account : state.SetAccount,
-    Balance : state.AccountBalance,
+    Account : state.Account,
     Transactions : state.Transactions
   }
 }

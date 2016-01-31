@@ -6,6 +6,7 @@ const DataStore = (require('path').dirname(require.main.filename)+'/dapp/data/')
 const AliasStore = DataStore+'.aliasstore';
 const algorithm = 'aes-256-ctr';
 const salt = "0d1d4a88c2afd4fa8c0e1e63537ed4ad64918c";
+import { web3, unlockAccount } from '../../ethereum/index';
 
 function encryptText(text) {
   return new Promise((resolve, reject) => {
@@ -96,4 +97,52 @@ export function setAliasStore(text) {
   })
 }
 
-// export function getBalance()
+export function importAccount(account){
+  return new Promise((resolve, reject) => {
+    unlockAccount(account.address, account.password).then(unlocked => {
+      account.set = true;
+      return setAliasStore(JSON.stringify(account));
+    }).then(() => {
+      console.log('Alias Store Created');
+      resolve(account);
+    }).catch(error => {
+      reject(error);
+    });
+  });
+}
+
+export function getBalance(account){
+  return new Promise((resolve, reject) => {
+    web3.eth.getBalance(account, (error, balance ) => {
+      if(error){reject(error)}
+      let Balance = web3.fromWei(balance, 'ether');
+      console.log(Balance);
+      let bigNumber = ['.'];
+
+      switch(Balance.e){
+        case -9:
+          resolve(Number('.00000000'+Balance.c[0]+''+Balance.c[1]));
+        case -8:
+          resolve(Number('.0000000'+Balance.c[0]+''+Balance.c[1]));
+        case -7:
+          resolve(Number('.000000'+Balance.c[0]+''+Balance.c[1]));
+        case -6:
+          resolve(Number('.00000'+Balance.c[0]+''+Balance.c[1]));
+        case -5:
+          resolve(Number('.0000'+Balance.c[0]+''+Balance.c[1]));
+        case -4:
+          resolve(Number('.000'+Balance.c[0]+''+Balance.c[1]));
+        case -3:
+          resolve(Number('.00'+Balance.c[0]+''+Balance.c[1]));
+        case -2:
+          resolve(Number('.0'+Balance.c[0]+''+Balance.c[1]));
+        case -1:
+          resolve(Number('.'+Balance.c[0]+''+Balance.c[1]));
+        case 0:
+          resolve(Number(Balance.c[0]));
+        default:
+          resolve(Number(Balance.c[0]+'.'+`${ Balance.c[1] > 0 ? Balance.c[1] : 0 }` ));
+      }
+    });
+  });
+}

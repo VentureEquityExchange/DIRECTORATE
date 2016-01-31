@@ -60,11 +60,6 @@ class NewAccountComponent extends Component {
     let { open } = this.state;
     let { Account } = this.props.Account;
 
-    if(Account.set){
-      dispatch(Actions.SET_ACCOUNT(Account));
-    }
-
-
     return (
       <div>
       <RaisedButton
@@ -108,7 +103,7 @@ class NewAccountComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Account : state.CreateAccount
+    Account : state.Account
   }
 }
 

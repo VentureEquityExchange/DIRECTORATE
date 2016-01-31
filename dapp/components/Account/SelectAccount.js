@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
-import { Wallet, NewAccount, ImportAccount } from '../index';
 import Dialog from 'material-ui/lib/dialog';
+import { Wallet, NewAccount, ImportAccount } from '../index';
 import * as Account from '../../utilities/Account/index';
 import * as Actions from '../../actions/index';
 import { connect } from 'react-redux';
@@ -30,19 +30,19 @@ class SelectAccountComponent extends Component {
   }
 
   render(){
+    let { Accounts } = this.props.Accounts;
     let { Account } = this.props.Account;
-
     let showDialog = true;
 
-    if(this.props.Account.Account.set != null || this.props.AccountCreated.Account.set != null || this.props.SetAccount.Account.set != null){
+    if(Account.set == true){
       showDialog = false;
     }
 
 
-    var accounts = this.props.Accounts.map((account) => {
+    var accounts = Accounts.map((account, i) => {
       return(
         <RaisedButton
-          key={account.address}
+          key={i}
           label={account.alias}
           style={customContentStyle}
           onClick={this.onClick.bind(this, account)} />
@@ -69,10 +69,8 @@ class SelectAccountComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Accounts : state.Accounts.Accounts,
-    Account : state.ImportAccount,
-    AccountCreated : state.CreateAccount,
-    SetAccount : state.SetAccount
+    Accounts : state.Accounts,
+    Account : state.Account
   }
 }
 

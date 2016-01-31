@@ -71,7 +71,7 @@ class NavBarComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    Account : state.SetAccount
+    Account : state.Account
 
   }
 }

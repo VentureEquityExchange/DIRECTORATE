@@ -71,5 +71,5 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
 	mainWindow = createMainWindow();
-	// mainWindow.webContents.openDevTools();
+	mainWindow.webContents.openDevTools();
 });

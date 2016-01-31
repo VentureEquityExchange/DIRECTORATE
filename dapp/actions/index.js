@@ -1,6 +1,8 @@
 import Promise from 'bluebird';
 import * as Network from '../utilities/Network/index';
-import * as Accounts from '../utilities/Account/index';
+import * as Account from '../utilities/Account/index';
+import * as Contract from '../utilities/Contract/index';
+import * as DAV from '../utilities/Contract/DAV';
 
 import {
   newAccount,
@@ -12,8 +14,7 @@ import {
   minerStop
 } from '../ethereum/index';
 
-import * as Contract from '../utilities/Contract/index';
-import * as DAV from '../utilities/Contract/DAV';
+
 
 
 
@@ -128,7 +129,7 @@ export function CREATE_ACCOUNT(account){
         newAccount(account.password).then((address) => {
            account.address = address;
            account.set = true;
-           return Accounts.setAliasStore(JSON.stringify(account));
+           return Account.setAliasStore(JSON.stringify(account));
         }).then(() => {
           console.log('Account Created');
           resolve(account);
@@ -191,72 +192,12 @@ export function NEW_VENTURE(Account, venture){
     types : ['NEW_VENTURE_REQUEST', 'NEW_VENTURE_SUCCESS', 'NEW_VENTURE_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        // lets use this action as our entry point into deploying the DAV onto the blockchain.
-        // first we need to compile our Directorate contract and deploy, then we need to deploy the bylaws, etc. contracts..
-
-        // this process will include several promises..
-        let C = new Object();
-
-        Contract.compile('Directorate').then((compiled) => {
-
-          console.log(compiled);
-          return unlockAccount(Account.address, Account.password);
-
-        }).then((unlocked) => {
-
-          console.log(unlocked);
-          return minerStart(2);
-
-        }).then((data) => {
-
-          console.log(data);
-          return Contract.details('Directorate');
-
-        }).then((c) => {
-
-          console.log(c);
-
-          return DAV.DeployDirectorate(c.abi, c.code, Account.address, venture);
-
-        }).then((deployed) => {
-          console.log(deployed);
-
-          return Contract.saveAddress('Directorate', deployed.address);
-
-        }).then((data) => {
-
-          console.log(data);
-          return minerStop(2);
-
-        }).then((data) => {
-
-          return Contract.details('Directorate');
-
-        }).then((c) => {
-          C = c;
-          console.log(c);
-
-          return DAV.AddDirectorToIndex(Account);
-
-        }).then((txhash) => {
-
-          console.log(txhash);
-
-          return DAV.AddVentureToDirectorIndex(Account, C);
-        }).then((txhash) => {
-
-          console.log(txhash);
-          resolve({name : venture.name, address : C.address});
-
+        DAV.NewVenture(Account, venture).then((venture) => {
+          resolve(venture)
         }).catch((error) => {
-
-          console.log(error);
           reject(error);
-
         });
-
-
-      })
+      });
     }
   }
 }
@@ -301,34 +242,12 @@ export function GET_BALANCE(account){
     types : ['BALANCE_REQUEST', 'BALANCE_SUCCESS', 'BALANCE_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        web3.eth.getBalance(account, (error, balance ) => {
-          if(error){reject(error)}
-          let Balance = web3.fromWei(balance, 'ether');
-          console.log(Balance);
-          let bigNumber = ['.'];
-
-          switch(Balance.e){
-            case -9:
-              resolve(Number('.00000000'+Balance.c[0]+''+Balance.c[1]));
-            case -8:
-              resolve(Number('.0000000'+Balance.c[0]+''+Balance.c[1]));
-            case -7:
-              resolve(Number('.000000'+Balance.c[0]+''+Balance.c[1]));
-            case -6:
-              resolve(Number('.00000'+Balance.c[0]+''+Balance.c[1]));
-            case -5:
-              resolve(Number('.0000'+Balance.c[0]+''+Balance.c[1]));
-            case -4:
-              resolve(Number('.000'+Balance.c[0]+''+Balance.c[1]));
-            case -3:
-              resolve(Number('.00'+Balance.c[0]+''+Balance.c[1]));
-            case -2:
-              resolve(Number('.0'+Balance.c[0]+''+Balance.c[1]));
-            case -1:
-              resolve(Number('.'+Balance.c[0]+''+Balance.c[1]));
-            default:
-              resolve(Number(Balance.c[0]+'.'+Balance.c[1]));
-          }
+        console.log(account);
+        Account.getBalance(account).then((balance) => {
+          console.log(balance);
+          resolve(balance);
+        }).catch((error) => {
+          reject(error);
         });
       });
     }
@@ -340,26 +259,26 @@ export function IMPORT_ACCOUNT(account){
     types : ['IMPORT_REQUEST', 'IMPORT_SUCCESS', 'IMPORT_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        unlockAccount(account.address, account.password).then(unlocked => {
-          account.set = true;
-          return Accounts.setAliasStore(JSON.stringify(account));
-        }).then(() => {
-          console.log('Alias Store Created');
+        Account.importAccount(account).then((account) => {
           resolve(account);
-          return null;
-        }).catch(error => {
-          // this throws a warning saying rejecting non-error;
-          // no worries, we are handing this error in our Redux.
-          // Ignoring the warning.
+        }).catch((error) => {
           reject(error);
-          return null;
         });
       });
     }
   }
 }
 
+export function IMPORT_ACCOUNT_SELECTED(account){
+  console.log(account);
+  return {
+    type : 'IMPORT_ACCOUNT_SELECTED',
+    SelectedAccount : account
+  }
+}
+
 export function SET_ACCOUNT(account){
+  console.log(account);
   return {
     type : 'SET_ACCOUNT',
     Account : account
@@ -371,7 +290,7 @@ export function GET_ACCOUNTS(){
     types : ['ACCOUNTS_REQUEST', 'ACCOUNTS_SUCCESS', 'ACCOUNTS_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        Accounts.decryptAliases().then(aliases => {
+        Account.decryptAliases().then(aliases => {
           resolve(aliases);
         }).catch(error => {
           reject(error);

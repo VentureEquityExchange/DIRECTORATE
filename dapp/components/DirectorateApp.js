@@ -9,12 +9,14 @@ import DefaultTheme from './Themes/default';
 class DirectorateAppComponent extends Component {
 
   render(){
-    let { set } = this.props.SetAccount.Account;
+    let { set } = this.props.Account.Account;
+
+    console.log(set);
 
     return (
       <div>
         <Loading />
-        {set ? <Layout /> : null }
+        {set == true ? <Layout /> : null }
         <SelectAccount />
       </div>
     );
@@ -24,7 +26,7 @@ class DirectorateAppComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    SetAccount : state.SetAccount,
+    Account : state.Account,
     Venture : state.Venture
   }
 }
