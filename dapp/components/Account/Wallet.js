@@ -90,69 +90,48 @@ class WalletComponent extends Component {
 
     // console.log(this.props);
 
-    switch(expand){
-      case true:
-        return (
-          <Card initiallyExpanded={expand}>
-            <CardHeader
-              title="Account Wallet"
-              subtitle={Account.address}
-              actAsExpander={true}
-              showExpandableButton={true}
-              onClick={this.expandCard}
-               />
-            {
-              !expand ? null : <div>
-                <CardText >
-                  <strong>Balance: {Balance == null ? 'loading...' : Balance + " Ξther" } </strong>
-                </CardText>
-                <CardText>
-                  <TextField
-                    hintText={`${Account.address}`}
-                    defaultValue=""
-                    type="text"
-                    onChange={this.sendToAddress.bind(this)}
-                    style={{width:'100%', marginTop:'1%'}} />
-                    Send To Address
-                  <TextField
-                    hintText={"Amount (Ξther)"}
-                    defaultValue={0}
-                    type="number"
-                    onChange={this.sendAmount.bind(this)}
-                    style={{width:'100%', marginTop:'1%'}} />
-                    Send Amount (Ξther)
-                  <br/>
+    return (
+      <Card initiallyExpanded={false}>
+        <CardHeader
+          title="Account Wallet"
+          subtitle={`${Account.address} | ${Balance} Ξther`}
+          actAsExpander={true}
+          showExpandableButton={true}
+           />
+           <CardText expandable={true}>
+             <strong>Balance: {Balance == null ? 'loading...' : Balance + " Ξther" } </strong>
+           </CardText>
+           <CardText expandable={true}>
+             <TextField
+               hintText={`${Account.address}`}
+               defaultValue=""
+               type="text"
+               onChange={this.sendToAddress.bind(this)}
+               style={{width:'100%', marginTop:'1%'}} />
+               Send To Address
+             <TextField
+               hintText={"Amount (Ξther)"}
+               defaultValue={0}
+               type="number"
+               onChange={this.sendAmount.bind(this)}
+               style={{width:'100%', marginTop:'1%'}} />
+               Send Amount (Ξther)
+             <br/>
 
-                  <RaisedButton
-                      label="Send Transaction"
-                      secondary={true}
-                      style={{width:'100%', marginTop:'1%'}}
-                      onClick={this.sendTransaction.bind(this)} />
-                  <RaisedButton
-                      label="Cancel"
-                      primary={true}
-                      style={{width:'100%', marginTop:'1%'}}
-                      onClick={this.expandCard} />
-                </CardText>
-              </div>
-            }
-          </Card>
+             <RaisedButton
+                 label="Send Transaction"
+                 secondary={true}
+                 style={{width:'100%', marginTop:'1%'}}
+                 onClick={this.sendTransaction.bind(this)} />
+             <RaisedButton
+                 label="Cancel"
+                 primary={true}
+                 style={{width:'100%', marginTop:'1%'}}
+                 onClick={this.expandCard} />
+           </CardText>
+      </Card>
 
-        );
-      case false:
-        // console.log('close');
-        return (
-          <Card initiallyExpanded={expand} expand={expand}>
-            <CardHeader
-              title="Account Wallet"
-              subtitle={`${Account.address} | ${Balance} Ξther`}
-              actAsExpander={true}
-              showExpandableButton={false}
-              onClick={this.expandCard.bind(this)}
-               />
-          </Card>
-        );
-    }
+    );
 
   }
 }

@@ -31,7 +31,7 @@ System.config({
     "material-ui": "npm:material-ui@0.14.2",
     "muicss": "npm:muicss@0.3.0",
     "path": "npm:path@0.12.7",
-    "react": "npm:react@0.14.6",
+    "react": "npm:react@0.14.7",
     "react-card": "npm:react-card@1.0.2",
     "react-cellblock": "npm:react-cellblock@2.0.0",
     "react-dom": "npm:react-dom@0.14.6",
@@ -39,7 +39,7 @@ System.config({
     "react-grid-layout": "npm:react-grid-layout@0.10.0-beta1",
     "react-redux": "npm:react-redux@4.0.6",
     "react-router": "npm:react-router@2.0.0-rc5",
-    "react-tap-event-plugin": "npm:react-tap-event-plugin@0.2.1",
+    "react-tap-event-plugin": "npm:react-tap-event-plugin@0.2.2",
     "react-toolbox": "npm:react-toolbox@0.14.1",
     "redux": "npm:redux@3.0.5",
     "redux-devtools": "npm:redux-devtools@3.0.1",
@@ -307,7 +307,7 @@ System.config({
       "lodash.merge": "npm:lodash.merge@3.3.2",
       "lodash.throttle": "npm:lodash.throttle@3.0.4",
       "process": "github:jspm/nodelibs-process@0.1.2",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-addons-create-fragment": "npm:react-addons-create-fragment@0.14.6",
       "react-addons-pure-render-mixin": "npm:react-addons-pure-render-mixin@0.14.6",
       "react-addons-transition-group": "npm:react-addons-transition-group@0.14.6",
@@ -317,7 +317,7 @@ System.config({
       "warning": "npm:warning@2.1.0"
     },
     "npm:muicss@0.3.0": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:object.entries@1.0.3": {
       "define-properties": "npm:define-properties@1.1.2",
@@ -346,24 +346,24 @@ System.config({
       "strict-uri-encode": "npm:strict-uri-encode@1.1.0"
     },
     "npm:react-addons-create-fragment@0.14.6": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-addons-css-transition-group@0.14.6": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-addons-pure-render-mixin@0.14.6": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-addons-transition-group@0.14.6": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-addons-update@0.14.6": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-card@1.0.2": {
       "classnames": "npm:classnames@2.2.3",
       "process": "github:jspm/nodelibs-process@0.1.2",
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-cellblock@2.0.0": {
       "babel-runtime": "npm:babel-runtime@5.8.35",
@@ -371,16 +371,16 @@ System.config({
       "classnames": "npm:classnames@2.2.3",
       "eventlistener": "npm:eventlistener@0.0.1",
       "path": "github:jspm/nodelibs-path@0.1.0",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-dom": "npm:react-dom@0.14.6"
     },
     "npm:react-dock@0.2.3": {
       "lodash.debounce": "npm:lodash.debounce@3.1.1",
       "object-assign": "npm:object-assign@4.0.1",
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-dom@0.14.6": {
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-draggable@1.1.3": {
       "classnames": "npm:classnames@2.2.3",
@@ -389,7 +389,7 @@ System.config({
     },
     "npm:react-essence@0.1.9": {
       "events": "github:jspm/nodelibs-events@0.1.1",
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
     },
     "npm:react-grid-layout@0.10.0-beta1": {
       "deep-equal": "npm:deep-equal@1.0.1",
@@ -401,7 +401,7 @@ System.config({
     },
     "npm:react-json-tree@0.3.0": {
       "babel-runtime": "npm:babel-runtime@5.8.34",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-mixin": "npm:react-mixin@1.7.0"
     },
     "npm:react-mixin@1.7.0": {
@@ -412,7 +412,7 @@ System.config({
       "hoist-non-react-statics": "npm:hoist-non-react-statics@1.0.3",
       "invariant": "npm:invariant@2.2.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "redux": "npm:redux@3.0.5"
     },
     "npm:react-resizable@1.0.1": {
@@ -430,16 +430,20 @@ System.config({
     },
     "npm:react-tap-event-plugin@0.2.1": {
       "fbjs": "npm:fbjs@0.2.1",
-      "react": "npm:react@0.14.6"
+      "react": "npm:react@0.14.7"
+    },
+    "npm:react-tap-event-plugin@0.2.2": {
+      "fbjs": "npm:fbjs@0.2.1",
+      "react": "npm:react@0.14.7"
     },
     "npm:react-toolbox@0.14.1": {
       "classnames": "npm:classnames@2.2.3",
       "normalize.css": "npm:normalize.css@3.0.3",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-addons-css-transition-group": "npm:react-addons-css-transition-group@0.14.6",
       "react-dom": "npm:react-dom@0.14.6"
     },
-    "npm:react@0.14.6": {
+    "npm:react@0.14.7": {
       "fbjs": "npm:fbjs@0.6.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -456,13 +460,13 @@ System.config({
     "npm:redux-devtools-dock-monitor@1.0.1": {
       "babel-runtime": "npm:babel-runtime@6.3.19",
       "parse-key": "npm:parse-key@0.2.1",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-dock": "npm:react-dock@0.2.3",
       "react-pure-render": "npm:react-pure-render@1.0.2",
       "redux-devtools": "npm:redux-devtools@3.0.1"
     },
     "npm:redux-devtools-log-monitor@1.0.2": {
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-json-tree": "npm:react-json-tree@0.3.0",
       "react-pure-render": "npm:react-pure-render@1.0.2",
       "redux-devtools": "npm:redux-devtools@3.0.1",
@@ -473,7 +477,7 @@ System.config({
     },
     "npm:redux-devtools@3.0.1": {
       "lodash": "npm:lodash@3.10.1",
-      "react": "npm:react@0.14.6",
+      "react": "npm:react@0.14.7",
       "react-redux": "npm:react-redux@4.0.6",
       "redux": "npm:redux@3.0.5"
     },

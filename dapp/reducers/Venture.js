@@ -27,6 +27,7 @@ export default function VENTURE(state = { Ventures : [], Venture : undefined }, 
       return {
         ...state,
         Ventures : state.Ventures.concat(action.result),
+        Venture : action.result,
         error : undefined
       };
     case 'NEW_VENTURE_FAILURE':
@@ -35,6 +36,13 @@ export default function VENTURE(state = { Ventures : [], Venture : undefined }, 
         ...state,
         error : action.error,
         Venture : undefined
+      };
+    case 'SELECTED_VENTURE':
+      console.log(action);
+      return {
+        ...state,
+        Venture : action.result,
+        error : undefined
       };
     default:
       return state;

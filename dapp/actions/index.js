@@ -183,6 +183,13 @@ export function GET_VENTURES(Account){
   }
 }
 
+export function SELECT_VENTURE(venture){
+  return {
+    type : 'SELECTED_VENTURE',
+    result : venture
+  }
+}
+
 export function NEW_VENTURE(Account, venture){
 
   console.log(Account);

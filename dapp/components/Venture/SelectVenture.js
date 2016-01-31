@@ -23,6 +23,7 @@ class SelectVentureComponent extends Component {
     this.state = {
       expand : false,
       status : "Loading...",
+      deploy : false,
       venture : {
         title : undefined
       }
@@ -56,7 +57,7 @@ class SelectVentureComponent extends Component {
 
   newVenture = () => {
     let { dispatch } = this.props;
-    let { expand, venture } = this.state;
+    let { expand, venture, deploy } = this.state;
     let { Account } = this.props.Account;
 
     console.log(Account);
@@ -77,20 +78,22 @@ class SelectVentureComponent extends Component {
         console.log('Canceled.');
       } else {
         dispatch(Actions.NEW_VENTURE(Account, venture));
-        this.setState({expand : !expand});
+        this.setState({deploy : !deploy});
       }
 
     }
   }
 
   SelectVenture = (venture) => {
-    console.log(venture);
+    let { dispatch } = this.props;
+
+    dispatch(Actions.SELECT_VENTURE(venture));
   }
 
   render(){
     let { set, address } = this.props.Account.Account;
-    let { expand, status } = this.state;
-    let { Ventures } = this.props.Venture;
+    let { expand, status, deploy, venture } = this.state;
+    let { Ventures, Venture, error } = this.props.Venture;
     console.log(this.props);
 
     let DAVs;
@@ -107,7 +110,7 @@ class SelectVentureComponent extends Component {
     return (
       <Card initiallyExpanded={true}>
         <CardHeader
-          title={"Select DAV"}
+          title={`Select DAV`}
         />
         <CardActions expandable={true}>
           { Ventures.length > 0 ? DAVs : <div>{status}</div> }
@@ -141,6 +144,13 @@ class SelectVentureComponent extends Component {
         <CardActions expandable={true}>
           <RaisedButton secondary={true} label="New Decentralized Autonomous Venture | DAV" style={customContentStyle} onClick={this.newVenture}/>
         </CardActions>
+        {error != undefined ? alert(`Insufficient Funds in account, please add Ether to account at address: ${address}`) : <Dialog
+          title={`Deploying ${venture.name} to the Ethereum Blockchain. One Moment...`}
+          modal={true}
+          open={deploy}
+          autoScrollBodyContent={true}
+        >
+        </Dialog> }
       </Card>
     );
   }

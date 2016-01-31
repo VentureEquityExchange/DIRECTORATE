@@ -18,6 +18,9 @@ import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DefaultTheme from './Themes/default';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 const NavBarStyle = {
   fontFamily: 'Roboto',
@@ -30,8 +33,30 @@ const NavBarStyle = {
 class NavBarComponent extends React.Component {
 	constructor(props){
 		super(props);
-
+    this.state = {
+      value : 1
+    }
 	}
+
+  handleChange = (event, index, value) => {
+    // instead of changing the value, let's dispatch some actions
+    let { dispatch } = this.props;
+
+    switch(value){
+      case 2:
+        let Account = {
+          address : undefined,
+          alias : undefined,
+          password : undefined,
+          set : false
+        }
+        dispatch(Actions.SET_ACCOUNT(Account))
+      case 3:
+        dispatch(Actions.SELECT_VENTURE(undefined));
+    };
+
+    // this.setState({value});
+  }
 
   onClick = (side) => {
     let { dispatch } = this.props;
@@ -51,8 +76,12 @@ class NavBarComponent extends React.Component {
 
         </ToolbarGroup>
         <ToolbarGroup float="right">
-          <ToolbarTitle text="VΞX|DIRECTORATE" />
-          <FontIcon className="muidocs-icon-custom-sort" />
+
+          <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+            <MenuItem value={1} primaryText={`${Account.alias}`}/>
+            <MenuItem value={2} primaryText="Switch Accounts"/>
+            <MenuItem value={3} primaryText="Switch Ventures"/>
+          </DropDownMenu>
           <IconMenu
             iconButtonElement={
               <IconButton onClick={this.onClick.bind(this, 'right')}>
@@ -61,8 +90,6 @@ class NavBarComponent extends React.Component {
             }
           >
           </IconMenu>
-          <ToolbarSeparator />
-          <FlatButton label={Account.alias} secondary={true}/>
         </ToolbarGroup>
       </Toolbar>
     );

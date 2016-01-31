@@ -9,6 +9,7 @@ import ImportAccount from './Account/ImportAccount';
 import NewAccount from './Account/NewAccount';
 import MarketInsights from './MarketInsights';
 import SelectVenture from './Venture/SelectVenture';
+import Directors from './Venture/Directors';
 
 export {
   DirectorateApp,
@@ -21,5 +22,6 @@ export {
   NewAccount,
   ImportAccount,
   MarketInsights,
-  SelectVenture
+  SelectVenture,
+  Directors
 };
