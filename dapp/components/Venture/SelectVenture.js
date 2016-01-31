@@ -108,7 +108,7 @@ class SelectVentureComponent extends Component {
           title={"Select DAV"}
         />
         <CardActions expandable={true}>
-          { Ventures.length > 0 ? DAVs : null }
+          { Ventures.length > 0 ? DAVs : <div>Loading DAVs...</div> }
         </CardActions>
         {
           !expand ? null : <CardText>
