@@ -1,16 +1,18 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
-const contractsPath = require("path").join(__dirname, "/dapp/contracts/");
-const compiler = (contractsPath+'compile.js');
+const jsonfile = Promise.promisifyAll(require('jsonfile'));
+const DataStore = (require('path').dirname(require.main.filename)+'/dapp/data/');
+const ContractStore = DataStore+'.contractstore';
+const compiler = ('./compile.js');
 const child = require('child_process').fork(compiler);
-
+import async from 'async';
 import { web3 } from '../../ethereum/index';
 
 
 export function deploy(abi, code, address){
   return new Promise((resolve, reject) => {
     // general deploy method for contracts without instantiating variables...
-    
+
     web3.eth.contract(JSON.parse(abi)).new({from: address, data : code, gas : 3141592},
       (error, deployed) => {
         if(error){reject(error);}
@@ -48,13 +50,74 @@ export function saveAddress(contract, address){
   })
 }
 
+
+
 export function compile(contract){
   return new Promise((resolve, reject) => {
     child.send(contract);
-
     child.on('message', (compiled) => {
-      if(!compiled.abi){reject(compiled);}
+      // if(!compiled.abi){reject(compiled);}
+      console.log(compiled);
       resolve(compiled);
     });
   });
 }
+
+
+function checkContractStore() {
+  return new Promise((resolve, reject) => {
+    fs.readdirAsync(DataStore).then((files) => {
+      files.forEach((file) => {
+        if(file == '.contractstore') {
+            resolve(true);
+        }
+      });
+      resolve(false);
+    }).catch((error) => {
+      reject(error);
+    });
+  })
+}
+
+export function getContractStore() {
+  return new Promise((resolve, reject) => {
+    checkContractStore().then((exists) => {
+      if(!exists){
+        resolve({})
+      } else {
+        return jsonfile.readFileAsync(ContractStore);
+      }
+    }).then((contractstore) => {
+      resolve(contractstore);
+    }).catch((error) => {
+      reject(error);
+    })
+  })
+}
+
+
+
+
+// function saveCompiled(Contract, compiled){
+// 	return new Promise(function(resolve, reject){
+// 		fs.writeFileAsync(contractsFolder+'/'+Contract+'/'+'abi.json', compiled.contracts[Contract].interface).then(function(data){
+// 			return fs.writeFileAsync(contractsFolder+'/'+Contract+'/'+'bytecode.txt', compiled.contracts[Contract].bytecode);
+// 		}).then(function(){
+// 			resolve({abi : JSON.parse(compiled.contracts[Contract].interface), code : compiled.contracts[Contract].bytecode});
+// 		}).catch(function(error){
+// 			reject(error);
+// 		});
+// 	});
+// }
+//
+// function compileAndSave(Contract){
+// 	return new Promise(function(resolve, reject){
+// 		compile(Contract).then(function(compiled){
+// 			return saveCompiled(Contract, compiled);
+// 		}).then(function(compiled){
+// 			resolve(compiled);
+// 		}).catch(function(error){
+// 			reject(error);
+// 		});
+// 	});
+// }

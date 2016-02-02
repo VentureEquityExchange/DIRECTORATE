@@ -82,14 +82,9 @@ class NavBarComponent extends React.Component {
             <MenuItem value={2} primaryText="Switch Accounts"/>
             <MenuItem value={3} primaryText="Switch Ventures"/>
           </DropDownMenu>
-          <IconMenu
-            iconButtonElement={
-              <IconButton onClick={this.onClick.bind(this, 'right')}>
-                <DoubleBarIcon />
-              </IconButton>
-            }
-          >
-          </IconMenu>
+          <IconButton onClick={this.onClick.bind(this, 'right')}>
+            <DoubleBarIcon />
+          </IconButton>
         </ToolbarGroup>
       </Toolbar>
     );

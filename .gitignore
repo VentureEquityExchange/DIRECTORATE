@@ -1,3 +1,4 @@
 /node_modules
 /jspm_packages
 /dapp/data/.aliasstore
+/dapp/data/.contractstore

@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import * as Network from '../utilities/Network/index';
 import * as Account from '../utilities/Account/index';
 import * as Contract from '../utilities/Contract/index';
-import * as DAV from '../utilities/Contract/DAV';
+import * as DAV from '../utilities/DAV/index';
 
 import {
   newAccount,
@@ -20,47 +20,47 @@ import {
 
 // Used to deploy contracts in development
 
-// Promise.delay(5000).then(() => {
-//
-//   return Contract.compile('DirectorIndex');
-//
-// }).then((compiled) => {
-//
-//   console.log(compiled);
-//   return unlockAccount("0x34a4d6c830193f0244364a1711b182868c9feda9", "test");
-//
-// }).then((unlocked) => {
-//
-//   console.log(unlocked);
-//   return minerStart(2);
-//
-// }).then((data) => {
-//
-//   console.log(data);
-//   return Contract.details('DirectorIndex');
-//
-// }).then((c) => {
-//
-//   console.log(Contract);
-//   return Contract.deploy(c.abi, c.code, "0x34a4d6c830193f0244364a1711b182868c9feda9");
-//
-// }).then((deployed) => {
-//
-//   console.log(deployed);
-//   return Contract.saveAddress('DirectorIndex', deployed.address);
-//
-// }).then((data) => {
-//
-//   console.log(data);
-//   return minerStop(2);
-//
-// }).then((data) => {
-//
-//   console.log(data);
-// }).catch((error) => {
-//   console.log(error);
-//   // reject(error);
-// });
+Promise.delay(5000).then(() => {
+
+  return Contract.compile('DirectorIndex');
+
+}).then((compiled) => {
+
+  console.log(compiled);
+  return unlockAccount("0x34a4d6c830193f0244364a1711b182868c9feda9", "test");
+
+}).then((unlocked) => {
+
+  console.log(unlocked);
+  return minerStart(2);
+
+}).then((data) => {
+
+  console.log(data);
+  return Contract.details('DirectorIndex');
+
+}).then((c) => {
+
+  console.log(Contract);
+  return Contract.deploy(c.abi, c.code, "0x34a4d6c830193f0244364a1711b182868c9feda9");
+
+}).then((deployed) => {
+
+  console.log(deployed);
+  return Contract.saveAddress('DirectorIndex', deployed.address);
+
+}).then((data) => {
+
+  console.log(data);
+  return minerStop(2);
+
+}).then((data) => {
+
+  console.log(data);
+}).catch((error) => {
+  console.log(error);
+  // reject(error);
+});
 
 
 export function _NETWORK(){
@@ -162,20 +162,14 @@ export function GET_VENTURES(Account){
     types : ['GET_VENTURES_REQUEST', 'GET_VENTURES_SUCCESS', 'GET_VENTURES_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
+        console.log(Account)
 
         DAV.GetVentures(Account).then((ventures) => {
-
-          return DAV.GetVenturesDetails(ventures);
-        }).then((details) => {
-
-          console.log(details);
-          resolve(details);
-
+          console.log(ventures);
+          resolve(ventures);
         }).catch((error) => {
-
           console.log(error);
           reject(error);
-
         });
 
       });
@@ -199,7 +193,7 @@ export function NEW_VENTURE(Account, venture){
     types : ['NEW_VENTURE_REQUEST', 'NEW_VENTURE_SUCCESS', 'NEW_VENTURE_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        DAV.NewVenture(Account, venture).then((venture) => {
+        DAV.NewDAV(Account, venture).then((venture) => {
           resolve(venture)
         }).catch((error) => {
           reject(error);

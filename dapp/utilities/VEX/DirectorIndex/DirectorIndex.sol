@@ -28,7 +28,7 @@ contract DirectorIndex {
 
     function AddVenture(address venture) public returns(bool){
         if(Directors[msg.sender].director == 0x0){
-            return false;
+            Directors[msg.sender].director = msg.sender;
         } else {
             for(uint i = 0; i < Directors[msg.sender].ventures.length; i++){
                 if(Directors[msg.sender].ventures[i] == venture){
