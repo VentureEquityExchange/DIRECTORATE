@@ -113,7 +113,7 @@ export function deleteAccount(address, password) {
 
 export function unlockAccount(address, password) {
 	return new Promise((resolve, reject) => {
-		let duration = 120;
+		let duration = 360;
         let payload = {jsonrpc: '2.0',method: 'personal_unlockAccount',params: [address, password, duration],id: 1};
 				gethIPC(payload, (error, data) => {
 					if(error){reject(error);}

@@ -1,65 +1,72 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const jsonfile = Promise.promisifyAll(require('jsonfile'));
-const DataStore = (require('path').dirname(require.main.filename)+'/dapp/data/');
+import path from 'path';
+const DataStore = (path.dirname(require.main.filename)+'/dapp/data/');
 const ContractStore = DataStore+'.contractstore';
-const compiler = ('./compile.js');
-const child = require('child_process').fork(compiler);
+const child = require('child_process').fork(__dirname+'/dapp/utilities/Contract/compile.js');
 import async from 'async';
 import { web3 } from '../../ethereum/index';
+// console.log(__dirname);
+
+// export function deploy(abi, code, address){
+//   return new Promise((resolve, reject) => {
+//     // general deploy method for contracts without instantiating variables...
+//
+//     web3.eth.contract(JSON.parse(abi)).new({from: address, data : code, gas : 3141592},
+//       (error, deployed) => {
+//         if(error){reject(error);}
+//         if(!deployed.address){
+//           console.log('Waiting for contract transaction '+deployed.transactionHash+' to be mined...');
+//         } else {
+//           console.log('Contract mined! Contract Address: '+deployed.address);
+//           resolve(deployed);
+//         }
+//       });
+//   });
+// }
+
+// export function details(contract){
+//   return new Promise((resolve, reject) => {
+//     Promise.join(
+//       fs.readFileAsync(contractsPath+contract+'/abi.json', 'utf8'),
+//       fs.readFileAsync(contractsPath+contract+'/bytecode.txt', 'utf8'),
+//       fs.readFileAsync(contractsPath+contract+'/address.txt', 'utf8'),
+//       (abi, code, address) => {
+//         resolve({abi : abi, code : code, address : address});
+//       }).catch((error) => {
+//         reject(error);
+//       });
+//   });
+// }
+
+// export function saveAddress(contract, address){
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileAsync(contractsPath+contract+'/address.txt', address).then((data) => {
+//       resolve(data);
+//     }).catch((error) => {
+//       reject(error);
+//     });
+//   })
+// }
 
 
-export function deploy(abi, code, address){
+
+export function Compile(contracts){
   return new Promise((resolve, reject) => {
-    // general deploy method for contracts without instantiating variables...
 
-    web3.eth.contract(JSON.parse(abi)).new({from: address, data : code, gas : 3141592},
-      (error, deployed) => {
-        if(error){reject(error);}
-        if(!deployed.address){
-          console.log('Waiting for contract transaction '+deployed.transactionHash+' to be mined...');
-        } else {
-          console.log('Contract mined! Contract Address: '+deployed.address);
-          resolve(deployed);
-        }
-      });
-  });
-}
+    child.send(contracts);
 
-export function details(contract){
-  return new Promise((resolve, reject) => {
-    Promise.join(
-      fs.readFileAsync(contractsPath+contract+'/abi.json', 'utf8'),
-      fs.readFileAsync(contractsPath+contract+'/bytecode.txt', 'utf8'),
-      fs.readFileAsync(contractsPath+contract+'/address.txt', 'utf8'),
-      (abi, code, address) => {
-        resolve({abi : abi, code : code, address : address});
-      }).catch((error) => {
-        reject(error);
-      });
-  });
-}
-
-export function saveAddress(contract, address){
-  return new Promise((resolve, reject) => {
-    fs.writeFileAsync(contractsPath+contract+'/address.txt', address).then((data) => {
-      resolve(data);
-    }).catch((error) => {
+    child.on('error', function(error){
+      console.log(error);
       reject(error);
     });
-  })
-}
 
-
-
-export function compile(contract){
-  return new Promise((resolve, reject) => {
-    child.send(contract);
     child.on('message', (compiled) => {
-      // if(!compiled.abi){reject(compiled);}
-      console.log(compiled);
+      if(!compiled.sources){reject(compiled);}
       resolve(compiled);
     });
+
   });
 }
 

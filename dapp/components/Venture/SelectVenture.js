@@ -36,6 +36,7 @@ class SelectVentureComponent extends Component {
     console.log('Make call to DirectorIndex contract and send back results');
 
     setTimeout(() => {
+      // dispatch(Actions.NEW_DIRECTOR_INDEX(Account));
       dispatch(Actions.GET_VENTURES(Account));
       this.setState({status: "No DAVs Found."})
     }, 2000)
@@ -113,7 +114,7 @@ class SelectVentureComponent extends Component {
           title={`Select DAV`}
         />
         <CardActions expandable={true}>
-          { Ventures.length > 0 ? DAVs : <div>{status}</div> }
+          { Ventures.length > 0 ? DAVs : null }
         </CardActions>
         {
           !expand ? null : <CardText>
@@ -159,7 +160,8 @@ class SelectVentureComponent extends Component {
 const mapStateToProps = (state) => {
   return {
     Account : state.Account,
-    Venture : state.Venture
+    Venture : state.Venture,
+    DirectorIndex : state.DirectorIndex
   }
 }
 

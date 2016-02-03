@@ -3,6 +3,8 @@ import * as Network from '../utilities/Network/index';
 import * as Account from '../utilities/Account/index';
 import * as Contract from '../utilities/Contract/index';
 import * as DAV from '../utilities/DAV/index';
+import * as DirectorIndex from '../utilities/VEX/DirectorIndex/index';
+
 
 import {
   newAccount,
@@ -11,56 +13,10 @@ import {
   web3,
   getTransactionByHash,
   minerStart,
-  minerStop
+  minerStop,
+  setEtherbase
 } from '../ethereum/index';
 
-
-
-
-
-// Used to deploy contracts in development
-
-Promise.delay(5000).then(() => {
-
-  return Contract.compile('DirectorIndex');
-
-}).then((compiled) => {
-
-  console.log(compiled);
-  return unlockAccount("0x34a4d6c830193f0244364a1711b182868c9feda9", "test");
-
-}).then((unlocked) => {
-
-  console.log(unlocked);
-  return minerStart(2);
-
-}).then((data) => {
-
-  console.log(data);
-  return Contract.details('DirectorIndex');
-
-}).then((c) => {
-
-  console.log(Contract);
-  return Contract.deploy(c.abi, c.code, "0x34a4d6c830193f0244364a1711b182868c9feda9");
-
-}).then((deployed) => {
-
-  console.log(deployed);
-  return Contract.saveAddress('DirectorIndex', deployed.address);
-
-}).then((data) => {
-
-  console.log(data);
-  return minerStop(2);
-
-}).then((data) => {
-
-  console.log(data);
-}).catch((error) => {
-  console.log(error);
-  // reject(error);
-});
 
 
 export function _NETWORK(){
@@ -162,7 +118,6 @@ export function GET_VENTURES(Account){
     types : ['GET_VENTURES_REQUEST', 'GET_VENTURES_SUCCESS', 'GET_VENTURES_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        console.log(Account)
 
         DAV.GetVentures(Account).then((ventures) => {
           console.log(ventures);
@@ -281,8 +236,20 @@ export function IMPORT_ACCOUNT_SELECTED(account){
 export function SET_ACCOUNT(account){
   console.log(account);
   return {
-    type : 'SET_ACCOUNT',
-    Account : account
+    types : ['SET_ACCOUNT_REQUEST', 'SET_ACCOUNT_SUCCESS', 'SET_ACCOUNT_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        if(account.address == undefined){
+          resolve(account);
+        } else {
+          setEtherbase(account.address).then((set) => {
+            resolve(account);
+          }).catch((error) => {
+            reject(error);
+          });
+        }
+      });
+    }
   }
 }
 
@@ -312,5 +279,28 @@ export function _ERROR(status){
   return {
     type: status.code,
     error: status
+  }
+}
+
+export function NEW_DIRECTOR_INDEX(account){
+  let DI = new Object();
+  return {
+    types : ['NEW_DIRECTOR_INDEX_REQUEST', 'NEW_DIRECTOR_INDEX_SUCCESS', 'NEW_DIRECTOR_INDEX_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        unlockAccount(account.address, account.password).then((unlocked) => {
+          return minerStart(2);
+        }).then((miningStarted) => {
+          return DirectorIndex.NewDirectorIndex(account);
+        }).then((DirectorIndex) => {
+          DI = DirectorIndex;
+          return minerStop(2);
+        }).then((miningStopped) => {
+          resolve(DI);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    }
   }
 }

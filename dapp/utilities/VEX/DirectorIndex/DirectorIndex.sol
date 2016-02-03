@@ -1,7 +1,8 @@
 contract DirectorIndex {
+
     struct Director {
         address director;
-        address[] ventures;
+        address[] DAVs;
 
     }
 
@@ -26,22 +27,22 @@ contract DirectorIndex {
         }
     }
 
-    function AddVenture(address venture) public returns(bool){
+    function AddVenture(address DAV) public returns(bool){
         if(Directors[msg.sender].director == 0x0){
             Directors[msg.sender].director = msg.sender;
         } else {
-            for(uint i = 0; i < Directors[msg.sender].ventures.length; i++){
-                if(Directors[msg.sender].ventures[i] == venture){
+            for(uint i = 0; i < Directors[msg.sender].DAVs.length; i++){
+                if(Directors[msg.sender].DAVs[i] == DAV){
                     throw;
                 }
             }
         }
 
-        Directors[msg.sender].ventures.push(venture);
+        Directors[msg.sender].DAVs.push(DAV);
         return true;
     }
 
-    function GetVentures() public returns(address[]){
-        return Directors[msg.sender].ventures;
+    function GetVentures(address _director) public returns(address[]){
+        return Directors[_director].DAVs;
     }
 }

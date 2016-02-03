@@ -25,7 +25,7 @@ class DirectorsComponent extends Component {
       <Card initiallyExpanded={false}>
         <CardHeader
           title={`${Venture.name} | Directors`}
-          subtitle={`Venture Address: ${Venture.address}`}
+          subtitle={`Venture Address: ${Venture.DAV}`}
           actAsExpander={true}
           showExpandableButton={true}
         />

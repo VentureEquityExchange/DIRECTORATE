@@ -53,11 +53,22 @@ export default function ACCOUNT_REDUCER(state = { Account : { set : false }, Bal
         ...state,
         error : action.error
       };
-    case 'SET_ACCOUNT':
+    case 'SET_ACCOUNT_REQUEST':
+      return {
+        ...state
+      };
+    case 'SET_ACCOUNT_SUCCESS':
+      console.log(action.result);
       return {
         ...state,
-        Account : action.Account,
+        Account : action.result,
         error : undefined
+      };
+    case 'SET_ACCOUNT_FAILURE':
+      return {
+        ...state,
+        Account : undefined,
+        error : action.error
       };
     default:
       return state;

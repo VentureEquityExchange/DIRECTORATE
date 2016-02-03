@@ -8,7 +8,7 @@ const algorithm = 'aes-256-ctr';
 const salt = "0d1d4a88c2afd4fa8c0e1e63537ed4ad64918c";
 import { web3, unlockAccount } from '../../ethereum/index';
 
-function encryptText(text) {
+export function encryptText(text) {
   return new Promise((resolve, reject) => {
     let cipher = crypto.createCipher(algorithm, salt);
     if(!cipher){reject(cipher);}
@@ -19,7 +19,7 @@ function encryptText(text) {
   });
 }
 
-function decryptText(text) {
+export function decryptText(text) {
   return new Promise((resolve, reject) => {
     let decipher = crypto.createDecipher(algorithm, salt);
     if(!decipher){reject(decipher);}
