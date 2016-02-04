@@ -22,8 +22,10 @@ class LoadingDialog extends Component {
 
   componentDidMount(){
     let { dispatch, Network } = this.props;
+    dispatch(Actions.COMPILE_DAV());
     setInterval(() => {
       dispatch(Actions._NETWORK());
+
     });
 
   }
@@ -94,7 +96,8 @@ class LoadingDialog extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Network : state.Network
+    Network : state.Network,
+    Venture : state.Venture
   }
 }
 

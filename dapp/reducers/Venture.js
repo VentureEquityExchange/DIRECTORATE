@@ -1,5 +1,23 @@
-export default function VENTURE(state = { Ventures : [], Venture : undefined, Directors : [] }, action){
+export default function VENTURE(state = { Ventures : [], Venture : undefined, Directors : [], compiled : false }, action){
   switch(action.type){
+    case 'COMPILE_DAV_REQUEST':
+      return {
+        ...state
+      };
+    case 'COMPILE_DAV_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        compiled : action.result,
+        error : undefined
+      };
+    case 'COMPILE_DAV_FAILURE':
+      console.log(action);
+      return {
+        ...state,
+        error : action.error,
+        compiled : false
+      };
     case 'GET_VENTURES_REQUEST':
       return {
         ...state

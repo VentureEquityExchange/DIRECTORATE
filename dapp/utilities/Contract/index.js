@@ -49,25 +49,28 @@ import { web3 } from '../../ethereum/index';
 //     });
 //   })
 // }
-
-
-
+let DAV = {};
 export function Compile(contracts){
   return new Promise((resolve, reject) => {
 
-    child.send(contracts);
+    if(Object.keys(DAV).length == 0 ){
+      console.log('empty');
+    } else {
+      resolve(DAV);
+    }
 
-    child.on('error', function(error){
-      console.log(error);
-      reject(error);
-    });
+    child.send(contracts);
 
     child.on('message', (compiled) => {
       if(!compiled.sources){reject(compiled);}
+      if(contracts.sources['Directorate.sol']){
+        console.log('Saving DAV');
+        DAV = compiled;
+      };
       resolve(compiled);
     });
 
-    // child.setMaxListeners(Infinity);
+    child.setMaxListeners(Infinity);
 
 
 

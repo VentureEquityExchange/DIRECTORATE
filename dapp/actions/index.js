@@ -139,6 +139,21 @@ export function SELECT_VENTURE(venture){
   }
 }
 
+export function COMPILE_DAV(){
+  return {
+    types : ['COMPILE_DAV_REQUEST', 'COMPILE_DAV_SUCCESS', 'COMPILE_DAV_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        DAV.COMPILE_DAV().then((compiled) => {
+          resolve(compiled);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    }
+  }
+}
+
 export function DAV_DIRECTORS(DirectorAddress){
   return {
     types : ['DAV_DIRECTORS_REQUEST', 'DAV_DIRECTORS_SUCCESS', 'DAV_DIRECTORS_FAILURE'],

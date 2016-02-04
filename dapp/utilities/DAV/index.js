@@ -54,6 +54,19 @@ export function Directorate(Address){
   });
 }
 
+export function COMPILE_DAV(){
+  return new Promise((resolve, reject) => {
+    DAVContracts().then((contracts) => {
+      return Contract.Compile(contracts);
+    }).then((compiled) => {
+      console.log(compiled);
+      resolve(true);
+    }).catch((error) => {
+      reject(error);
+    })
+  })
+}
+
 export function Directors(DirectorsAddress){
   return new Promise((resolve, reject) => {
     DAVContracts().then((contracts) => {
