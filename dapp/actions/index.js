@@ -263,10 +263,10 @@ export function IMPORT_ACCOUNT_SELECTED(account){
   }
 }
 
-export function SET_VENTURES(){
+export function RESET_VENTURES(){
   return {
-    type : 'SET_VENTURES',
-    action : {venture : {}, ventures : []}
+    type : 'RESET_VENTURES',
+    action : {}
   }
 }
 

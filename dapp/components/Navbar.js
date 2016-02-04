@@ -52,7 +52,7 @@ class NavBarComponent extends React.Component {
         }
         dispatch(Actions.SET_ACCOUNT(Account))
       case 3:
-        dispatch(Actions.SET_VENTURES());
+        dispatch(Actions.RESET_VENTURES());
     };
 
     // this.setState({value});

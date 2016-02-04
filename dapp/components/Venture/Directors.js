@@ -7,7 +7,7 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
 import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
-
+import Griddle from 'griddle-react';
 
 class DirectorsComponent extends Component {
   constructor(props) {
@@ -19,16 +19,14 @@ class DirectorsComponent extends Component {
     let { dispatch, Venture } = this.props;
     let { Directors } = Venture.Venture.contract;
 
-    console.log(Directors);
-
     dispatch(Actions.DAV_DIRECTORS(Directors));
 
   }
 
   render(){
-    let { Venture } = this.props.Venture;
+    let { Venture, Directors } = this.props.Venture;
 
-    console.log(Venture);
+    console.log(Directors);
 
     return (
       <Card initiallyExpanded={false}>
@@ -39,13 +37,8 @@ class DirectorsComponent extends Component {
           showExpandableButton={true}
         />
         <CardText expandable={true}>
-          Lets put a table here perhaps
-          // Will leave off from here.
+          <Griddle results={Directors} showFilter={true} showSettings={true} columns={["address"]}/>
         </CardText>
-        <CardActions expandable={true}>
-          <FlatButton label="What Do we want to do with Directors?"/>
-          <FlatButton label="Anything?"/>
-        </CardActions>
       </Card>
     );
   }

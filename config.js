@@ -19,12 +19,14 @@ System.config({
     "async": "npm:async@1.5.2",
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
+    "binstring": "npm:binstring@0.2.1",
     "bluebird": "npm:bluebird@3.1.1",
     "core-js": "npm:core-js@1.2.6",
     "crypto": "npm:crypto@0.0.3",
     "deep-freeze": "npm:deep-freeze@0.0.1",
     "expect": "npm:expect@1.13.4",
     "fs": "npm:fs@0.0.2",
+    "griddle-react": "npm:griddle-react@0.3.1",
     "history": "npm:history@2.0.0-rc2",
     "jsonfile": "npm:jsonfile@2.2.3",
     "lodash": "npm:lodash@4.0.0",
@@ -95,6 +97,9 @@ System.config({
     "npm:babel-runtime@6.3.19": {
       "core-js": "npm:core-js@1.2.6",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:binstring@0.2.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
     "npm:bluebird@3.1.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
@@ -168,6 +173,10 @@ System.config({
     },
     "npm:flux-standard-action@0.6.0": {
       "lodash.isplainobject": "npm:lodash.isplainobject@3.2.0"
+    },
+    "npm:griddle-react@0.3.1": {
+      "react": "npm:react@0.14.7",
+      "underscore": "npm:underscore@1.8.3"
     },
     "npm:has@1.0.1": {
       "function-bind": "npm:function-bind@1.0.2"

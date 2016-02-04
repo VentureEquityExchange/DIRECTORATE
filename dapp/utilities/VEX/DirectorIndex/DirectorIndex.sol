@@ -18,12 +18,12 @@ contract DirectorIndex {
         }
     }
 
-    function NewDirector() public returns(bool){
-        if(Directors[msg.sender].director != 0x0){
+    function NewDirector(address _director, address DAV) public {
+        if(Directors[_director].director != 0x0){
             throw;
         } else {
-            Directors[msg.sender].director = msg.sender;
-            return true;
+            Directors[_director].director = _director;
+            Directors[_director].DAVs.push(DAV);
         }
     }
 

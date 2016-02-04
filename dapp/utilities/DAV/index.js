@@ -4,6 +4,7 @@ const fs = Promise.promisifyAll(require('fs'));
 const jsonfile = Promise.promisifyAll(require('jsonfile'));
 const DataStore = (require('path').dirname(require.main.filename)+'/dapp/data/');
 const ContractStore = DataStore+'.contractstore';
+const convert = require('binstring');
 
 import { web3, unlockAccount, minerStart, minerStop } from '../../ethereum/index';
 import { encryptText, decryptText } from '../Account/index';
@@ -23,16 +24,16 @@ export function DAVContracts(){
   return new Promise((resolve, reject) => {
     let DAV = new Object();
     let contracts = ['Directorate', 'Bylaws', 'Shareholders', 'Directors', 'Voting'];
-    async.forEach(contracts, function(contract, cb) {
+    async.forEach(contracts, (contract, cb)  => {
 
-      fs.readFileAsync(__dirname+'/dapp/utilities/DAV/DAV_Contracts/'+contract+'.sol', 'utf8').then(function(source){
+      fs.readFileAsync(__dirname+'/dapp/utilities/DAV/DAV_Contracts/'+contract+'.sol', 'utf8').then((source) => {
         DAV[contract+'.sol'] = source;
         cb();
-      }).catch(function(error){
+      }).catch((error) => {
         reject(error);
       });
 
-    }, function(error){
+    }, (error) => {
       if(error){reject(error)}
       resolve({sources : DAV});
     });
@@ -100,6 +101,7 @@ export function NewDAV(Account, venture){
 
       nDAV.name = venture.name
       nDAV.abi = Directorate.interface;
+      nDAV.directors = venture.directors;
 
       return DeployDirectorate(Directorate.interface, Directorate.bytecode, Account.address, venture);
     }).then((deployed) => {
@@ -125,20 +127,46 @@ export function AddDAVToIndex(Account, DAV){
     DirectorIndex.Instance().then((DI) => {
       DI.AddVenture(DAV.address, {from: Account.address}, (error, txhash) => {
         if(error){reject(error)}
-        resolve(txhash);
+        async.forEach(DAV.directors, (director, cb) => {
+          DI.NewDirector(director, DAV.address, {from: Account.address}, (error, Tx) => {
+            if(error){reject(error);}
+            console.log(Tx);
+            cb();
+          })
+        }, (error) => {
+          if(error){reject(error)}
+          resolve(txhash);
+        });
       });
     });
   });
 }
 
 export function GET_DIRECTORS(DirectorsAddress){
+  let DirectorsArray = [];
   return new Promise((resolve, reject) => {
     Directors(DirectorsAddress).then((D) => {
       D.GetDirectors.call((error, directors) => {
         console.log(error);
         console.log(directors);
-        if(error){reject(error)}
-        resolve(directors);
+        async.forEach(directors, (director, cb) => {
+          D.GetDirector.call(director, (error, d) => {
+            if(error){reject(error)}
+            let Active;
+            { d[3] ? Active = 'Yes' : Active = 'No'}
+            DirectorsArray.push({
+              address : d[0],
+              name : d[1],
+              role : convert(d[2],{out:'utf8'}),
+              active : Active
+            });
+            cb();
+          });
+
+        }, (error) => {
+            if(error){reject(error)}
+            resolve(DirectorsArray);
+        });
       });
     });
   })

@@ -27,6 +27,8 @@ contract Directors {
         currentDirectors = _directors;
         for(uint i = 0; i < _directors.length; i++){
           directors[_directors[i]].director = _directors[i];
+          directors[_directors[i]].role = "Director";
+          directors[_directors[i]].active = true;
         }
     }
 
@@ -34,8 +36,8 @@ contract Directors {
       return currentDirectors;
     }
 
-    function GetDirector(address _director) public returns(address, string){
-      return (directors[_director].director, directors[_director].name);
+    function GetDirector(address _director) public returns(address, string, bytes32, bool){
+      return (directors[_director].director, directors[_director].name, directors[_director].role, directors[_director].active);
     }
 
     function SetDirector(address _director, string _name, bytes32 _role, bool _active){

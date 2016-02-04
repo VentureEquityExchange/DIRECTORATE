@@ -39,7 +39,6 @@ class SelectVentureComponent extends Component {
     setTimeout(() => {
       // dispatch(Actions.NEW_DIRECTOR_INDEX(Account));
       dispatch(Actions.GET_VENTURES(Account));
-      this.setState({status: "No DAVs Found."})
     }, 2000)
 
   }
@@ -100,13 +99,20 @@ class SelectVentureComponent extends Component {
 
     let DAVs;
 
-    if(Ventures.length > 0){
+    if(Ventures != undefined){
       DAVs = Ventures.map((venture, i) => {
         return (
           <RaisedButton key={i} label={venture.name} style={customContentStyle} onClick={this.SelectVenture.bind(this, venture)}/>
         );
       })
-    }
+    };
+    //  else{
+    //   if(Ventures.length == 0){
+    //     DAVs = "No DAVs Found."
+    //     }
+    //   }
+    // };
+
 
 
     return (
@@ -115,7 +121,8 @@ class SelectVentureComponent extends Component {
           title={`Select DAV`}
         />
         <CardActions expandable={true}>
-          { Ventures.length > 0 ? DAVs : <div>{`Loading DAVs... one moment.`}</div> }
+          <div>{ Ventures != undefined ? DAVs : "Loading DAVs... one moment." }</div>
+
         </CardActions>
         {
           !expand ? null : <CardText>

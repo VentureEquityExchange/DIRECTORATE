@@ -28,7 +28,7 @@ class SelectAccountComponent extends Component {
   onClick = (account) => {
     let { dispatch } = this.props;
     dispatch(Actions.SET_ACCOUNT(account));
-    dispatch(Actions.SET_VENTURES());
+    dispatch(Actions.RESET_VENTURES());
   }
 
   render(){

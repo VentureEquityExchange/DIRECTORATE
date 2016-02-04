@@ -49,25 +49,57 @@ import { web3 } from '../../ethereum/index';
 //     });
 //   })
 // }
-let DAV = {};
+let PreCompiled = {
+  DAV : {},
+  DI : {}
+};
+
+let { DAV, DI } = PreCompiled;
+
 export function Compile(contracts){
   return new Promise((resolve, reject) => {
+    console.log(typeof contracts);
+    console.log(contracts);
+    let DI_RegExp = new RegExp("DirectorIndex");
 
-    if(Object.keys(DAV).length == 0 ){
-      console.log('empty');
-    } else {
-      resolve(DAV);
+    if(typeof contracts == 'object'){
+      console.log("OBJECT FOUND DURING COMPILATION");
+      if(Object.keys(contracts.sources).indexOf('Directorate.sol') != -1){
+        if(Object.keys(DAV).length != 0){
+          resolve(DAV);
+        }
+      }
+    } else if(typeof contracts == 'string'){
+      console.log("STRING FOUND DURING COMPILATION")
+      if(contracts.match(DI_RegExp)){
+        if(Object.keys(DI).length != 0){
+          resolve(DI);
+        }
+      }
     }
+
 
     child.send(contracts);
 
     child.on('message', (compiled) => {
       if(!compiled.sources){reject(compiled);}
-      if(contracts.sources['Directorate.sol']){
-        console.log('Saving DAV');
-        DAV = compiled;
-      };
-      resolve(compiled);
+
+      if(typeof contracts == 'object'){
+        if(Object.keys(contracts.sources).indexOf('Directorate.sol') != -1){
+          if(Object.keys(DAV).length == 0){
+            DAV = compiled;
+            resolve(compiled);
+          }
+        }
+      } else if(typeof contracts == 'string'){
+        if(contracts.match(DI_RegExp)){
+          if(Object.keys(DI).length == 0){
+            DI = compiled;
+            resolve(compiled);
+          }
+        }
+      }
+
     });
 
     child.setMaxListeners(Infinity);

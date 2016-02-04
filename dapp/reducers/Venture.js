@@ -1,4 +1,4 @@
-export default function VENTURE(state = { Ventures : [], Venture : undefined, Directors : [], compiled : false }, action){
+export default function VENTURE(state = { Ventures : undefined, Venture : undefined, Directors : [], compiled : false }, action){
   switch(action.type){
     case 'COMPILE_DAV_REQUEST':
       return {
@@ -34,7 +34,7 @@ export default function VENTURE(state = { Ventures : [], Venture : undefined, Di
       return {
         ...state,
         error : action.error,
-        Ventures : []
+        Ventures : undefined
       };
     case 'NEW_VENTURE_REQUEST':
       return {
@@ -55,12 +55,12 @@ export default function VENTURE(state = { Ventures : [], Venture : undefined, Di
         error : action.error,
         Venture : undefined
       };
-    case 'SET_VENTURES':
+    case 'RESET_VENTURES':
       console.log(action);
       return {
         ...state,
         Venture : undefined,
-        Ventures : [],
+        Ventures : undefined,
         error : undefined
       };
     case 'SELECTED_VENTURE':
