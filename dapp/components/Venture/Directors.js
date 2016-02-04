@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import * as Actions from '../../actions/index';
 // material-ui components
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
@@ -16,10 +16,19 @@ class DirectorsComponent extends Component {
 
   componentDidMount(){
     console.log(`Hello World; we're here.`)
+    let { dispatch, Venture } = this.props;
+    let { Directors } = Venture.Venture.contract;
+
+    console.log(Directors);
+
+    dispatch(Actions.DAV_DIRECTORS(Directors));
+
   }
 
   render(){
     let { Venture } = this.props.Venture;
+
+    console.log(Venture);
 
     return (
       <Card initiallyExpanded={false}>

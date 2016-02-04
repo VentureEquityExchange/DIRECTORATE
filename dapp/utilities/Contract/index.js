@@ -67,6 +67,10 @@ export function Compile(contracts){
       resolve(compiled);
     });
 
+    // child.setMaxListeners(Infinity);
+
+
+
   });
 }
 

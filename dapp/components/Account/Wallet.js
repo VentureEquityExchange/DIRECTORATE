@@ -116,18 +116,12 @@ class WalletComponent extends Component {
                onChange={this.sendAmount.bind(this)}
                style={{width:'100%', marginTop:'1%'}} />
                Send Amount (Ξther)
-             <br/>
 
              <RaisedButton
                  label="Send Transaction"
                  secondary={true}
-                 style={{width:'100%', marginTop:'1%'}}
+                 style={{width:'100%', marginTop:'5%'}}
                  onClick={this.sendTransaction.bind(this)} />
-             <RaisedButton
-                 label="Cancel"
-                 primary={true}
-                 style={{width:'100%', marginTop:'1%'}}
-                 onClick={this.expandCard} />
            </CardText>
       </Card>
 

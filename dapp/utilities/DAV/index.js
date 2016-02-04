@@ -18,6 +18,7 @@ These functions handle the deployment of sections of the DAV...
 
 */
 
+
 export function DAVContracts(){
   return new Promise((resolve, reject) => {
     let DAV = new Object();
@@ -46,6 +47,21 @@ export function Directorate(Address){
       let { Directorate } = compiled.contracts;
 
       let instance = web3.eth.contract(JSON.parse(Directorate.interface)).at(Address);
+      resolve(instance);
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
+
+export function Directors(DirectorsAddress){
+  return new Promise((resolve, reject) => {
+    DAVContracts().then((contracts) => {
+      return Contract.Compile(contracts);
+    }).then((compiled) => {
+      let { Directors } = compiled.contracts;
+
+      let instance = web3.eth.contract(JSON.parse(Directors.interface)).at(DirectorsAddress);
       resolve(instance);
     }).catch((error) => {
       reject(error);
@@ -100,6 +116,19 @@ export function AddDAVToIndex(Account, DAV){
       });
     });
   });
+}
+
+export function GET_DIRECTORS(DirectorsAddress){
+  return new Promise((resolve, reject) => {
+    Directors(DirectorsAddress).then((D) => {
+      D.GetDirectors.call((error, directors) => {
+        console.log(error);
+        console.log(directors);
+        if(error){reject(error)}
+        resolve(directors);
+      });
+    });
+  })
 }
 
 
@@ -202,3 +231,10 @@ export function DeployDirectorate(abi, code, address, venture){
       });
   });
 }
+
+
+
+// Bylaws
+// Shareholders
+// Exchange
+// Voting

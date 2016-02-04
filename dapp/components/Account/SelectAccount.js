@@ -20,13 +20,15 @@ class SelectAccountComponent extends Component {
 
   componentDidMount(){
     let { dispatch, Accounts } = this.props;
-    dispatch(Actions.GET_ACCOUNTS());
 
+    dispatch(Actions.GET_ACCOUNTS());
   }
+
 
   onClick = (account) => {
     let { dispatch } = this.props;
     dispatch(Actions.SET_ACCOUNT(account));
+    dispatch(Actions.SET_VENTURES());
   }
 
   render(){

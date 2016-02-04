@@ -139,6 +139,21 @@ export function SELECT_VENTURE(venture){
   }
 }
 
+export function DAV_DIRECTORS(DirectorAddress){
+  return {
+    types : ['DAV_DIRECTORS_REQUEST', 'DAV_DIRECTORS_SUCCESS', 'DAV_DIRECTORS_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        DAV.GET_DIRECTORS(DirectorAddress).then((directors) => {
+          resolve(directors);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    }
+  }
+}
+
 export function NEW_VENTURE(Account, venture){
 
   console.log(Account);
@@ -230,6 +245,13 @@ export function IMPORT_ACCOUNT_SELECTED(account){
   return {
     type : 'IMPORT_ACCOUNT_SELECTED',
     SelectedAccount : account
+  }
+}
+
+export function SET_VENTURES(){
+  return {
+    type : 'SET_VENTURES',
+    action : {venture : {}, ventures : []}
   }
 }
 

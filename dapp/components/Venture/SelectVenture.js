@@ -31,9 +31,10 @@ class SelectVentureComponent extends Component {
   }
 
   componentDidMount(){
-    let { dispatch } = this.props;
+    let { dispatch, Venture } = this.props;
     let { Account } = this.props.Account;
     console.log('Make call to DirectorIndex contract and send back results');
+    Venture.Ventures = [];
 
     setTimeout(() => {
       // dispatch(Actions.NEW_DIRECTOR_INDEX(Account));
@@ -114,7 +115,7 @@ class SelectVentureComponent extends Component {
           title={`Select DAV`}
         />
         <CardActions expandable={true}>
-          { Ventures.length > 0 ? DAVs : null }
+          { Ventures.length > 0 ? DAVs : <div>{`Loading DAVs... one moment.`}</div> }
         </CardActions>
         {
           !expand ? null : <CardText>
