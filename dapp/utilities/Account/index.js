@@ -7,6 +7,7 @@ const AliasStore = DataStore+'.aliasstore';
 const algorithm = 'aes-256-ctr';
 const salt = "0d1d4a88c2afd4fa8c0e1e63537ed4ad64918c";
 import { web3, unlockAccount } from '../../ethereum/index';
+import async from 'async';
 
 export function encryptText(text) {
   return new Promise((resolve, reject) => {
@@ -51,7 +52,8 @@ function getAliasStore() {
         resolve([])
       } else {
         return jsonfile.readFileAsync(AliasStore);
-      }
+      };
+
     }).then((aliasstore) => {
       resolve(aliasstore);
     }).catch((error) => {
@@ -61,23 +63,25 @@ function getAliasStore() {
 }
 
 export function decryptAliases() {
-  let decryptedAliases = [];
   return new Promise((resolve, reject) => {
     getAliasStore().then((aliases) => {
+      let decryptedAliases = [];
       if(aliases.length == 0){resolve(aliases);}
-      aliases.forEach((alias) => {
+      async.forEach(aliases, (alias, cb) => {
         let decipher = crypto.createDecipher(algorithm, salt);
         if(!decipher){reject(decipher);}
         let decryptedText = decipher.update(alias,'hex','utf8')
         decryptedText += decipher.final('utf8');
         decryptedAliases.push(JSON.parse(decryptedText));
+        cb();
+      }, (error) => {
+          if(error){reject(error)}
+          resolve(decryptedAliases);
       });
-      resolve(decryptedAliases);
     }).catch((error) => {
       reject(error);
-    })
-
-  })
+    });
+  });
 }
 
 export function setAliasStore(text) {

@@ -10,6 +10,12 @@ import NewAccount from './Account/NewAccount';
 import MarketInsights from './MarketInsights';
 import SelectVenture from './Venture/SelectVenture';
 import Directors from './Venture/Directors';
+import Bylaws from './Venture/Bylaws';
+import Shareholders from './Venture/Shareholders';
+import Voting from './Venture/Voting';
+import DashNav from './DashNav';
+import DashView from './DashView';
+import Welcome from './Welcome';
 
 export {
   DirectorateApp,
@@ -23,5 +29,11 @@ export {
   ImportAccount,
   MarketInsights,
   SelectVenture,
-  Directors
+  Directors,
+  Bylaws,
+  Shareholders,
+  Voting,
+  DashNav,
+  DashView,
+  Welcome
 };

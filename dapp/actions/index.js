@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 import * as Network from '../utilities/Network/index';
-import * as Account from '../utilities/Account/index';
+import { decryptAliases, setAliasStore, getBalance, importAccount } from '../utilities/Account/index';
 import * as Contract from '../utilities/Contract/index';
 import * as DAV from '../utilities/DAV/index';
 import * as DirectorIndex from '../utilities/VEX/DirectorIndex/index';
@@ -85,7 +85,7 @@ export function CREATE_ACCOUNT(account){
         newAccount(account.password).then((address) => {
            account.address = address;
            account.set = true;
-           return Account.setAliasStore(JSON.stringify(account));
+           return setAliasStore(JSON.stringify(account));
         }).then(() => {
           console.log('Account Created');
           resolve(account);
@@ -169,6 +169,36 @@ export function DAV_DIRECTORS(DirectorAddress){
   }
 }
 
+export function GET_BYLAWS(venture){
+  return {
+    types : ['GET_BYLAWS_REQUEST', 'GET_BYLAWS_SUCCESS', 'GET_BYLAWS_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        DAV.GET_BYLAWS(venture).then((bylaws) => {
+          resolve(bylaws);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    }
+  }
+}
+
+export function GET_SHAREHOLDERS(venture){
+  return {
+    types : ['GET_SHAREHOLDERS_REQUEST', 'GET_SHAREHOLDERS_SUCCESS', 'GET_SHAREHOLDERS_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        DAV.GET_SHAREHOLDERS(venture).then((shareholders) => {
+          resolve(shareholders);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    }
+  }
+}
+
 export function NEW_VENTURE(Account, venture){
 
   console.log(Account);
@@ -229,7 +259,7 @@ export function GET_BALANCE(account){
     promise : () => {
       return new Promise((resolve, reject) => {
         console.log(account);
-        Account.getBalance(account).then((balance) => {
+        getBalance(account).then((balance) => {
           console.log(balance);
           resolve(balance);
         }).catch((error) => {
@@ -245,7 +275,7 @@ export function IMPORT_ACCOUNT(account){
     types : ['IMPORT_REQUEST', 'IMPORT_SUCCESS', 'IMPORT_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        Account.importAccount(account).then((account) => {
+        importAccount(account).then((account) => {
           resolve(account);
         }).catch((error) => {
           reject(error);
@@ -290,12 +320,19 @@ export function SET_ACCOUNT(account){
   }
 }
 
+export function SET_DASHVIEW(view){
+  return {
+    type : 'SET_DASHVIEW',
+    result : view
+  }
+}
+
 export function GET_ACCOUNTS(){
   return {
     types : ['ACCOUNTS_REQUEST', 'ACCOUNTS_SUCCESS', 'ACCOUNTS_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        Account.decryptAliases().then(aliases => {
+        decryptAliases().then((aliases) => {
           resolve(aliases);
         }).catch(error => {
           reject(error);

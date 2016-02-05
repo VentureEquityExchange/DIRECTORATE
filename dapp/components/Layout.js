@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Grid, Row, Column} from 'react-cellblock';
-import { SideNav, Wallet, NavBar, MarketInsights, SelectVenture,  Directors } from './index';
+import { SideNav, Wallet, NavBar, MarketInsights, SelectVenture,  Directors, Voting, Shareholders, Bylaws, DashNav, DashView } from './index';
 import Appbar from 'muicss/lib/react/appbar';
 import Panel from 'muicss/lib/react/panel';
 
@@ -10,8 +10,12 @@ class LayoutComponent extends Component {
     super(props);
   }
 
+
+
   render(){
     let { Venture } = this.props.Venture;
+
+    let view = true;
 
     return (
       <Grid >
@@ -25,12 +29,17 @@ class LayoutComponent extends Component {
             <Column width="1/1">
               <SelectVenture />
             </Column>
-          </Row> :
+          </Row> : <div>
           <Row>
-            <Column width="1/1">
-              <Directors />
+            <Column width="1/7">
+              <DashNav />
+            </Column>
+            <Column width="6/7">
+              <DashView />
             </Column>
           </Row>
+
+          </div>
         }
       </Grid>
     );

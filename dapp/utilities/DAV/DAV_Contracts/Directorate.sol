@@ -20,13 +20,13 @@ contract Directorate {
     Venture public venture;
     DAVContracts public contracts;
 
-    function Directorate(string _name, address[] _directors){
+    function Directorate(string _name, address[] _directors, string _directorName){
         venture.Name = _name;
         venture.DAV = address(this);
 
         contracts.BylawsContract = new Bylaws();
         contracts.ShareholdersContract = new Shareholders();
-        contracts.DirectorsContract = new Directors(Bylaws(contracts.BylawsContract), Shareholders(contracts.ShareholdersContract), _directors);
+        contracts.DirectorsContract = new Directors(_directorName, msg.sender, Bylaws(contracts.BylawsContract), Shareholders(contracts.ShareholdersContract), _directors);
         contracts.VotingContract = new Voting(
           Bylaws(contracts.BylawsContract),
           Shareholders(contracts.ShareholdersContract),

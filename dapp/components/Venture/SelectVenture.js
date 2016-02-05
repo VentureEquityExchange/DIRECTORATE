@@ -50,9 +50,17 @@ class SelectVentureComponent extends Component {
 
   ventureDirectors = (event) => {
     let directors = JSON.parse(String("["+event.target.value+"]"));
+    let { Account } = this.props.Account;
 
     console.log(typeof directors);
     console.log(directors);
+
+    let index = directors.indexOf(Account.address);
+
+    if(index != -1){
+      directors.splice(index, 1);
+    }
+
     this.state.venture.directors = directors;
   }
 
@@ -104,19 +112,14 @@ class SelectVentureComponent extends Component {
         return (
           <RaisedButton key={i} label={venture.name} style={customContentStyle} onClick={this.SelectVenture.bind(this, venture)}/>
         );
-      })
+      });
     };
-    //  else{
-    //   if(Ventures.length == 0){
-    //     DAVs = "No DAVs Found."
-    //     }
-    //   }
-    // };
+
 
 
 
     return (
-      <Card initiallyExpanded={true}>
+      <Card initiallyExpanded={true} style={{width:'550px', margin:'auto'}}>
         <CardHeader
           title={`Select DAV`}
         />

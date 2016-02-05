@@ -83,6 +83,40 @@ export function Directors(DirectorsAddress){
   });
 }
 
+// Eventually all of these functions should be consolidated into an single function with a switch;
+// A perfect fit for here.
+
+export function Shareholders(ShareholdersAddress){
+  return new Promise((resolve, reject) => {
+    DAVContracts().then((contracts) => {
+      return Contract.Compile(contracts);
+    }).then((compiled) => {
+      let { Shareholders } = compiled.contracts;
+
+      let instance = web3.eth.contract(JSON.parse(Shareholders.interface)).at(ShareholdersAddress);
+      resolve(instance);
+    }).catch((error) => {
+      reject(error);
+    });
+  })
+}
+
+
+export function Bylaws(BylawsAddress){
+  return new Promise((resolve, reject) => {
+    DAVContracts().then((contracts) => {
+      return Contract.Compile(contracts);
+    }).then((compiled) => {
+      let { Bylaws } = compiled.contracts;
+
+      let instance = web3.eth.contract(JSON.parse(Bylaws.interface)).at(BylawsAddress);
+      resolve(instance);
+    }).catch((error) => {
+      reject(error);
+    });
+  })
+}
+
 
 export function NewDAV(Account, venture){
   return new Promise((resolve, reject) => {
@@ -103,7 +137,7 @@ export function NewDAV(Account, venture){
       nDAV.abi = Directorate.interface;
       nDAV.directors = venture.directors;
 
-      return DeployDirectorate(Directorate.interface, Directorate.bytecode, Account.address, venture);
+      return DeployDirectorate(Directorate.interface, Directorate.bytecode, Account, venture);
     }).then((deployed) => {
       console.log(deployed);
 
@@ -254,13 +288,70 @@ export function GetVentures(Account){
 //   })
 // }
 
-
-
-export function DeployDirectorate(abi, code, address, venture){
+export function GET_SHAREHOLDERS(venture){
   return new Promise((resolve, reject) => {
-    // general deploy method for contracts without instantiating variables...
+    let ShareholdersArray = [];
+    Shareholders(venture.contract.Shareholders).then((Sh) => {
+      Sh.getCurrentShareholders.call((error, shareholders) => {
+        async.forEach(shareholders, (shareholder, cb) => {
+          Sh.getSharesHeld.call(shareholder, (error, sharesHeld) => {
+            console.log(error);
 
-    web3.eth.contract(JSON.parse(abi)).new(venture.name, venture.directors, {from: address, data : code, gas : 3141592},
+            if(error){reject(error)}
+
+            console.log(sharesHeld);
+
+            ShareholdersArray.push({
+              shareholder : shareholder,
+              sharesHeld : sharesHeld.c[0]
+            });
+            cb();
+
+          })
+        }, (error) => {
+          if(error){reject(error)}
+          resolve(ShareholdersArray);
+        });
+      })
+    })
+  })
+}
+
+export function GET_BYLAWS(venture){
+  return new Promise((resolve, reject) => {
+    Bylaws(venture.contract.Bylaws).then((B) => {
+      B.bylaws.call((error, bylaws) => {
+        if(error){reject(error)}
+        let period;
+
+        switch(bylaws[4].c[0]){
+          case 1209600:
+            period = "Two Weeks";
+          default:
+            period = "Two Weeks";
+        }
+
+        resolve({
+          ORT : bylaws[0].c[0], // BigNumber
+          EORT : bylaws[1].c[0], // BigNumber
+          ORL : bylaws[2].c[0], // BigNumber
+          equalWeighted : bylaws[3], // Bool
+          resolutionPeriod : period, // String
+          DAV : bylaws[5] // Address
+        });
+      });
+    });
+  });
+}
+
+
+export function DeployDirectorate(abi, code, Account, venture){
+  return new Promise((resolve, reject) => {
+    // Passing in two arguments
+    // 1. Venture name;
+    // 2. Venture Directors;
+
+    web3.eth.contract(JSON.parse(abi)).new(venture.name, venture.directors, Account.alias, {from: Account.address, data : code, gas : 3141592},
       (error, deployed) => {
         if(error){reject(error);}
         if(!deployed.address){

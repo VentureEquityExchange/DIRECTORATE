@@ -1,4 +1,13 @@
-export default function VENTURE(state = { Ventures : undefined, Venture : undefined, Directors : [], compiled : false }, action){
+const DEFAULT_VENTURE_STATE = {
+  Ventures : undefined,
+  Venture : undefined,
+  Directors : [],
+  Bylaws : {},
+  compiled : false
+};
+
+
+export default function VENTURE(state = DEFAULT_VENTURE_STATE, action){
   switch(action.type){
     case 'COMPILE_DAV_REQUEST':
       return {
@@ -70,6 +79,24 @@ export default function VENTURE(state = { Ventures : undefined, Venture : undefi
         Venture : action.result,
         error : undefined
       };
+    case 'GET_BYLAWS_REQUEST':
+      return {
+        ...state
+      };
+    case 'GET_BYLAWS_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        Bylaws : action.result,
+        error : undefined
+      };
+    case 'GET_BYLAWS_FAILURE':
+      console.log(action);
+      return {
+        ...state,
+        error : action.error,
+        Bylaws : undefined
+      };
     case 'DAV_DIRECTORS_REQUEST':
       return {
         ...state
@@ -87,6 +114,24 @@ export default function VENTURE(state = { Ventures : undefined, Venture : undefi
         ...state,
         error : action.error,
         Directors : undefined
+      };
+    case 'GET_SHAREHOLDERS_REQUEST':
+      return {
+        ...state
+      };
+    case 'GET_SHAREHOLDERS_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        Shareholders : action.result,
+        error : undefined
+      };
+    case 'GET_SHAREHOLDERS_FAILURE':
+      console.log(action);
+      return {
+        ...state,
+        error : action.error,
+        Shareholders : undefined
       };
     default:
       return state;

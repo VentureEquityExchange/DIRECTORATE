@@ -27,10 +27,20 @@ contract Shareholders {
     address[] internal currentShareholders;
     address[] public allShareholders;
 
+    // Initial Shares For DAV; Can be raised later, but at the effect of diluting shareholders;
+    // More to come on this....
+    // For now, lets hook up our components...
+
     uint public internalShares = 1000000;
 
     function Shareholders(){
         contracts.DAV = msg.sender;
+        shareholders[msg.sender].account = msg.sender;
+        shareholders[msg.sender].sharesHeld = internalShares;
+
+
+        currentShareholders.push(msg.sender);
+        allShareholders.push(msg.sender);
     }
 
     function getSharesHeld(address _a) returns (uint){

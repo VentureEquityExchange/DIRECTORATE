@@ -31,7 +31,7 @@ class SideNavComponent extends Component {
   }
 
 	render() {
-		let { left, right } = this.props.SideNav;
+		let { left, right } = this.props.Nav;
 
 		return (
 			<div>
@@ -70,7 +70,7 @@ class SideNavComponent extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		SideNav : state.SideNavigation
+		Nav : state.Navigation
 	}
 }
 

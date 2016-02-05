@@ -19,12 +19,19 @@ contract Directors {
     address[] public currentDirectors;
     DAVContracts public contracts;
 
-    function Directors(address bylaws, address shareholders, address[] _directors){
+    function Directors(string _directorName, address _directorAddress, address bylaws, address shareholders, address[] _directors){
         contracts.DAV = msg.sender;
         contracts.Bylaws = bylaws;
         contracts.Shareholders = shareholders;
 
+        directors[_directorAddress].director = _directorAddress;
+        directors[_directorAddress].name = _directorName;
+        directors[_directorAddress].role = "Director";
+        directors[_directorAddress].active = true;
+
         currentDirectors = _directors;
+        currentDirectors.push(_directorAddress);
+
         for(uint i = 0; i < _directors.length; i++){
           directors[_directors[i]].director = _directors[i];
           directors[_directors[i]].role = "Director";

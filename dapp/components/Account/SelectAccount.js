@@ -20,8 +20,10 @@ class SelectAccountComponent extends Component {
 
   componentDidMount(){
     let { dispatch, Accounts } = this.props;
+    setTimeout(() => {
+        dispatch(Actions.GET_ACCOUNTS());
+    }, 1000);
 
-    dispatch(Actions.GET_ACCOUNTS());
   }
 
 

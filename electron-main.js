@@ -41,12 +41,12 @@ function onClosed() {
 
 function createMainWindow() {
 	const win = new BrowserWindow({
-		width: 600,
+		width: 1300,
 		height: 750,
     minWidth: 600,
-    minHeight: 400,
+    minHeight: 500,
     frame : false,
-    fullscreen : false
+    fullscreen : true
 	});
 
   // win.setFullScreen(true)
@@ -71,5 +71,5 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
 	mainWindow = createMainWindow();
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 });

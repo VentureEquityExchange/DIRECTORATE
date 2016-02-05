@@ -12,11 +12,6 @@ import * as Actions from '../../actions/index';
 import TextField from 'material-ui/lib/text-field';
 
 
-const injectTapEventPlugin = require('react-tap-event-plugin');
-injectTapEventPlugin();
-
-// @ThemeDecorator(ThemeManager.getMuiTheme(DefaultTheme))
-
 class WalletComponent extends Component {
   constructor(props){
     super(props);

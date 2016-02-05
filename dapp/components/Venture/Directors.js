@@ -29,7 +29,7 @@ class DirectorsComponent extends Component {
     console.log(Directors);
 
     return (
-      <Card initiallyExpanded={false}>
+      <Card initiallyExpanded={true}>
         <CardHeader
           title={`${Venture.name} | Directors`}
           subtitle={`Venture Address: ${Venture.DAV}`}
