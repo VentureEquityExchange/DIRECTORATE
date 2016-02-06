@@ -19,6 +19,15 @@ contract Directors {
     address[] public currentDirectors;
     DAVContracts public contracts;
 
+
+    function isDirector(address d) public returns(bool){
+        if(directors[d].director == 0x0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     function Directors(string _directorName, address _directorAddress, address bylaws, address shareholders, address[] _directors){
         contracts.DAV = msg.sender;
         contracts.Bylaws = bylaws;
@@ -44,7 +53,11 @@ contract Directors {
     }
 
     function GetDirector(address _director) public returns(address, string, bytes32, bool){
-      return (directors[_director].director, directors[_director].name, directors[_director].role, directors[_director].active);
+      if(directors[_director].director == 0x0){
+        throw;
+      } else {
+        return (directors[_director].director, directors[_director].name, directors[_director].role, directors[_director].active);
+      }
     }
 
     function SetDirector(address _director, string _name, bytes32 _role, bool _active){

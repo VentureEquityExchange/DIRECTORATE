@@ -327,6 +327,22 @@ export function SET_DASHVIEW(view){
   }
 }
 
+export function AMEND_BYLAWS(bylaw){
+  return {
+    type : ['AMEND_BYLAWS_REQUEST', 'AMEND_BYLAWS_SUCCESS', 'AMEND_BYLAWS_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        DAV.AMEND_BYLAWS(bylaw).then((openResolutions) => {
+          // openResolutions contains all open resolutions
+          resolve(openResolutions);
+        }).catch((error) => {
+          reject(error)
+        })
+      })
+    }
+  }
+}
+
 export function GET_ACCOUNTS(){
   return {
     types : ['ACCOUNTS_REQUEST', 'ACCOUNTS_SUCCESS', 'ACCOUNTS_FAILURE'],

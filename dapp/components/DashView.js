@@ -23,6 +23,10 @@ class DashViewComponent extends Component {
         return (<Bylaws />);
       case 'Shareholders':
         return (<Shareholders />);
+      case 'Directors':
+        return (<Directors />);
+      case 'Voting':
+        return (<Voting />);
     }
   }
 }

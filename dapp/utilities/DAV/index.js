@@ -68,6 +68,9 @@ export function COMPILE_DAV(){
   })
 }
 
+// Eventually all of these functions should be consolidated into an single function with a switch;
+// A perfect fit for here.
+
 export function Directors(DirectorsAddress){
   return new Promise((resolve, reject) => {
     DAVContracts().then((contracts) => {
@@ -83,8 +86,6 @@ export function Directors(DirectorsAddress){
   });
 }
 
-// Eventually all of these functions should be consolidated into an single function with a switch;
-// A perfect fit for here.
 
 export function Shareholders(ShareholdersAddress){
   return new Promise((resolve, reject) => {
@@ -110,6 +111,21 @@ export function Bylaws(BylawsAddress){
       let { Bylaws } = compiled.contracts;
 
       let instance = web3.eth.contract(JSON.parse(Bylaws.interface)).at(BylawsAddress);
+      resolve(instance);
+    }).catch((error) => {
+      reject(error);
+    });
+  })
+}
+
+export function Voting(VotingContract){
+  return new Promise((resolve, reject) => {
+    DAVContracts().then((contracts) => {
+      return Contract.Compile(contracts);
+    }).then((compiled) => {
+      let { Voting } = compiled.contracts;
+
+      let instance = web3.eth.contract(JSON.parse(Voting.interface)).at(VotingAddress);
       resolve(instance);
     }).catch((error) => {
       reject(error);
@@ -288,6 +304,19 @@ export function GetVentures(Account){
 //   })
 // }
 
+export function AMEND_BYLAWS(venture, bylaw){
+  return new Promise((resolve, reject) => {
+    Directorate(venture.contract.Directorate).then((D) => {
+      // D.callVote().then(() => {
+      //
+      // })
+
+    }).catch((error) => {
+      reject(error);
+    })
+  })
+}
+
 export function GET_SHAREHOLDERS(venture){
   return new Promise((resolve, reject) => {
     let ShareholdersArray = [];
@@ -319,26 +348,46 @@ export function GET_SHAREHOLDERS(venture){
 
 export function GET_BYLAWS(venture){
   return new Promise((resolve, reject) => {
+    let BylawsObject = new Object();
     Bylaws(venture.contract.Bylaws).then((B) => {
-      B.bylaws.call((error, bylaws) => {
+      B.getBylaws.call((error, items) => {
         if(error){reject(error)}
-        let period;
+        // let period;
 
-        switch(bylaws[4].c[0]){
-          case 1209600:
-            period = "Two Weeks";
-          default:
-            period = "Two Weeks";
-        }
+        console.log('BYLAWS');
 
-        resolve({
-          ORT : bylaws[0].c[0], // BigNumber
-          EORT : bylaws[1].c[0], // BigNumber
-          ORL : bylaws[2].c[0], // BigNumber
-          equalWeighted : bylaws[3], // Bool
-          resolutionPeriod : period, // String
-          DAV : bylaws[5] // Address
+        async.forEach(items, (item, cb) => {
+          B.getValue.call(item, (error, value) => {
+            let period;
+            let I = convert(item, {out:'utf8'});
+            if(I.match(RegExp('resolutionPeriod'))){
+              switch(value.c[0]){
+                case 1209600:
+                  period = "Two Weeks";
+                  break;
+                default:
+                  period = "Two Weeks";
+                  break;
+              }
+              BylawsObject[I] = period;
+              cb();
+            } else {
+              BylawsObject[I] = value.c[0];
+              cb();
+            }
+          });
+
+        }, (error) => {
+          if(error){reject(error)}
+          console.log(BylawsObject);
+          B.DAV.call((error, DAV) => {
+            if(error){reject(error)}
+            BylawsObject['DAV'] = DAV;
+            resolve(BylawsObject);
+          });
         });
+
+
       });
     });
   });

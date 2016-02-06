@@ -1,52 +1,50 @@
 contract Bylaws {
 
     struct ByLawsConfig {
-        uint ORT;
-        uint EORT;
-        uint ORL;
-        bool equalWeighted; // default is true; false == shareWeighted;
-        uint resolutionPeriod;
-        address DAV;
+        mapping(bytes32 => uint) value;
+        bytes32[] items;
     }
 
-    ByLawsConfig public bylaws;
+    ByLawsConfig bylaws;
+    address public DAV;
 
     function Bylaws(){
-        bylaws.ORT = (100 * 67/100); // 67%
-        bylaws.EORT = (100 * 90/100); // 90%
-        bylaws.ORL = 5;
-        bylaws.equalWeighted = true;
-        bylaws.resolutionPeriod = 2 weeks;
-        bylaws.DAV = msg.sender;
+        DAV = msg.sender;
+
+        bylaws.value["ORT"] = (100 * 67/100); // 67%
+        bylaws.value["EORT"] = (100 * 90/100); // 90%
+        bylaws.value["ORL"] = 5;
+        bylaws.value["equalWeighted"] = 1;
+        bylaws.value["resolutionPeriod"] = 2 weeks;
+
+        bylaws.items.push("ORT");
+        bylaws.items.push("EORT");
+        bylaws.items.push("ORL");
+        bylaws.items.push("equalWeighted");
+        bylaws.items.push("resolutionPeriod");
     }
 
-    function setORT(uint percentage) internal returns (bool){
-        bylaws.ORT = (100 * percentage / 100);
-        return true;
+    function getValue(bytes32 item) public returns(uint){
+        return bylaws.value[item];
     }
 
-    function setEORT(uint percentage) internal returns (bool){
-        bylaws.EORT = (100 * percentage / 100);
-        return true;
+    function getBylaws() public returns(bytes32[]){
+        return bylaws.items;
     }
 
-    function setWeighting(bool equalWeighted) internal returns (bool){
-        bylaws.equalWeighted = equalWeighted;
-        return true;
+    function returnValue(bytes32 item) public returns (uint){
+        return bylaws.value[item];
     }
 
-    function setORL(uint limit) internal returns (bool){
-        bylaws.ORL = limit;
-        return true;
+    function setValue(bytes32 item, uint value) public returns (bool){
+        if(msg.sender != DAV){
+            throw;
+        } else {
+            bylaws.value[item] = value;
+            return true;
+        }
     }
 
-    function setRP(uint period) internal returns (bool){
-        bylaws.resolutionPeriod = period;
-        return true;
-    }
 
-    function DAV() public returns (address){
-        return bylaws.DAV;
-    }
 
 }
