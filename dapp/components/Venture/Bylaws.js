@@ -7,7 +7,7 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
 import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
-
+import SelectField from 'material-ui/lib/select-field';
 import TextField from 'material-ui/lib/text-field';
 import Dialog from 'material-ui/lib/dialog';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -28,9 +28,12 @@ class BylawsComponent extends Component {
     super(props);
     this.state = {
       open : false,
-      bylawsItem : undefined,
+      bylawsItem : '',
       title : undefined,
-      value : undefined
+      oldValue : undefined,
+      newValue : undefined,
+      equalWeighted : 1,
+      resolutionPeriod : 2
     }
   }
 
@@ -49,14 +52,33 @@ class BylawsComponent extends Component {
 
     let { dispatch } = this.props;
     let { Venture } = this.props.Venture;
-
+    let { type } = this.state;
     console.log(Venture);
     console.log(bylaw);
 
-    this.setState({open : !this.state.open, bylawsItem : bylaw, title : title, value : value});
+    { bylaw.match(RegExp("resolutionPeriod")) || bylaw.match(RegExp("equalWeighted")) ? type="text" : type="number" }
+
+    this.setState({open : !this.state.open, bylawsItem : bylaw, title : title, oldValue : value, type:type});
 
     // dispatch(Actions.AMEND_BYLAWS(Venture, bylaw));
   }
+
+  setValue = (event) => {
+    let newValue = event.target.value;
+    console.log(newValue);
+  }
+
+  setWeighting = (event, index, value) => {
+
+    this.setState({equalWeighted : value});
+  }
+
+  setResolutionPeriod = (event, index, value) => {
+
+    this.setState({resolutionPeriod : value});
+  }
+
+
 
   render(){
     let { Bylaws } = this.props.Venture;
@@ -67,11 +89,11 @@ class BylawsComponent extends Component {
       if(item.match(RegExp("DAV"))){
         pText = "DAV Address";
         sText = Bylaws[item];
-      } else if(item.match(RegExp("ORT"))){
-        pText = "Ordinary Resolution Threshold";
-        sText = Bylaws[item];
       } else if(item.match(RegExp("EORT"))){
         pText = "Extra-Ordinary Resolution Threshold";
+        sText = Bylaws[item];
+      } else if(item.match(RegExp("ORT"))){
+        pText = "Ordinary Resolution Threshold";
         sText = Bylaws[item];
       } else if(item.match(RegExp("resolutionPeriod"))){
         pText = "Open Resolution Time Period Limit";
@@ -96,7 +118,7 @@ class BylawsComponent extends Component {
               <IconMenu iconButtonElement={
                 <IconButton
                   touch={true}
-                  tooltip="more"
+                  tooltip={`Amend ${pText}`}
                   tooltipPosition="bottom-left"
                 >
                   <MoreVertIcon color={Colors.grey400} />
@@ -145,23 +167,42 @@ class BylawsComponent extends Component {
         >
             <TextField
               hintText={`${this.state.title}: Previous Value`}
-              floatingLabelText={`${this.state.title}: Previous Value`}
+              floatingLabelText={`${this.state.title}: ${this.state.oldValue}`}
               min={1}
               max={100}
-              defaultValue={this.state.value}
+              defaultValue={this.state.oldValue}
+              disabled={true}
+              type="number"
+              style={{width:'100%', marginTop:'1%'}}
+              onChange={null} />
+            { this.state.bylawsItem.match(RegExp("equalWeighted")) ||
+              this.state.bylawsItem.match(RegExp("resolutionPeriod")) ?
+              <div>
+                { this.state.bylawsItem.match(RegExp("resolutionPeriod")) ?
+                    <SelectField value={this.state.resolutionPeriod} onChange={this.setResolutionPeriod}>
+                      <MenuItem value={1} primaryText="One Week"/>
+                      <MenuItem value={2} primaryText="Two Weeks"/>
+                      <MenuItem value={3} primaryText="Tree Weeks"/>
+                      <MenuItem value={4} primaryText="Four Weeks"/>
+                      <MenuItem value={5} primaryText="Five Weeks"/>
+                    </SelectField> :
+                    <SelectField value={this.state.equalWeighted} onChange={this.setWeighting}>
+                        <MenuItem value={1} primaryText="Equal Weighted"/>
+                        <MenuItem value={2} primaryText="Share Weighted"/>
+                    </SelectField>
+                }
+              </div> :
+              <TextField
+                hintText={`${this.state.title}: Proposed Value`}
+                floatingLabelText={`${this.state.title}: Proposed Value`}
+                min={1}
+                max={100}
+                defaultValue=""
+                type={this.state.type}
+                style={{width:'100%', marginTop:'1%'}}
+                onChange={this.setValue.bind(this)} />
+            }
 
-              type="number"
-              style={{width:'100%', marginTop:'1%'}}
-              onChange={null} />
-            <TextField
-              hintText={`${this.state.title}: Proposed Value`}
-              floatingLabelText={`${this.state.title}: Proposed Value`}
-              min={1}
-              max={100}
-              defaultValue=""
-              type="number"
-              style={{width:'100%', marginTop:'1%'}}
-              onChange={null} />
             <RaisedButton
                 label="New Proposal"
                 style={{width:'100%', marginTop:'1%'}}
@@ -170,7 +211,7 @@ class BylawsComponent extends Component {
                 label="Cancel"
                 secondary={true}
                 style={{width:'100%', marginTop:'1%'}}
-                onClick={this.amendBylaws.bind(this, undefined, undefined, undefined)} />
+                onClick={this.amendBylaws.bind(this, '', undefined, undefined)} />
         </Dialog>
       </div>
     );
