@@ -2,8 +2,13 @@ const DEFAULT_VENTURE_STATE = {
   Ventures : undefined,
   Venture : undefined,
   Directors : [],
+  Resolutions : {
+    open : [],
+    all : []
+  },
   Bylaws : {},
-  compiled : false
+  compiled : false,
+  BylawsChanged : undefined
 };
 
 
@@ -132,6 +137,42 @@ export default function VENTURE(state = DEFAULT_VENTURE_STATE, action){
         ...state,
         error : action.error,
         Shareholders : undefined
+      };
+    case 'AMEND_BYLAWS_REQUEST':
+      return {
+        ...state
+      };
+    case 'AMEND_BYLAWS_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        BylawsChanged : action.result,
+        error : undefined
+      };
+    case 'AMEND_BYLAWS_FAILURE':
+      console.log(action);
+      return {
+        ...state,
+        error : action.error,
+        BylawsChanged : undefined
+      };
+    case 'GET_OPEN_RESOLUTIONS_REQUEST':
+      return {
+        ...state
+      };
+    case 'GET_OPEN_RESOLUTIONS_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        Resolutions : {
+          open : action.result
+        }
+      };
+    case 'GET_OPEN_RESOLUTIONS_FAILURE':
+      console.log(action);
+      return {
+        ...state,
+        error : action.error
       };
     default:
       return state;

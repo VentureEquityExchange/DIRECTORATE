@@ -327,18 +327,32 @@ export function SET_DASHVIEW(view){
   }
 }
 
-export function AMEND_BYLAWS(bylaw){
+export function AMEND_BYLAWS(Account, newBylawResolution){
   return {
-    type : ['AMEND_BYLAWS_REQUEST', 'AMEND_BYLAWS_SUCCESS', 'AMEND_BYLAWS_FAILURE'],
+    types : ['AMEND_BYLAWS_REQUEST', 'AMEND_BYLAWS_SUCCESS', 'AMEND_BYLAWS_FAILURE'],
     promise : () => {
       return new Promise((resolve, reject) => {
-        DAV.AMEND_BYLAWS(bylaw).then((openResolutions) => {
-          // openResolutions contains all open resolutions
-          resolve(openResolutions);
+        DAV.AMEND_BYLAWS(Account, newBylawResolution).then((txhash) => {
+          resolve(txhash);
         }).catch((error) => {
           reject(error)
-        })
-      })
+        });
+      });
+    }
+  }
+}
+
+export function GET_OPEN_RESOLUTIONS(venture){
+  return {
+    types : ['GET_OPEN_RESOLUTIONS_REQUEST', 'GET_OPEN_RESOLUTIONS_SUCCESS', 'GET_OPEN_RESOLUTIONS_FAILURE'],
+    promise : () => {
+      return new Promise((resolve, reject) => {
+        DAV.GET_OPEN_RESOLUTIONS(venture).then((resolutions) => {
+          resolve(resolutions);
+        }).catch((error) => {
+          reject(error);
+        });
+      });
     }
   }
 }

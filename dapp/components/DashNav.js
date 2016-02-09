@@ -20,7 +20,7 @@ import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
-const DashNavList = ['Bylaws', 'Directors', 'Voting', 'Shareholders'];
+const DashNavList = ['Bylaws', 'Directors', 'Voting', 'Shareholders', 'Financials', 'Securities & Exchange'];
 
 
 class DashNavComponent extends Component {

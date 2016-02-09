@@ -43,11 +43,12 @@ contract Directorate {
     }
 
     function callVote(string proposal, bool EOR, bytes32 voteItem, bytes32 proposedValue, bytes32 currentValue) {
-      if(!Directors(contracts.DirectorsContract).isDirector(msg.sender)){
+      Voting(contracts.VotingContract).NewResolution(msg.sender, proposal, EOR, voteItem, proposedValue, currentValue);
+      /*if(!Directors(contracts.DirectorsContract).isDirector(msg.sender)){
           throw;
       } else {
-        Voting(contracts.VotingContract).NewResolution(msg.sender, proposal, EOR, voteItem, proposedValue, currentValue);
-      }
+
+      }*/
     }
 
 }

@@ -118,7 +118,7 @@ export function Bylaws(BylawsAddress){
   })
 }
 
-export function Voting(VotingContract){
+export function Voting(VotingAddress){
   return new Promise((resolve, reject) => {
     DAVContracts().then((contracts) => {
       return Contract.Compile(contracts);
@@ -304,17 +304,43 @@ export function GetVentures(Account){
 //   })
 // }
 
-export function AMEND_BYLAWS(venture, bylaw){
+export function AMEND_BYLAWS(Account, newBylawResolution){
   return new Promise((resolve, reject) => {
-    Directorate(venture.contract.Directorate).then((D) => {
-      // D.callVote().then(() => {
-      //
-      // })
+
+
+    unlockAccount(Account.address, Account.password).then((unlocked) => {
+      console.log(unlocked);
+
+      return Directorate(newBylawResolution.venture);
+
+    }).then((D) => {
+      console.log(D);
+      console.log(newBylawResolution);
+
+
+      let { proposedBy, proposal, EOR, voteItem, proposedValue, currentValue } = newBylawResolution;
+
+      D.callVote(proposal, EOR, voteItem, proposedValue, currentValue, {from : Account.address}, (error, txhash) => {
+          if(error){reject(error)}
+          console.log(txhash);
+          resolve(txhash);
+      });
 
     }).catch((error) => {
       reject(error);
     })
   })
+}
+
+export function GET_OPEN_RESOLUTIONS(venture){
+  return new Promise((resolve, reject) => {
+    Voting(venture.contract.Voting).then((V) => {
+      V.GetAllResolutions.call((error, resolutions) => {
+        if(error){reject(error)}
+        resolve(resolutions);
+      });
+    });
+  });
 }
 
 export function GET_SHAREHOLDERS(venture){

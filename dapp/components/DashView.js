@@ -27,6 +27,8 @@ class DashViewComponent extends Component {
         return (<Directors />);
       case 'Voting':
         return (<Voting />);
+      default:
+        return (<div>{view} needs to be created.</div>);
     }
   }
 }

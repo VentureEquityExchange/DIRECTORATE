@@ -24,8 +24,8 @@ class WelcomeComponent extends Component {
         modal={true}
         open={true}
       >
-      <div style={{margin:'auto', width:'90%'}}>
-        <h1 style={{fontSize : '60px'}}>VEX|DIRECTORATE</h1>
+      <div style={{textAlign:'center'}}>
+        <h1 style={{fontSize : '60px', fontFamily : 'Roboto', fontWeight:'100'}}>VΞX|DIRECTORATE</h1>
       </div>
 
       </Dialog>

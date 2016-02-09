@@ -15,7 +15,6 @@ class DirectorsComponent extends Component {
   }
 
   componentDidMount(){
-    console.log(`Hello World; we're here.`)
     let { dispatch, Venture } = this.props;
     let { Directors } = Venture.Venture.contract;
 
@@ -31,10 +30,8 @@ class DirectorsComponent extends Component {
     return (
       <Card initiallyExpanded={true}>
         <CardHeader
-          title={`${Venture.name} | Directors`}
-          subtitle={`Venture Address: ${Venture.DAV}`}
-          actAsExpander={true}
-          showExpandableButton={true}
+          title={`Directors`}
+          subtitle={`Current Directors of ${Venture.name}`}
         />
         <CardText expandable={true}>
           <Griddle results={Directors} showFilter={true} showSettings={true} columns={["address"]}/>

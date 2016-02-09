@@ -33,7 +33,8 @@ class BylawsComponent extends Component {
       oldValue : undefined,
       newValue : undefined,
       equalWeighted : 1,
-      resolutionPeriod : 2
+      resolutionPeriod : 2,
+      type : 'number'
     }
   }
 
@@ -60,20 +61,85 @@ class BylawsComponent extends Component {
 
     this.setState({open : !this.state.open, bylawsItem : bylaw, title : title, oldValue : value, type:type});
 
-    // dispatch(Actions.AMEND_BYLAWS(Venture, bylaw));
+
+  }
+
+  amendBylaw(){
+    let { dispatch } = this.props;
+    let { Account } = this.props.Account;
+    let { Venture } = this.props.Venture;
+
+    console.log(this.props);
+    // Arguments for Voting.sol => NewResolution();
+    //
+    // address proposedBy, string proposal, bool EOR, bytes32 voteItem, bytes32 proposedValue, bytes32 currentValue
+
+    let newBylawResolution = {
+      venture : Venture.DAV,
+      proposedBy : Account.address,
+      proposal : `Amend ${this.state.title}`,
+      EOR : true,
+      voteItem : this.state.bylawsItem,
+      proposedValue : this.state.newValue,
+      currentValue : this.state.oldValue
+    }
+
+    console.log(newBylawResolution);
+
+    dispatch(Actions.AMEND_BYLAWS(Account, newBylawResolution));
+
   }
 
   setValue = (event) => {
-    let newValue = event.target.value;
-    console.log(newValue);
+
+    switch(this.state.type){
+      case "text":
+        this.state.newValue = String(event.target.value);
+        break;
+      default:
+        this.state.newValue = Number(event.target.value);
+    }
+
+    console.log(this.state);
+
   }
 
   setWeighting = (event, index, value) => {
+    switch(value){
+      case 1:
+        this.state.newValue = "Equal Weighted (amongst Directors)";
+      case 0:
+        this.state.newValue = "Share Weighted (amongst Shareholders)"
+    }
 
+    this.state.equalWeighted = value;
     this.setState({equalWeighted : value});
   }
 
   setResolutionPeriod = (event, index, value) => {
+    switch(value){
+      case 1:
+        this.state.newValue = "One Week";
+        this.state.resolutionPeriod = value;
+        break;
+      case 2:
+        this.state.newValue = "Two Weeks";
+        this.state.resolutionPeriod = value;
+        break;
+      case 3:
+        this.state.newValue = "Three Weeks";
+        this.state.resolutionPeriod = value;
+        break;
+      case 4:
+        this.state.newValue = "Four Weeks";
+        this.state.resolutionPeriod = value;
+        break;
+      case 5:
+        this.state.newValue = "Five Weeks";
+        this.state.resolutionPeriod = value;
+        break;
+    }
+
 
     this.setState({resolutionPeriod : value});
   }
@@ -81,7 +147,8 @@ class BylawsComponent extends Component {
 
 
   render(){
-    let { Bylaws } = this.props.Venture;
+    let { Bylaws, Venture } = this.props.Venture;
+
     let pText;
     let sText;
     let ListItems = Object.keys(Bylaws).map((item, index ) => {
@@ -99,8 +166,8 @@ class BylawsComponent extends Component {
         pText = "Open Resolution Time Period Limit";
         sText = Bylaws[item];
       } else if(item.match(RegExp("equalWeighted"))){
-        pText = "Equity Weighting";
-        { Bylaws[item] == 1 ? sText = "Equal Weighted" : sText = "Share Weighted" }
+        pText = "Voting Weight";
+        { Bylaws[item] == 1 ? sText = "Equal Weighted (amongst Directors)" : sText = "Share Weighted (amongst Shareholders)" }
       } else if(item.match(RegExp("ORL"))){
         pText = "Open Resolution Limit";
         sText = Bylaws[item];
@@ -150,9 +217,7 @@ class BylawsComponent extends Component {
         <Card initiallyExpanded={true} >
           <CardHeader
             title="Bylaws"
-            subtitle="Subtitle"
-            actAsExpander={true}
-            showExpandableButton={true}
+            subtitle={`Operating Agreements for ${Venture.name}`}
           />
           <CardText expandable={true} style={{height:'500px', overflow:'scroll'}}>
             <List subheader="" >
@@ -172,7 +237,7 @@ class BylawsComponent extends Component {
               max={100}
               defaultValue={this.state.oldValue}
               disabled={true}
-              type="number"
+              type={this.state.type}
               style={{width:'100%', marginTop:'1%'}}
               onChange={null} />
             { this.state.bylawsItem.match(RegExp("equalWeighted")) ||
@@ -182,13 +247,13 @@ class BylawsComponent extends Component {
                     <SelectField value={this.state.resolutionPeriod} onChange={this.setResolutionPeriod}>
                       <MenuItem value={1} primaryText="One Week"/>
                       <MenuItem value={2} primaryText="Two Weeks"/>
-                      <MenuItem value={3} primaryText="Tree Weeks"/>
+                      <MenuItem value={3} primaryText="Three Weeks"/>
                       <MenuItem value={4} primaryText="Four Weeks"/>
                       <MenuItem value={5} primaryText="Five Weeks"/>
                     </SelectField> :
                     <SelectField value={this.state.equalWeighted} onChange={this.setWeighting}>
                         <MenuItem value={1} primaryText="Equal Weighted"/>
-                        <MenuItem value={2} primaryText="Share Weighted"/>
+                        <MenuItem value={0} primaryText="Share Weighted"/>
                     </SelectField>
                 }
               </div> :
@@ -206,7 +271,7 @@ class BylawsComponent extends Component {
             <RaisedButton
                 label="New Proposal"
                 style={{width:'100%', marginTop:'1%'}}
-                onClick={null} />
+                onClick={this.amendBylaw.bind(this, )} />
             <RaisedButton
                 label="Cancel"
                 secondary={true}
@@ -220,7 +285,8 @@ class BylawsComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Venture : state.Venture
+    Venture : state.Venture,
+    Account : state.Account
   }
 }
 
